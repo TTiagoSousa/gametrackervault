@@ -1,0 +1,72 @@
+@use './Styles/Colors/Theme.scss' as *;
+@use './Styles/Formats/Theme.scss' as *;
+@use './Styles/Fonts.scss' as Font;
+
+*{
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  text-decoration: none;
+}
+
+body{
+  font-family: Font.$font_family_sans;
+  color: var(--text-main);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+// Fundo da app: o cinza-caixa liso, sem halos nem grelhas.
+main{
+  min-height: 100svh;
+  background: var(--bg);
+}
+
+*{
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+*::-webkit-scrollbar{ width: 8px; height: 8px; }
+*::-webkit-scrollbar-track{ background: transparent; }
+
+*::-webkit-scrollbar-thumb{
+  background: var(--line-strong);
+  border-radius: 8px;
+
+  &:hover{ background: var(--accent); }
+}
+
+::selection{
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+@keyframes vaultPop{
+  from{ opacity: 0; transform: translateY(10px) scale(.985); }
+  to{ opacity: 1; transform: none; }
+}
+
+// ---------------------------------------------------------------------------
+// Títulos de modal partilhados. Ficam aqui para os títulos da app inteira
+// mudarem juntos; um modal novo acrescenta cá o seu.
+// ---------------------------------------------------------------------------
+.Admin_Create_User_Modal_Title,
+.Update_Modal_Title{
+  font-family: Font.$font_family_display;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+// Quem pede menos movimento no sistema não vê entradas, deslizes nem pulsos.
+@media (prefers-reduced-motion: reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

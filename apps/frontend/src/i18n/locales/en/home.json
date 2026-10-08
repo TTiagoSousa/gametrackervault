@@ -1,0 +1,15 @@
+{
+  "title": "Home",
+  "greeting": "Hi, {{name}}",
+  "subtitle": "Your shelf has one row for each status. They are still empty.",
+  "stats": {
+    "playing": "Playing",
+    "finished": "Finished",
+    "beaten": "Beaten"
+  },
+  "empty": {
+    "description": "When the library arrives, every game you mark goes in as a spine on the right row."
+  },
+  "count_one": "{{count}} game",
+  "count_other": "{{count}} games"
+}

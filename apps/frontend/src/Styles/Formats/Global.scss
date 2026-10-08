@@ -1,0 +1,5 @@
+// Raios por hierarquia, não um só para tudo: painéis maiores, controlos médios,
+// lombadas quase rectas (como as caixas).
+$border-radius: 14px;  // painéis e modais
+$ctrl-radius:   10px;  // botões, inputs, separadores
+$spine-radius:  6px;   // lombadas

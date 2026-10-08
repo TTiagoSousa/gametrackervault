@@ -1,0 +1,20 @@
+{
+  "title": "Admin",
+  "users": {
+    "title": "Usuarios",
+    "new": "Nuevo usuario",
+    "username": "Usuario",
+    "role": "Rol",
+    "createdAt": "Creado el",
+    "roles": { "ADMIN": "Administrador", "USER": "Usuario" }
+  },
+  "createUser": {
+    "title": "Nuevo usuario",
+    "username": "Usuario",
+    "usernamePlaceholder": "Mínimo 3 caracteres",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Mínimo 8 caracteres",
+    "role": "Rol",
+    "created": "Usuario creado"
+  }
+}

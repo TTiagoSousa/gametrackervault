@@ -1,0 +1,161 @@
+@use 'Fonts.scss' as Font;
+
+// ---------------------------------------------------------------------------
+// Vocabulário do Vault — as peças de que todas as páginas são feitas.
+// ---------------------------------------------------------------------------
+
+/// Contentor de página: coluna com espaço entre blocos.
+@mixin Pages_Configs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-sizing: border-box;
+  font-family: Font.$font_family_sans;
+}
+
+/// Cabeçalho de página: título em Unbounded à esquerda (.Right_Side, nome
+/// herdado), ações à direita (.Left_Side).
+@mixin Page_Header {
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .Right_Side{
+
+    span{
+      font-family: Font.$font_family_display;
+      font-size: clamp(26px, 3vw, 34px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+    }
+  }
+}
+
+/// Legenda pequena: cabeçalhos de coluna, chaves de leitura, metadados.
+@mixin Caption($size: 12px) {
+  font-family: Font.$font_family_sans;
+  font-size: $size;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
+/// Título de secção dentro de um cartão.
+@mixin Section_Title($size: 16px) {
+  font-family: Font.$font_family_display;
+  font-size: $size;
+  font-weight: 700;
+  letter-spacing: -.015em;
+}
+
+/// Superfície base de bloco: plana, só linha fina — sem sombra nem brilho.
+@mixin Panel_Surface {
+  background: var(--surface);
+  border: var(--card-border);
+  border-radius: var(--border-radius);
+}
+
+/// Base de qualquer controlo escrevível (input, textarea, select).
+@mixin Control_Surface {
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--ctrl-radius);
+  color: var(--text-main);
+  font-family: Font.$font_family_sans;
+  transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+
+  &::placeholder{ color: var(--text-faint); }
+
+  &:focus,
+  &:focus-within{
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  &:disabled{
+    opacity: .45;
+    cursor: not-allowed;
+  }
+}
+
+/// Botão secundário — contorno discreto, ganha cor no hover.
+@mixin Ghost_Button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--ctrl-radius);
+  background: var(--surface);
+  color: var(--text-main);
+  font-family: Font.$font_family_sans;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+
+  &:hover:not(:disabled){
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  &:focus-visible{
+    outline: none;
+    box-shadow: 0 0 0 4px var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  &:disabled{
+    opacity: .45;
+    cursor: default;
+  }
+}
+
+/// Botão principal — ultramarino cheio.
+@mixin Solid_Button {
+  @include Ghost_Button;
+  background: var(--accent);
+  border-color: transparent;
+  color: var(--on-accent);
+
+  &:hover:not(:disabled){
+    background: var(--accent-bright);
+    border-color: transparent;
+    color: var(--on-accent);
+  }
+}
+
+@mixin Modal_Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-scrim);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+@mixin Modal_Panel {
+  box-sizing: border-box;
+  border-radius: var(--border-radius);
+  box-shadow: var(--float-shadow);
+  background-color: var(--surface);
+  border: var(--card-border);
+  color: var(--text-main);
+  font-family: Font.$font_family_sans;
+  animation: vaultPop .26s cubic-bezier(.2, .8, .2, 1) both;
+}

@@ -1,0 +1,102 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+// Início: saudação e três prateleiras, uma por estado. Cada prateleira é um
+// painel com o nome do estado, a contagem e uma fila de lombadas em cima de uma
+// tábua da cor do estado.
+.Home {
+  @include Mixin.Pages_Configs;
+
+  .Home_Hero{
+
+    h1{
+      font-family: Font.$font_family_display;
+      font-size: clamp(28px, 3.4vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+    }
+
+    p{
+      max-width: 560px;
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+  }
+
+  .Home_Shelves{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+
+    @media (max-width: 980px){ grid-template-columns: 1fr; }
+  }
+
+  .Home_Shelf{
+    @include Mixin.Panel_Surface;
+    padding: 20px 20px 0;
+    overflow: hidden;
+
+    --shelf-color: var(--game-status-playing);
+    &.finished{ --shelf-color: var(--game-status-finished); }
+    &.beaten{ --shelf-color: var(--game-status-beaten); }
+
+    .Home_Shelf_Head{
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+
+      h2{
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: Font.$font_family_display;
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+
+      .Home_Shelf_Dot{
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--shelf-color);
+      }
+
+      .Home_Shelf_Count{
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-faint);
+      }
+    }
+
+    .Home_Shelf_Row{
+      height: 150px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      overflow: hidden;
+
+      .Spine{ width: 30px; }
+    }
+
+    // A tábua da prateleira, na cor do estado
+    .Home_Shelf_Board{
+      height: 8px;
+      margin: 0 -20px;
+      background: var(--shelf-color);
+    }
+  }
+
+  .Home_Note{
+    max-width: 560px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-faint);
+  }
+}

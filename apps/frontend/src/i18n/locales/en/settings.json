@@ -1,0 +1,23 @@
+{
+  "title": "Settings",
+  "theme": {
+    "title": "Theme",
+    "description": "How the interface looks. The accent colour is the same in both.",
+    "dark": {
+      "name": "Night",
+      "hint": "The vault at night"
+    },
+    "light": {
+      "name": "Day",
+      "hint": "The same language, in daylight"
+    },
+    "auto": {
+      "name": "Automatic",
+      "hint": "Night from 8 pm to 7 am"
+    }
+  },
+  "language": {
+    "title": "Language",
+    "description": "The interface language. Saved in this browser."
+  }
+}

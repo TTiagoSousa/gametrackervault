@@ -1,0 +1,13 @@
+{
+  "menu": {
+    "home": "Home",
+    "settings": "Settings",
+    "admin": "Admin"
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "logout": "Log out"
+  }
+}

@@ -1,0 +1,142 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+.Update_Modal_Overlay{
+  @include Mixin.Modal_Overlay;
+
+  .Update_Modal{
+    @include Mixin.Modal_Panel;
+    width: 520px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px;
+
+    .Update_Modal_headline{
+      font-size: 13px;
+      color: var(--text-soft);
+
+      &.ok{ color: var(--success); }
+      &.bad{ color: var(--danger-color); }
+    }
+
+    .Update_Modal_steps{
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+
+      li{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12.5px;
+        color: var(--text-faint);
+
+        i{
+          width: 9px;
+          height: 9px;
+          flex-shrink: 0;
+          border-radius: 50%;
+          border: 1px solid var(--line-strong);
+        }
+
+        &.ok{
+          color: var(--text-main);
+          i{ background: var(--success); border-color: var(--success); }
+        }
+
+        &.live{
+          color: var(--accent-bright);
+          i{
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 8px var(--accent-soft);
+            animation: Update_Modal_pulse 1.2s ease-in-out infinite;
+          }
+        }
+
+        &.bad{
+          color: var(--danger-color);
+          i{ background: var(--danger-color); border-color: var(--danger-color); }
+        }
+      }
+    }
+
+    .Update_Modal_error{
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--danger-color);
+    }
+
+    .Update_Modal_log{
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      button{
+        @include Mixin.Ghost_Button;
+        align-self: flex-start;
+        height: 28px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+
+      pre{
+        max-height: 220px;
+        overflow: auto;
+        margin: 0;
+        padding: 10px 12px;
+        border: var(--card-border);
+        border-radius: var(--ctrl-radius);
+        background: var(--surface-2);
+        font-family: Font.$font_family_mono;
+        font-size: 11px;
+        line-height: 1.45;
+        color: var(--text-soft);
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+
+    .Update_Modal_Actions{
+      display: flex;
+      gap: 10px;
+
+      button{
+        flex: 1;
+        height: 42px;
+        border-radius: var(--ctrl-radius);
+        cursor: pointer;
+        font-family: Font.$font_family_sans;
+        font-size: 13px;
+        font-weight: 700;
+        border: none;
+
+        &:disabled{
+          opacity: 0.55;
+          cursor: not-allowed;
+        }
+      }
+
+      .Cancel_Button{
+        background-color: var(--surface-2);
+        color: var(--text-main);
+        border: var(--card-border);
+      }
+
+      .Save_Button{
+        background-color: var(--accent);
+        color: var(--on-accent);
+      }
+    }
+  }
+}
+
+@keyframes Update_Modal_pulse{
+  0%, 100%{ opacity: 1; }
+  50%{ opacity: .35; }
+}

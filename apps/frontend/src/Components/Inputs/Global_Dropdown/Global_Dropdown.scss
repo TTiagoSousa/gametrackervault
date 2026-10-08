@@ -1,0 +1,161 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+.Dropdown_Field{
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &.Disabled{
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .Dropdown_Field_Trigger{
+    @include Mixin.Control_Surface;
+    width: 100%;
+    height: 100%;
+    padding: 5px 12px;
+    box-sizing: border-box;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .01em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    cursor: pointer;
+    text-align: left;
+
+    span{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &.Placeholder{ color: var(--text-faint); }
+    }
+
+    svg{
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      color: var(--text-faint);
+      transition: transform .2s ease, color .16s ease;
+    }
+
+    &:hover svg{ color: var(--accent); }
+  }
+
+  &.Open .Dropdown_Field_Trigger{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-soft);
+
+    svg{ transform: rotate(180deg); color: var(--accent); }
+  }
+}
+
+// Portal'd para document.body — fica fora da árvore de .Dropdown_Field de propósito,
+// para escapar a qualquer overflow:hidden/z-index de cards ancestrais.
+.Dropdown_Field_Panel{
+  position: fixed;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--float-shadow);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  animation: vaultPop .16s ease both;
+}
+
+.Dropdown_Field_Search{
+  width: 100%;
+  height: 38px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  outline: none;
+  background-color: transparent;
+  color: var(--text-main);
+  font-family: Font.$font_family_sans;
+  font-weight: 500;
+  font-size: 13px;
+  flex-shrink: 0;
+
+  &::placeholder{ color: var(--text-faint); }
+  &:focus{ border-bottom-color: var(--accent); }
+}
+
+.Dropdown_Field_Options{
+  list-style: none;
+  margin: 0;
+  padding: 5px;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+
+  &::-webkit-scrollbar{ width: 6px; }
+  &::-webkit-scrollbar-track{ background: transparent; }
+
+  &::-webkit-scrollbar-thumb{
+    background-color: var(--line-strong);
+    border-radius: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover{
+    background-color: var(--accent);
+  }
+
+  li{
+    position: relative;
+    padding: 8px 10px 8px 12px;
+    border-radius: var(--ctrl-radius);
+    font-family: Font.$font_family_sans;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--text-soft);
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: background .13s ease, color .13s ease;
+
+    // Marca de seleção à esquerda em vez de fundo cheio: mantém a lista leve.
+    &::before{
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2px;
+      height: 0;
+      background: var(--accent);
+      transition: height .16s ease;
+    }
+
+    &:hover{
+      background-color: var(--accent-soft);
+      color: var(--text-main);
+    }
+
+    &.Selected{
+      color: var(--accent);
+
+      &::before{ height: 60%; }
+    }
+  }
+
+  .Dropdown_Field_Empty{
+    text-align: center;
+    color: var(--text-faint);
+    cursor: default;
+
+    &:hover{ background-color: transparent; }
+    &::before{ display: none; }
+  }
+}

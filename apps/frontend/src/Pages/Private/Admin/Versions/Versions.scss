@@ -1,0 +1,194 @@
+@use '../../../../Styles/Fonts.scss' as Font;
+@use '../../../../Styles/Mixins.scss' as Mixin;
+
+.Versions {
+  @include Mixin.Pages_Configs;
+
+  header{
+    @include Mixin.Page_Header;
+
+    .Right_Side{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      span{ color: var(--text-main); }
+
+      .Versions_back{
+        @include Mixin.Ghost_Button;
+        height: 34px;
+        padding: 0 12px 0 8px;
+
+        svg{
+          width: 14px;
+          height: 14px;
+          transform: rotate(90deg);
+        }
+
+        span{
+          font-family: Font.$font_family_sans;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 0;
+          text-transform: none;
+          color: inherit;
+        }
+      }
+    }
+
+    .Left_Side .Versions_refresh{
+      @include Mixin.Ghost_Button;
+      height: 34px;
+      padding: 0 14px;
+
+      svg{ width: 14px; height: 14px; }
+    }
+  }
+
+  .Versions_section{
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-box-shadow);
+    background-color: var(--surface);
+    border: var(--card-border);
+  }
+
+  .Versions_summary{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 12px;
+    font-size: 13px;
+    color: var(--text-soft);
+
+    em{
+      font-style: normal;
+      font-family: Font.$font_family_mono;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .Versions_offline{
+      font-size: 11.5px;
+      color: var(--text-faint);
+    }
+  }
+
+  .Versions_error{ font-size: 12.5px; color: var(--danger-color); }
+  .Versions_empty{ font-size: 12.5px; color: var(--text-faint); }
+
+  .Versions_list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  // Fechada mostra a versão e a data; aberta, as notas.
+  .Versions_item{
+    display: flex;
+    flex-direction: column;
+    border: var(--card-border);
+    border-radius: 18px;
+    background: var(--surface);
+
+    &.installed{ border-color: var(--accent-deep); }
+
+    .Versions_item_head{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+
+      &:focus-visible{
+        outline: none;
+        box-shadow: inset 0 0 0 1px var(--accent);
+      }
+    }
+
+    .Versions_item_chevron{
+      width: 20px;
+      height: 20px;
+      padding: 4px;
+      flex-shrink: 0;
+      box-sizing: border-box;
+      display: flex;
+      color: var(--text-soft);
+      transition: transform .2s;
+
+      svg{ width: 100%; height: 100%; }
+    }
+
+    &.expanded .Versions_item_chevron{ transform: rotate(180deg); }
+
+    .Versions_item_title{
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .Versions_item_expand_wrapper{
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .25s ease;
+    }
+
+    &.expanded .Versions_item_expand_wrapper{ grid-template-rows: 1fr; }
+
+    .Versions_item_expand{
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .Versions_item_body{
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 0 16px 16px 44px;
+    }
+
+    .Versions_item_version{
+      font-family: Font.$font_family_mono;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .Versions_item_date{
+      font-family: Font.$font_family_mono;
+      font-size: 11px;
+      color: var(--text-faint);
+    }
+
+    .Versions_item_headline{
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .Versions_badge{
+      @include Mixin.Caption(11px);
+      padding: 2px 7px;
+      border-radius: var(--ctrl-radius);
+      border: 1px solid var(--line-strong);
+      color: var(--text-soft);
+
+      &.installed{ border-color: var(--success); color: var(--success); }
+      &.new{ border-color: var(--accent); color: var(--accent-bright); }
+    }
+
+    .Versions_install{
+      @include Mixin.Solid_Button;
+      height: 32px;
+      padding: 0 14px;
+      font-size: 12.5px;
+    }
+  }
+}

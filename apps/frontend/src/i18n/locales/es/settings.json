@@ -1,0 +1,23 @@
+{
+  "title": "Ajustes",
+  "theme": {
+    "title": "Tema",
+    "description": "Cómo se presenta la interfaz. El color de acento es el mismo en ambos.",
+    "dark": {
+      "name": "Noche",
+      "hint": "La bóveda de noche"
+    },
+    "light": {
+      "name": "Día",
+      "hint": "El mismo lenguaje, a la luz"
+    },
+    "auto": {
+      "name": "Automático",
+      "hint": "Noche de 20:00 a 7:00"
+    }
+  },
+  "language": {
+    "title": "Idioma",
+    "description": "El idioma de la interfaz. Se guarda en este navegador."
+  }
+}

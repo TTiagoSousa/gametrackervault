@@ -1,0 +1,66 @@
+{
+  "card": {
+    "title": "Version",
+    "description": "The installed GameTracker Vault version and the available updates.",
+    "seeVersions": "See versions",
+    "checking": "checking…",
+    "installed": "Installed",
+    "latest": "Latest version",
+    "noReleases": "no releases yet",
+    "offline": "repository unreachable",
+    "status": "Status",
+    "updates_one": "{{count}} update",
+    "updates_other": "{{count}} updates",
+    "upToDate": "Up to date",
+    "canSkip": "you can jump straight to the latest",
+    "nothingToInstall": "nothing to install",
+    "whatsNew": "What's new in {{version}}",
+    "updateTo": "Update to {{version}}",
+    "serverOnly": "In-app updates only work on the server installation."
+  },
+  "versions": {
+    "title": "Versions",
+    "back": "Admin",
+    "refresh": "Check for updates",
+    "searching": "checking…",
+    "installed": "Installed",
+    "offline": "repository unreachable — the list may be out of date",
+    "serverOnly": "in-app updates only work on the server installation",
+    "empty": "No releases published yet.",
+    "badgeInstalled": "Installed",
+    "badgeNew": "New",
+    "install": "Update to this one"
+  },
+  "notes": {
+    "features": "New features",
+    "fixes": "Fixes",
+    "improvements": "Improvements",
+    "other": "Other",
+    "more": "+ {{count}} more",
+    "empty": "No notes for this release."
+  },
+  "update": {
+    "title": "Update GameTracker Vault",
+    "steps": {
+      "fetch": "Download the version",
+      "build": "Install dependencies and build",
+      "migrate": "Update the database",
+      "publish": "Publish the frontend",
+      "configure": "Update services",
+      "restart": "Restart the backend"
+    },
+    "headline": {
+      "running": "Updating from {{from}} to {{to}}…",
+      "queued": "Waiting for the server to start…",
+      "restarting": "The backend is restarting…",
+      "done": "Updated to {{to}}. Reloading…",
+      "failed": "The update failed"
+    },
+    "previousStillRunning": "The previous version is still running.",
+    "unknownError": "Unknown error.",
+    "showLog": "Show details",
+    "hideLog": "Hide details",
+    "reloadNow": "Reload now",
+    "updating": "Updating…"
+  }
+}

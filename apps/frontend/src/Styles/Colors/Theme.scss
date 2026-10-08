@@ -1,0 +1,20 @@
+@use 'sass:list';
+@use 'Tokens';
+
+.Dark_Mode{
+  @each $name, $pair in Tokens.$theme{
+    --#{$name}: #{list.nth($pair, 1)};
+  }
+}
+
+.Light_Mode{
+  @each $name, $pair in Tokens.$theme{
+    --#{$name}: #{list.nth($pair, 2)};
+  }
+}
+
+:root{
+  @each $name, $value in Tokens.$fixed{
+    --#{$name}: #{$value};
+  }
+}

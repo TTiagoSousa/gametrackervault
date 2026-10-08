@@ -1,0 +1,23 @@
+{
+  "title": "Definições",
+  "theme": {
+    "title": "Tema",
+    "description": "Como a interface se apresenta. A cor de acento é fixa em ambos.",
+    "dark": {
+      "name": "Noite",
+      "hint": "O cofre à noite"
+    },
+    "light": {
+      "name": "Dia",
+      "hint": "A mesma linguagem, à luz"
+    },
+    "auto": {
+      "name": "Automático",
+      "hint": "Noite das 20h às 7h"
+    }
+  },
+  "language": {
+    "title": "Língua",
+    "description": "A língua da interface. Fica guardada neste browser."
+  }
+}

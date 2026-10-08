@@ -1,0 +1,16 @@
+.Vault {
+  min-height: 100svh;
+
+  .Vault_Content {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 760px) {
+    .Vault_Content {
+      padding: 28px 16px 56px;
+    }
+  }
+}

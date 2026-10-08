@@ -1,0 +1,24 @@
+{
+  "name": "gametracker-vault",
+  "private": true,
+  "description": "Registo pessoal de jogos — backend NestJS, frontend React, pacote partilhado.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build:shared": "npm run build -w @gametracker/shared",
+    "dev": "npm run build:shared && concurrently -n shared,backend,frontend -c gray,blue,green \"npm run dev -w @gametracker/shared\" \"npm run start:dev -w @gametracker/backend\" \"npm run dev -w @gametracker/frontend\"",
+    "dev:backend": "npm run build:shared && npm run start:dev -w @gametracker/backend",
+    "dev:frontend": "npm run build:shared && npm run dev -w @gametracker/frontend",
+    "build": "npm run build:shared && npm run build -w @gametracker/backend && npm run build -w @gametracker/frontend",
+    "lint": "npm run lint -w @gametracker/backend && npm run lint -w @gametracker/frontend",
+    "release": "node scripts/release.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

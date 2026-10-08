@@ -1,0 +1,12 @@
+// Duas famílias, bem distintas:
+//   · Unbounded       — títulos, marca e títulos nas lombadas: larga e
+//                       arredondada, lembra o lettering das caixas de jogos
+//   · Instrument Sans — todo o resto do texto
+// JetBrains Mono fica para texto técnico: versões, commits, logs, códigos.
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+$font_family_sans:    'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+$font_family_display: 'Unbounded', 'Instrument Sans', system-ui, sans-serif;
+$font_family_mono:    'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;

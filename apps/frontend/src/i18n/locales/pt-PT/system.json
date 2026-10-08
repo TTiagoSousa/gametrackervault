@@ -1,0 +1,66 @@
+{
+  "card": {
+    "title": "Versão",
+    "description": "A versão do GameTracker Vault instalada e as atualizações disponíveis.",
+    "seeVersions": "Ver versões",
+    "checking": "a verificar…",
+    "installed": "Instalada",
+    "latest": "Última versão",
+    "noReleases": "ainda não há releases",
+    "offline": "sem ligação ao repositório",
+    "status": "Estado",
+    "updates_one": "{{count}} atualização",
+    "updates_other": "{{count}} atualizações",
+    "upToDate": "Atualizado",
+    "canSkip": "pode saltar diretamente para a última",
+    "nothingToInstall": "nada para instalar",
+    "whatsNew": "Novidades da {{version}}",
+    "updateTo": "Atualizar para {{version}}",
+    "serverOnly": "As atualizações pela app só funcionam na instalação do servidor."
+  },
+  "versions": {
+    "title": "Versões",
+    "back": "Admin",
+    "refresh": "Procurar atualizações",
+    "searching": "a procurar…",
+    "installed": "Instalada",
+    "offline": "sem ligação ao repositório — a lista pode estar desatualizada",
+    "serverOnly": "as atualizações pela app só funcionam na instalação do servidor",
+    "empty": "Ainda não há releases publicadas.",
+    "badgeInstalled": "Instalada",
+    "badgeNew": "Nova",
+    "install": "Atualizar para esta"
+  },
+  "notes": {
+    "features": "Novidades",
+    "fixes": "Correções",
+    "improvements": "Melhorias",
+    "other": "Outros",
+    "more": "+ {{count}} mais",
+    "empty": "Sem notas para esta versão."
+  },
+  "update": {
+    "title": "Atualizar GameTracker Vault",
+    "steps": {
+      "fetch": "Descarregar a versão",
+      "build": "Instalar dependências e compilar",
+      "migrate": "Atualizar a base de dados",
+      "publish": "Publicar o frontend",
+      "configure": "Atualizar serviços",
+      "restart": "Reiniciar o backend"
+    },
+    "headline": {
+      "running": "A atualizar de {{from}} para {{to}}…",
+      "queued": "À espera que o servidor comece…",
+      "restarting": "O backend está a reiniciar…",
+      "done": "Atualizado para {{to}}. A recarregar…",
+      "failed": "A atualização falhou"
+    },
+    "previousStillRunning": "A versão anterior continua a funcionar.",
+    "unknownError": "Erro desconhecido.",
+    "showLog": "Ver detalhes",
+    "hideLog": "Esconder detalhes",
+    "reloadNow": "Recarregar agora",
+    "updating": "A atualizar…"
+  }
+}

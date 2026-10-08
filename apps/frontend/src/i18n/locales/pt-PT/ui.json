@@ -1,0 +1,14 @@
+{
+  "dropdown": {
+    "searchPlaceholder": "Pesquisar...",
+    "noResults": "Sem resultados"
+  },
+  "alert": {
+    "labels": {
+      "success": "Sucesso",
+      "error": "Erro",
+      "warning": "Aviso",
+      "info": "Info"
+    }
+  }
+}

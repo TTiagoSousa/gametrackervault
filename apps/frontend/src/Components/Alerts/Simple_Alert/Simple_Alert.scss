@@ -1,0 +1,123 @@
+@use '../../../Styles/Fonts.scss' as Font;
+
+// Toast: cartão da superfície com o ícone num círculo da cor do tipo e uma
+// barra de progresso fina da mesma cor. A cor marca o tipo sem pintar o cartão
+// inteiro — o texto fica sempre legível nos dois temas.
+.Simple_Alert {
+  --alert-color: var(--alert-info-background);
+
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px 16px;
+  border-radius: 16px;
+  min-width: 280px;
+  max-width: min(400px, calc(100vw - 32px));
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--surface);
+  border: var(--card-border);
+  box-shadow: var(--float-shadow);
+  font-family: Font.$font_family_sans;
+  animation: sa-slide-in 0.3s ease forwards;
+
+  &--exit {
+    animation: sa-slide-out 0.3s ease forwards;
+  }
+
+  &--success { --alert-color: var(--alert-success-background); }
+  &--error   { --alert-color: var(--alert-error-background); }
+  &--warning { --alert-color: var(--alert-warning-background); }
+  &--info    { --alert-color: var(--alert-info-background); }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--alert-color);
+    color: var(--status-ink);
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  &__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  &__message {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-soft);
+    word-break: break-word;
+  }
+
+  &__close {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--text-faint);
+    cursor: pointer;
+    font-size: 12px;
+
+    &:hover {
+      color: var(--text-main);
+      background: var(--surface-2);
+    }
+  }
+
+  &__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: var(--alert-color);
+    animation: sa-progress 3s linear forwards;
+    transform-origin: left;
+  }
+
+  @media (max-width: 600px) {
+    left: 16px;
+    right: 16px;
+    top: 16px;
+    min-width: 0;
+    max-width: none;
+  }
+}
+
+@keyframes sa-slide-in {
+  from { transform: translateX(calc(100% + 24px)); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes sa-slide-out {
+  from { transform: translateX(0); opacity: 1; }
+  to   { transform: translateX(calc(100% + 24px)); opacity: 0; }
+}
+
+@keyframes sa-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@gametracker/shared",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Tipos e constantes partilhados entre o backend e o frontend.",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json && node scripts/mark-dist.mjs",
+    "dev": "tsc -p tsconfig.esm.json --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

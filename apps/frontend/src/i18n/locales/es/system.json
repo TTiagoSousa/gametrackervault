@@ -1,0 +1,66 @@
+{
+  "card": {
+    "title": "Versión",
+    "description": "La versión de GameTracker Vault instalada y las actualizaciones disponibles.",
+    "seeVersions": "Ver versiones",
+    "checking": "comprobando…",
+    "installed": "Instalada",
+    "latest": "Última versión",
+    "noReleases": "todavía no hay versiones",
+    "offline": "sin conexión con el repositorio",
+    "status": "Estado",
+    "updates_one": "{{count}} actualización",
+    "updates_other": "{{count}} actualizaciones",
+    "upToDate": "Actualizado",
+    "canSkip": "puedes saltar directamente a la última",
+    "nothingToInstall": "nada que instalar",
+    "whatsNew": "Novedades de la {{version}}",
+    "updateTo": "Actualizar a {{version}}",
+    "serverOnly": "Las actualizaciones desde la app solo funcionan en la instalación del servidor."
+  },
+  "versions": {
+    "title": "Versiones",
+    "back": "Admin",
+    "refresh": "Buscar actualizaciones",
+    "searching": "buscando…",
+    "installed": "Instalada",
+    "offline": "sin conexión con el repositorio — la lista puede estar desactualizada",
+    "serverOnly": "las actualizaciones desde la app solo funcionan en la instalación del servidor",
+    "empty": "Todavía no hay versiones publicadas.",
+    "badgeInstalled": "Instalada",
+    "badgeNew": "Nueva",
+    "install": "Actualizar a esta"
+  },
+  "notes": {
+    "features": "Novedades",
+    "fixes": "Correcciones",
+    "improvements": "Mejoras",
+    "other": "Otros",
+    "more": "+ {{count}} más",
+    "empty": "Sin notas para esta versión."
+  },
+  "update": {
+    "title": "Actualizar GameTracker Vault",
+    "steps": {
+      "fetch": "Descargar la versión",
+      "build": "Instalar dependencias y compilar",
+      "migrate": "Actualizar la base de datos",
+      "publish": "Publicar el frontend",
+      "configure": "Actualizar servicios",
+      "restart": "Reiniciar el backend"
+    },
+    "headline": {
+      "running": "Actualizando de {{from}} a {{to}}…",
+      "queued": "Esperando a que el servidor empiece…",
+      "restarting": "El backend se está reiniciando…",
+      "done": "Actualizado a {{to}}. Recargando…",
+      "failed": "La actualización ha fallado"
+    },
+    "previousStillRunning": "La versión anterior sigue funcionando.",
+    "unknownError": "Error desconocido.",
+    "showLog": "Ver detalles",
+    "hideLog": "Ocultar detalles",
+    "reloadNow": "Recargar ahora",
+    "updating": "Actualizando…"
+  }
+}

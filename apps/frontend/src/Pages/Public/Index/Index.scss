@@ -1,0 +1,290 @@
+@use '../../../Styles/Fonts.scss' as Font;
+
+// Login: à esquerda o campo ultramarino com a estante (a marca), à direita o
+// formulário. Abaixo de 900px o campo encolhe para uma faixa no topo, só com a
+// marca e a prateleira.
+.Login{
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(380px, 1fr);
+  min-height: 100svh;
+  background: var(--surface);
+  font-family: Font.$font_family_sans;
+
+  // --- Campo com a estante -------------------------------------------------------
+  .Login_Stage{
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    padding: 40px 48px 36px;
+    box-sizing: border-box;
+    background: var(--stage-bg);
+    color: var(--stage-text);
+    overflow: hidden;
+  }
+
+  .Login_Brand{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .Login_Logo{
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: var(--ctrl-radius);
+      background: var(--stage-text);
+
+      svg{ width: 24px; height: 24px; }
+    }
+
+    .Login_Brand_Name{
+      font-family: Font.$font_family_display;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  .Login_Pitch{
+    max-width: 520px;
+    margin-top: auto;
+
+    h1{
+      font-family: Font.$font_family_display;
+      font-size: clamp(30px, 3.4vw, 46px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -.02em;
+    }
+
+    p{
+      max-width: 440px;
+      margin-top: 16px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--stage-soft);
+    }
+  }
+
+  // A prateleira: lombadas alinhadas pela base em cima de uma tábua
+  .Login_Shelf{
+    .Login_Shelf_Row{
+      height: 230px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .Login_Shelf_Board{
+      height: 10px;
+      border-radius: 0 0 4px 4px;
+      background: var(--stage-text);
+      opacity: .9;
+    }
+  }
+
+  .Login_Legend{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--stage-soft);
+
+    li{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .Login_Legend_Dot{
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--stage-text);
+      box-sizing: border-box;
+
+      &.playing{ background: var(--game-status-playing); }
+      &.finished{ background: var(--game-status-finished); }
+      &.beaten{ background: var(--game-status-beaten); }
+    }
+  }
+
+  // --- Painel do formulário ------------------------------------------------------
+  .Login_Panel{
+    display: flex;
+    flex-direction: column;
+    padding: 24px 40px 40px;
+    box-sizing: border-box;
+
+    .Login_Topbar{
+      display: flex;
+      justify-content: flex-end;
+
+      .Theme_Toggle{
+        width: 40px;
+        height: 40px;
+
+        button{
+          border-radius: var(--ctrl-radius);
+          border: 1px solid var(--line-strong);
+          padding: 9px;
+          box-sizing: border-box;
+
+          &:hover{ border-color: var(--accent); }
+        }
+      }
+    }
+  }
+
+  .Login_Form{
+    width: 100%;
+    max-width: 360px;
+    margin: auto 0;
+    padding: 32px 0;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+
+    h2{
+      font-family: Font.$font_family_display;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+    }
+
+    .Login_Description{
+      margin: 8px 0 28px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+  }
+
+  .Login_Field{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 18px;
+
+    > span{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    input{
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      box-sizing: border-box;
+      border-radius: var(--ctrl-radius);
+      border: 1px solid var(--line-strong);
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: Font.$font_family_sans;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .16s ease, box-shadow .16s ease;
+
+      &:focus{
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-soft);
+      }
+    }
+  }
+
+  .Login_Password{
+    position: relative;
+
+    input{ padding-right: 50px; }
+
+    .Login_Password_Toggle{
+      position: absolute;
+      top: 50%;
+      right: 6px;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-faint);
+      cursor: pointer;
+
+      &:hover{
+        color: var(--text-main);
+        background: var(--surface-2);
+      }
+
+      &:focus-visible{
+        outline: none;
+        box-shadow: 0 0 0 3px var(--accent-soft);
+      }
+    }
+  }
+
+  .Login_Submit{
+    margin-top: 8px;
+    height: 50px;
+    border: none;
+    border-radius: var(--ctrl-radius);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-family: Font.$font_family_display;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .16s ease;
+
+    &:hover:not(:disabled){ background: var(--accent-bright); }
+
+    &:focus-visible{
+      outline: none;
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    &:disabled{
+      opacity: .7;
+      cursor: progress;
+    }
+  }
+
+  .Login_Note{
+    margin-top: 20px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--text-faint);
+  }
+
+  // --- Ecrãs pequenos ----------------------------------------------------------------
+  @media (max-width: 900px){
+    grid-template-columns: 1fr;
+
+    .Login_Stage{
+      gap: 20px;
+      padding: 20px 16px 16px;
+
+      .Login_Pitch,
+      .Login_Legend{ display: none; }
+
+      .Login_Shelf .Login_Shelf_Row{ height: 120px; }
+    }
+
+    .Login_Panel{
+      padding: 16px;
+
+      .Login_Topbar{ display: none; }
+    }
+
+    .Login_Form{
+      max-width: none;
+      margin: 0;
+      padding: 12px 0 24px;
+    }
+  }
+}

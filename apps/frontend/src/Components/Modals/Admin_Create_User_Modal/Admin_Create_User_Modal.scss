@@ -1,0 +1,65 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+.Admin_Create_User_Modal_Overlay{
+  @include Mixin.Modal_Overlay;
+
+  .Admin_Create_User_Modal{
+    @include Mixin.Modal_Panel;
+    width: 320px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+
+    .Admin_Create_User_Modal_Field{
+      .Global_Input,
+      .Dropdown_Field{
+        height: 38px;
+      }
+
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      label{
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+    }
+
+    .Admin_Create_User_Modal_Actions{
+      display: flex;
+      gap: 10px;
+
+      button{
+        flex: 1;
+        height: 42px;
+        border-radius: var(--ctrl-radius);
+        cursor: pointer;
+        font-family: Font.$font_family_sans;
+        font-size: 13px;
+        font-weight: 700;
+        border: none;
+
+        &:disabled{
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      .Cancel_Button{
+        background-color: var(--surface-2);
+        color: var(--text-main);
+        border: var(--card-border);
+      }
+
+      .Save_Button{
+        background-color: var(--accent);
+        color: var(--on-accent);
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "actions": {
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "save": "Guardar",
+    "create": "Criar",
+    "delete": "Apagar",
+    "edit": "Editar",
+    "back": "Voltar",
+    "confirm": "Confirmar",
+    "retry": "Tentar outra vez"
+  },
+  "state": {
+    "loading": "a carregar…",
+    "saving": "a guardar…",
+    "empty": "(vazio)"
+  },
+  "errors": {
+    "generic": "Algo correu mal.",
+    "pageTitle": "Esta página falhou",
+    "pageText": "Ocorreu um erro ao mostrar a página. O resto da app continua a funcionar.",
+    "retry": "Tentar outra vez"
+  }
+}

@@ -1,0 +1,26 @@
+@use 'Global';
+
+// Formas reativas ao tema: (noite, dia).
+// As cores vivem em Colors/Tokens.scss — aqui só bordas, sombras e raios.
+$theme: (
+  'card-border': (
+    1px solid rgba(200, 208, 255, .12),
+    1px solid rgba(15, 26, 60, .12)
+  ),
+
+  // Blocos assentes não têm sombra. Só o que flutua (menus, modais, toasts).
+  'card-box-shadow': (
+    'none',
+    'none'
+  ),
+  'float-shadow': (
+    '0 18px 44px rgba(4, 7, 26, .55)',
+    '0 16px 40px rgba(15, 26, 60, .18)'
+  ),
+);
+
+$fixed: (
+  'border-radius': Global.$border-radius,
+  'ctrl-radius':   Global.$ctrl-radius,
+  'spine-radius':  Global.$spine-radius,
+);

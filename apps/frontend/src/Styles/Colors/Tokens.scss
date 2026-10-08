@@ -1,0 +1,71 @@
+@use 'Global';
+
+// ---------------------------------------------------------------------------
+// Tokens reativos ao tema: nome-da-css-var => (valor de noite, valor de dia).
+//
+// Os nomes dizem o PAPEL da cor, não onde é usada. Um componente novo usa
+// estes — se nenhum servir, acrescenta-se aqui um token, nunca um hex solto.
+// ---------------------------------------------------------------------------
+$theme: (
+  // --- Superfícies, da mais funda para a mais saliente ---
+  'bg':        (Global.$night-bg,        Global.$day-bg),
+  'surface':   (Global.$night-surface,   Global.$day-surface),
+  'surface-2': (Global.$night-surface-2, Global.$day-surface-2),
+  'surface-3': (Global.$night-surface-3, Global.$day-surface-3),
+
+  // --- Linhas ---
+  'line':        (Global.$night-line,   Global.$day-line),
+  'line-strong': (Global.$night-line-2, Global.$day-line-2),
+
+  // --- Texto, do mais forte para o mais apagado ---
+  'text-main':  (Global.$night-text,  Global.$day-text),
+  'text-soft':  (Global.$night-soft,  Global.$day-soft),
+  'text-faint': (Global.$night-faint, Global.$day-faint),
+
+  // --- Acento (ultramarino) ---
+  'accent':        (Global.$night-accent,        Global.$day-accent),
+  'accent-bright': (Global.$night-accent-bright, Global.$day-accent-bright),
+  'accent-deep':   (Global.$night-accent-deep,   Global.$day-accent-deep),
+  'accent-soft':   (rgba(124, 134, 255, .18),    rgba(47, 59, 227, .10)),
+  'on-accent':     (#0D1230,                     #FFFFFF),
+
+  // --- Login: o campo ultramarino onde está a estante ---
+  'stage-bg':   (#151B42, #2F3BE3),
+  'stage-text': (#EEF0FF, #FFFFFF),
+  'stage-soft': (#A7AED6, rgba(255, 255, 255, .78)),
+  'stage-line': (rgba(200, 208, 255, .14), rgba(255, 255, 255, .22)),
+
+  // --- Estados de jogo ---
+  // As mesmas cores em todo o lado: lombadas, legendas, prateleiras do Início.
+  'game-status-playing':  (Global.$playing-night,  Global.$playing-day),
+  'game-status-finished': (Global.$finished-night, Global.$finished-day),
+  'game-status-beaten':   (Global.$beaten-night,   Global.$beaten-day),
+
+  // --- Semântico ---
+  'success':           (Global.$success-night, Global.$success-day),
+  'danger-color':      (Global.$danger-night,  Global.$danger-day),
+  'danger-color-soft': (rgba(255, 122, 122, .14), rgba(211, 58, 58, .10)),
+
+  'alert-success-background': (Global.$success-night, Global.$success-day),
+  'alert-warning-background': (Global.$warning-night, Global.$warning-day),
+  'alert-error-background':   (Global.$danger-night,  Global.$danger-day),
+  'alert-info-background':    (Global.$info-night,    Global.$info-day),
+);
+
+// Só fica aqui o que é mesmo igual nos dois temas.
+$fixed: (
+  'overlay-scrim': rgba(9, 13, 36, .55),
+
+  // Cores das lombadas decorativas — iguais nos dois temas, como caixas reais.
+  'spine-1': #E4572E,
+  'spine-2': #F3A712,
+  'spine-3': #29BF8E,
+  'spine-4': #6A4CFF,
+  'spine-5': #E83F8B,
+  'spine-6': #1F2A5C,
+  'spine-ink': #FFFFFF,
+  'spine-ink-dark': #0F1A3C,
+
+  // Texto por cima das cores de estado (amarelo, verde, magenta)
+  'status-ink': #0F1A3C,
+);

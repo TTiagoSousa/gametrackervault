@@ -1,0 +1,16 @@
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+.Global_Input{
+  width: 100%;
+  height: 100%;
+
+  input{
+    @include Mixin.Control_Surface;
+    width: 100%;
+    height: 100%;
+    padding: 5px 14px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,112 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+.Admin {
+  @include Mixin.Pages_Configs;
+
+  header{
+    @include Mixin.Page_Header;
+
+    .Left_Side{
+
+      button{
+        @include Mixin.Solid_Button;
+        height: 42px;
+        padding: 0 18px;
+
+        svg{
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+  }
+
+  // Lista de utilizadores num painel, uma linha por conta
+  .Admin_List{
+    @include Mixin.Panel_Surface;
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+
+    .Admin_Row{
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 4px;
+
+      & + .Admin_Row{ border-top: 1px solid var(--line); }
+      box-sizing: border-box;
+      transition: background .16s ease;
+
+      span{
+        font-size: 15px;
+        color: var(--text-main);
+      }
+
+      &.Admin_Row_Head{
+
+        span{
+          @include Mixin.Caption(12px);
+          color: var(--text-faint);
+        }
+      }
+
+      &:not(.Admin_Row_Head):hover{
+        background: var(--surface-2);
+      }
+
+      .Admin_Row_Username{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        font-weight: 700;
+      }
+
+      .Admin_Avatar{
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        border-radius: var(--ctrl-radius);
+        background: var(--accent);
+        color: var(--on-accent);
+        font-family: Font.$font_family_display;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .Admin_Row_Role{
+        width: fit-content;
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        background-color: var(--surface-2);
+        color: var(--text-soft);
+
+        &.admin{
+          background-color: var(--accent-soft);
+          color: var(--accent);
+        }
+      }
+
+      .Admin_Row_Date{
+        color: var(--text-soft);
+      }
+    }
+
+    @media (max-width: 600px){
+      .Admin_Row{
+        grid-template-columns: 1fr auto;
+
+        .Admin_Row_Date{ display: none; }
+      }
+
+      .Admin_Row_Head span:last-child{ display: none; }
+    }
+  }
+}

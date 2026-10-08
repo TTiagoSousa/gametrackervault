@@ -1,0 +1,15 @@
+{
+  "title": "Início",
+  "greeting": "Olá, {{name}}",
+  "subtitle": "A tua estante tem uma prateleira para cada estado. Ainda estão vazias.",
+  "stats": {
+    "playing": "A jogar",
+    "finished": "Acabados",
+    "beaten": "Passados"
+  },
+  "empty": {
+    "description": "Quando a biblioteca chegar, cada jogo que marcares entra como uma lombada na prateleira certa."
+  },
+  "count_one": "{{count}} jogo",
+  "count_other": "{{count}} jogos"
+}

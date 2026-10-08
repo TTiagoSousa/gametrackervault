@@ -1,0 +1,24 @@
+{
+  "actions": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "create": "Create",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "confirm": "Confirm",
+    "retry": "Try again"
+  },
+  "state": {
+    "loading": "loading…",
+    "saving": "saving…",
+    "empty": "(empty)"
+  },
+  "errors": {
+    "generic": "Something went wrong.",
+    "pageTitle": "This page failed",
+    "pageText": "Something went wrong showing this page. The rest of the app still works.",
+    "retry": "Try again"
+  }
+}

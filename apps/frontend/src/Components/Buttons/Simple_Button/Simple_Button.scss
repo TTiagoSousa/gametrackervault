@@ -1,0 +1,8 @@
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+.Simple_Button{
+  @include Mixin.Solid_Button;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+}

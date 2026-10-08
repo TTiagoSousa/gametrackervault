@@ -1,0 +1,5 @@
+# Normaliza fins de linha no repositório.
+* text=auto
+
+# Os scripts correm no Linux do container: com CRLF o bash parte ("$'\r': command not found").
+*.sh text eol=lf

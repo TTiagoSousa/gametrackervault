@@ -1,0 +1,1 @@
+export { default as Index } from '../Pages/Public/Index/Index.tsx';

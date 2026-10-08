@@ -1,0 +1,58 @@
+// ---------------------------------------------------------------------------
+// Paleta base — "Lombadas". As cores vêm do plástico das caixas de jogos: o
+// cinza-caixa como fundo, a tinta azul-marinho das letras impressas e o
+// ultramarino como acento. Os três estados de jogo têm cores de lombada
+// próprias (amarelo, verde, magenta).
+//
+// O escuro é a mesma estante à noite: ultramarino profundo, nunca preto neutro.
+//
+// Só Tokens.scss lê daqui. Os componentes usam sempre os tokens, nunca isto.
+// ---------------------------------------------------------------------------
+
+// --- Dia ---
+$day-bg:        #E9EBEF;  // cinza-caixa: fundo da aplicação
+$day-surface:   #F7F8FA;  // painéis
+$day-surface-2: #DFE2E8;  // superfícies encaixadas (inputs, carris)
+$day-surface-3: #D3D7DF;  // hover de superfícies
+$day-line:      rgba(15, 26, 60, .12);
+$day-line-2:    rgba(15, 26, 60, .22);
+$day-text:      #0F1A3C;  // tinta azul-marinho
+$day-soft:      #4A5576;
+$day-faint:     #7F88A3;
+
+$day-accent:        #2F3BE3;  // ultramarino
+$day-accent-bright: #1F29C4;
+$day-accent-deep:   #C9CCF8;
+
+// --- Noite ---
+$night-bg:        #0D1230;
+$night-surface:   #151B42;
+$night-surface-2: #1C2352;
+$night-surface-3: #252D63;
+$night-line:      rgba(200, 208, 255, .12);
+$night-line-2:    rgba(200, 208, 255, .22);
+$night-text:      #EEF0FF;
+$night-soft:      #A7AED6;
+$night-faint:     #6F78A8;
+
+$night-accent:        #7C86FF;
+$night-accent-bright: #A5ACFF;
+$night-accent-deep:   #2A3290;
+
+// --- Estados de jogo (cores de lombada) ---
+$playing-day:    #F5B700;
+$playing-night:  #FFD23F;
+$finished-day:   #13A383;
+$finished-night: #3EDDB6;
+$beaten-day:     #D6337F;
+$beaten-night:   #FF6FAE;
+
+// --- Semântico ---
+$success-night: #3EDDB6;
+$success-day:   #13865F;
+$warning-night: #FFD23F;
+$warning-day:   #B98700;
+$danger-night:  #FF7A7A;
+$danger-day:    #D33A3A;
+$info-night:    #7C86FF;
+$info-day:      #2F3BE3;

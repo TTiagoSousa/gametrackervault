@@ -1,0 +1,15 @@
+{
+  "title": "Inicio",
+  "greeting": "Hola, {{name}}",
+  "subtitle": "Tu estantería tiene una balda para cada estado. Todavía están vacías.",
+  "stats": {
+    "playing": "Jugando",
+    "finished": "Terminados",
+    "beaten": "Completados"
+  },
+  "empty": {
+    "description": "Cuando llegue la biblioteca, cada juego que marques entrará como un lomo en la balda correcta."
+  },
+  "count_one": "{{count}} juego",
+  "count_other": "{{count}} juegos"
+}
