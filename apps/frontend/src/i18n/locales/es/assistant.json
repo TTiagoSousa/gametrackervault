@@ -1,0 +1,62 @@
+{
+  "title": "Asistente",
+  "intro": "Pregunta por un juego, una saga o un género, o pide una recomendación. Los juegos que mencione el asistente se abren en la app.",
+  "suggestions": {
+    "next": "¿A qué juego debería jugar ahora?",
+    "similar": "Recomiéndame juegos parecidos a los que puse 9 o 10.",
+    "backlog": "De mi lista por jugar, ¿por cuál empiezo?",
+    "short": "Sugiéreme juegos cortos, de menos de 10 horas, que me gustarían.",
+    "hidden": "¿Qué juegos menos conocidos encajan con mis gustos?"
+  },
+  "placeholder": "Escribe tu pregunta… (Enter envía, Shift+Enter cambia de línea)",
+  "send": "Enviar",
+  "stop": "Parar",
+  "thinking": "Pensando…",
+  "tools": {
+    "search_games": "Buscó \"{{query}}\" en IGDB",
+    "get_game": "Abrió la ficha del juego {{query}} en IGDB"
+  },
+  "errors": {
+    "generic": "El asistente no pudo responder. Inténtalo de nuevo.",
+    "network": "Se perdió la conexión con el servidor a mitad de la respuesta. Inténtalo de nuevo.",
+    "stopped": "Has parado la respuesta.",
+    "settings": "No se pudieron leer los ajustes del asistente. Recarga la página."
+  },
+  "setup": {
+    "title": "Conecta tu Claude"
+  },
+  "side": {
+    "noKey": "Sin clave guardada",
+    "change": "Cambiar en Ajustes",
+    "newChat": "Nueva conversación",
+    "privacyTitle": "Qué lee el asistente",
+    "privacy": "Con cada pregunta van a Anthropic la conversación y tu estantería (juegos, estados, horas, notas y lo que escribiste), con tu clave. La conversación solo se queda en esta pestaña.",
+    "help": "Cómo poner la clave",
+    "suggestions": "Prueba a preguntar"
+  },
+  "settings": {
+    "title": "Asistente (Claude)",
+    "description": "Cada persona usa su propia clave de Anthropic, que se paga en su cuenta. La clave se prueba antes de guardarse, queda cifrada en el servidor y nunca vuelve al navegador.",
+    "connected": "Conectado",
+    "notConfigured": "Sin configurar",
+    "provider": "Proveedor",
+    "apiKey": "Clave de la API",
+    "keyKept": "Guardada, termina en {{hint}}. Déjala en blanco para mantenerla.",
+    "model": "Modelo",
+    "loadModels": "Cargar los modelos de la cuenta",
+    "loadingModels": "Cargando…",
+    "modelsLoaded_one": "{{count}} modelo disponible con esta clave.",
+    "modelsLoaded_other": "{{count}} modelos disponibles con esta clave.",
+    "modelHint": "Elige uno de los sugeridos o carga la lista de modelos a los que tu clave tiene acceso.",
+    "save": "Guardar",
+    "saving": "Probando y guardando…",
+    "remove": "Quitar clave",
+    "confirmRemove": "Quitar del todo",
+    "cancel": "Cancelar",
+    "saved": "Asistente configurado",
+    "removed": "Clave del asistente quitada",
+    "help": "¿Aún no tienes clave?",
+    "helpLink": "Mira cómo crear una.",
+    "updatedAt": "Actualizado el {{date}}"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "title": "Estatísticas",
+  "loading": "A fazer as contas…",
+  "loadFailed": "Não foi possível carregar as estatísticas. Recarrega a página para tentar outra vez.",
+  "empty": "Ainda não tens jogos na estante. Quando puseres alguns, as contas aparecem aqui.",
+  "emptyAction": "Procurar jogos",
+  "factsIncomplete": "O IGDB não respondeu: alguns tempos médios e géneros podem faltar. Recarrega mais tarde.",
+  "hours": {
+    "title": "Horas jogadas",
+    "aria": "{{logged}} horas escritas por ti e {{estimated}} estimadas",
+    "logged_one": "{{hours}} h escritas por ti, em {{count}} jogo",
+    "logged_other": "{{hours}} h escritas por ti, em {{count}} jogos",
+    "estimated_one": "{{hours}} h estimadas pela média do IGDB, em {{count}} jogo",
+    "estimated_other": "{{hours}} h estimadas pela média do IGDB, em {{count}} jogos",
+    "missing_one": "{{count}} jogo sem horas (a meio, em pausa, abandonado ou sem média)",
+    "missing_other": "{{count}} jogos sem horas (a meio, em pausa, abandonados ou sem média)"
+  },
+  "shelf": {
+    "title": "A estante",
+    "games_one": "{{count}} jogo",
+    "games_other": "{{count}} jogos"
+  },
+  "years": {
+    "title": "Concluídos por ano",
+    "count_one": "{{count}} jogo concluído",
+    "count_other": "{{count}} jogos concluídos",
+    "empty": "Ainda não concluíste nenhum jogo."
+  },
+  "rating": {
+    "title": "As tuas notas",
+    "average_one": "média {{average}} em {{count}} jogo",
+    "average_other": "média {{average}} em {{count}} jogos",
+    "count_one": "{{count}} jogo com {{rating}}",
+    "count_other": "{{count}} jogos com {{rating}}",
+    "empty": "Ainda não deste notas a nenhum jogo."
+  },
+  "genres": {
+    "title": "Géneros que mais jogas",
+    "empty": "Sem géneros por enquanto."
+  },
+  "mostPlayed": {
+    "title": "Mais horas",
+    "estimated": "estimado",
+    "empty": "Ainda não há horas para mostrar."
+  },
+  "topRated": {
+    "title": "Mais bem avaliados"
+  },
+  "note": "As horas estimadas são médias dos jogadores do IGDB, usadas quando não escreveste as horas de um jogo concluído.",
+  "noteLink": "Como se calculam",
+  "subtitle": "As contas à tua estante: horas, estados, o que acabaste e o que falta jogar.",
+  "summary": {
+    "title": "Resumo",
+    "hours": "Horas jogadas",
+    "hoursNote": "das quais {{hours}} h estimadas",
+    "hoursAllLogged": "todas escritas por ti",
+    "games": "Jogos na estante",
+    "gamesNote_one": "{{count}} a meio",
+    "gamesNote_other": "{{count}} a meio",
+    "finished": "Concluídos",
+    "finishedNote": "{{rate}}% dos que deixaste de jogar",
+    "noneFinished": "ainda nenhum",
+    "backlog": "Para acabar a lista",
+    "backlogNote_one": "{{count}} jogo marcado como \"Mais tarde\"",
+    "backlogNote_other": "{{count}} jogos marcados como \"Mais tarde\""
+  }
+}

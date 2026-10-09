@@ -1,0 +1,332 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+// Assistente do tamanho exato do ecrã: a página nunca rola. A altura é o ecrã
+// menos a barra de topo e o espaço de cima do contentor; a margem de baixo do
+// contentor é anulada. Duas colunas: a conversa (mensagens com scroll próprio,
+// caixa de escrever no fundo) e, à direita, sugestões e o que o assistente lê.
+.Assistant {
+  --pad-top: 32px;
+  --pad-bottom: 24px;
+
+  height: calc(100svh - var(--top-nav-height, 76px) - var(--pad-top) - var(--pad-bottom));
+  min-height: 460px;
+  margin-bottom: calc(var(--pad-bottom) - 64px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 20px;
+  font-family: Font.$font_family_sans;
+
+  @media (max-width: 980px){
+    grid-template-columns: 1fr;
+
+    // No telemóvel a conversa ocupa o ecrã; as sugestões ficam no fundo da página
+    .Assistant_Side{ display: none; }
+  }
+
+  @media (max-width: 760px){
+    --pad-top: 20px;
+    --pad-bottom: 16px;
+    margin-bottom: calc(var(--pad-bottom) - 48px);
+  }
+
+  // --- Conversa ---------------------------------------------------------------------------
+  .Assistant_Chat{
+    @include Mixin.Panel_Surface;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .Assistant_Head{
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .Assistant_Head_Icon{
+    width: 38px;
+    height: 38px;
+    padding: 9px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    border-radius: var(--ctrl-radius);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .Assistant_Head_Text{
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    h1{
+      font-family: Font.$font_family_display;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--text-main);
+    }
+
+    span{
+      font-family: Font.$font_family_mono;
+      font-size: 12.5px;
+      color: var(--text-faint);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .Assistant_New{
+    @include Mixin.Ghost_Button;
+    flex-shrink: 0;
+    margin-left: auto;
+    height: 38px;
+    padding: 0 14px;
+
+    svg{ width: 14px; height: 14px; }
+  }
+
+  .Assistant_Error{
+    margin: 16px 18px 0;
+    padding: 12px 14px;
+    border-radius: var(--ctrl-radius);
+    background: var(--danger-color-soft);
+    color: var(--danger-color);
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  // Sem chave: o cartão ocupa o corpo, com scroll próprio se não couber
+  .Assistant_Setup{
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 18px;
+
+    .Ai_Card{ border: none; padding: 0; }
+  }
+
+  .Assistant_Messages{
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+
+    @media (max-width: 720px){ padding: 16px; }
+  }
+
+  .Assistant_Intro{
+    margin: auto;
+    max-width: 460px;
+    text-align: center;
+
+    p{
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+  }
+
+  .Assistant_Message{
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 14px;
+    max-width: 860px;
+
+    // As perguntas do utilizador ficam num bloco sombreado
+    &.user .Assistant_Bubble{
+      padding: 10px 14px;
+      border-radius: var(--ctrl-radius);
+      background: var(--surface-2);
+    }
+  }
+
+  .Assistant_Avatar{
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--ctrl-radius);
+    font-family: Font.$font_family_display;
+    font-size: 13px;
+    font-weight: 700;
+
+    .user &{
+      background: var(--surface-3);
+      color: var(--text-main);
+    }
+
+    .assistant &{
+      padding: 8px;
+      box-sizing: border-box;
+      background: var(--accent);
+      color: var(--on-accent);
+    }
+  }
+
+  .Assistant_Bubble{
+    min-width: 0;
+    padding-top: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .Assistant_User_Text{
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-main);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .Assistant_Thinking{
+    font-size: 14.5px;
+    color: var(--text-faint);
+  }
+
+  // Pesquisas que o assistente fez no IGDB
+  .Assistant_Tools{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    li{
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--surface-2);
+      color: var(--text-soft);
+      font-size: 12.5px;
+      font-weight: 600;
+
+      svg{ width: 12px; height: 12px; }
+    }
+  }
+
+  .Assistant_Message_Error{
+    padding: 10px 12px;
+    border-radius: var(--ctrl-radius);
+    background: var(--danger-color-soft);
+    color: var(--danger-color);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  // --- Escrever ---------------------------------------------------------------------------
+  .Assistant_Composer{
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 14px;
+    border-top: 1px solid var(--line);
+
+    textarea{
+      @include Mixin.Control_Surface;
+      flex: 1;
+      height: 52px;
+      max-height: 160px;
+      padding: 14px;
+      box-sizing: border-box;
+      font-size: 15px;
+      line-height: 1.45;
+      resize: none;
+    }
+  }
+
+  .Assistant_Send{
+    @include Mixin.Solid_Button;
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    padding: 0;
+
+    svg{ width: 20px; height: 20px; }
+  }
+
+  .Assistant_Stop{
+    @include Mixin.Ghost_Button;
+    height: 52px;
+    flex-shrink: 0;
+    padding: 0 18px;
+  }
+
+  // --- Coluna da direita ------------------------------------------------------------------
+  .Assistant_Side{
+    @include Mixin.Panel_Surface;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .Assistant_Side_Block{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & + .Assistant_Side_Block{
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    h2{
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-soft);
+    }
+
+    p{
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+  }
+
+  .Assistant_Suggestions{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    button{
+      @include Mixin.Ghost_Button;
+      justify-content: flex-start;
+      min-height: 40px;
+      padding: 9px 12px;
+      text-align: left;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+  }
+
+  .Assistant_Side_Links{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    a{
+      color: var(--accent);
+      font-size: 13.5px;
+      font-weight: 600;
+
+      &:hover{ text-decoration: underline; }
+    }
+  }
+}

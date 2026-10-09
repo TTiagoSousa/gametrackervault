@@ -6,7 +6,16 @@
     "username": "Username",
     "role": "Role",
     "createdAt": "Criado em",
-    "roles": { "ADMIN": "Administrador", "USER": "Utilizador" }
+    "roles": {
+      "ADMIN": "Administrador",
+      "USER": "Utilizador"
+    },
+    "actions": "Ações",
+    "edit": "Editar",
+    "delete": "Apagar",
+    "confirmDelete": "Apagar mesmo",
+    "deleted": "Utilizador apagado",
+    "you": "tu"
   },
   "createUser": {
     "title": "Novo utilizador",
@@ -16,5 +25,40 @@
     "passwordPlaceholder": "Mínimo 8 caracteres",
     "role": "Role",
     "created": "Utilizador criado"
+  },
+  "igdb": {
+    "title": "Catálogo de jogos (IGDB)",
+    "description": "A pesquisa de jogos usa a API do IGDB. Uma chave serve todos os utilizadores desta instalação.",
+    "connected": "Ligado",
+    "notConfigured": "Por configurar",
+    "clientId": "Client ID",
+    "clientSecret": "Client Secret",
+    "secretKept": "Guardado, termina em {{hint}}. Deixa em branco para manter.",
+    "save": "Guardar",
+    "saving": "A guardar…",
+    "test": "Testar ligação",
+    "testing": "A testar…",
+    "remove": "Remover credenciais",
+    "confirmRemove": "Remover mesmo",
+    "cancel": "Cancelar",
+    "saved": "Credenciais do IGDB guardadas",
+    "removed": "Credenciais do IGDB removidas",
+    "testOk": "A ligação ao IGDB está a funcionar",
+    "testFail": {
+      "not-configured": "O IGDB ainda não está configurado",
+      "rejected": "A Twitch rejeitou as credenciais guardadas",
+      "unreachable": "Não foi possível contactar a Twitch",
+      "unreadable": "As credenciais guardadas já não se conseguem ler. Introduz o Client Secret outra vez."
+    },
+    "help": "As credenciais vêm de uma aplicação Twitch (tipo Confidential).",
+    "helpLink": "Abrir a consola da Twitch",
+    "updatedAt": "Atualizado a {{date}}",
+    "unreadable": "As credenciais guardadas já não se conseguem ler. Introduz o Client Secret outra vez."
+  },
+  "editUser": {
+    "title": "Editar utilizador",
+    "newPassword": "Password nova",
+    "passwordPlaceholder": "Em branco mantém a atual",
+    "saved": "Utilizador guardado"
   }
 }

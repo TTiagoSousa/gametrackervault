@@ -1,16 +1,19 @@
+// Contentor das páginas: largo (até 1600px) e com margens laterais curtas, para
+// aproveitar o ecrã. A barra de topo usa a mesma largura e as mesmas margens,
+// para tudo alinhar pela mesma linha.
 .Vault {
   min-height: 100svh;
 
   .Vault_Content {
-    max-width: 1240px;
+    max-width: 1600px;
     margin: 0 auto;
-    padding: 48px 32px 80px;
+    padding: 32px 24px 64px;
     box-sizing: border-box;
   }
 
   @media (max-width: 760px) {
     .Vault_Content {
-      padding: 28px 16px 56px;
+      padding: 20px 16px 48px;
     }
   }
 }

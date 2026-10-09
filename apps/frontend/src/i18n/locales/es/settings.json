@@ -2,7 +2,7 @@
   "title": "Ajustes",
   "theme": {
     "title": "Tema",
-    "description": "Cómo se presenta la interfaz. El color de acento es el mismo en ambos.",
+    "description": "Día, noche o automático. El color de acento es el mismo en los dos.",
     "dark": {
       "name": "Noche",
       "hint": "La bóveda de noche"
@@ -19,5 +19,32 @@
   "language": {
     "title": "Idioma",
     "description": "El idioma de la interfaz. Se guarda en este navegador."
-  }
+  },
+  "sections": {
+    "appearance": "Apariencia",
+    "account": "Cuenta",
+    "assistant": "Asistente"
+  },
+  "account": {
+    "usernameTitle": "Nombre",
+    "usernameDescription": "El nombre con el que entras y que aparece en la app. Letras, números, punto, guion y guion bajo.",
+    "username": "Nombre de usuario",
+    "saveUsername": "Guardar nombre",
+    "usernameSaved": "Nombre cambiado",
+    "passwordTitle": "Contraseña",
+    "passwordDescription": "Escribe la actual y la nueva dos veces.",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Contraseña nueva",
+    "confirmPassword": "Repite la contraseña nueva",
+    "savePassword": "Cambiar contraseña",
+    "passwordSaved": "Contraseña cambiada",
+    "saving": "Guardando…",
+    "description": "El nombre con el que entras y tu contraseña.",
+    "showPasswords": "Mostrar contraseñas",
+    "hidePasswords": "Ocultar contraseñas",
+    "ruleLength_one": "Al menos {{count}} carácter",
+    "ruleLength_other": "Al menos {{count}} caracteres",
+    "ruleMatch": "Las dos contraseñas nuevas coinciden"
+  },
+  "appearanceDescription": "Tema e idioma de la interfaz. Se guardan en este navegador."
 }

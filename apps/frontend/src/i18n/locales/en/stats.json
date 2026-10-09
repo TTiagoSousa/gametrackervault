@@ -1,0 +1,67 @@
+{
+  "title": "Stats",
+  "loading": "Crunching the numbers…",
+  "loadFailed": "Could not load your stats. Reload the page to try again.",
+  "empty": "Your shelf is empty. Once you add some games, the numbers show up here.",
+  "emptyAction": "Find games",
+  "factsIncomplete": "IGDB did not respond: some average times and genres may be missing. Reload later.",
+  "hours": {
+    "title": "Hours played",
+    "aria": "{{logged}} hours logged by you and {{estimated}} estimated",
+    "logged_one": "{{hours}} h logged by you, across {{count}} game",
+    "logged_other": "{{hours}} h logged by you, across {{count}} games",
+    "estimated_one": "{{hours}} h estimated from the IGDB average, across {{count}} game",
+    "estimated_other": "{{hours}} h estimated from the IGDB average, across {{count}} games",
+    "missing_one": "{{count}} game without hours (in progress, paused, dropped or no average)",
+    "missing_other": "{{count}} games without hours (in progress, paused, dropped or no average)"
+  },
+  "shelf": {
+    "title": "Your shelf",
+    "games_one": "{{count}} game",
+    "games_other": "{{count}} games"
+  },
+  "years": {
+    "title": "Finished per year",
+    "count_one": "{{count}} game finished",
+    "count_other": "{{count}} games finished",
+    "empty": "You haven’t finished any games yet."
+  },
+  "rating": {
+    "title": "Your ratings",
+    "average_one": "average {{average}} across {{count}} game",
+    "average_other": "average {{average}} across {{count}} games",
+    "count_one": "{{count}} game rated {{rating}}",
+    "count_other": "{{count}} games rated {{rating}}",
+    "empty": "You haven’t rated any games yet."
+  },
+  "genres": {
+    "title": "Genres you play most",
+    "empty": "No genres yet."
+  },
+  "mostPlayed": {
+    "title": "Most hours",
+    "estimated": "estimated",
+    "empty": "No hours to show yet."
+  },
+  "topRated": {
+    "title": "Top rated"
+  },
+  "note": "Estimated hours are IGDB player averages, used when you didn’t log the hours of a finished game.",
+  "noteLink": "How they are calculated",
+  "subtitle": "The numbers on your shelf: hours, statuses, what you finished and what’s left to play.",
+  "summary": {
+    "title": "Summary",
+    "hours": "Hours played",
+    "hoursNote": "of which {{hours}} h estimated",
+    "hoursAllLogged": "all logged by you",
+    "games": "Games on the shelf",
+    "gamesNote_one": "{{count}} in progress",
+    "gamesNote_other": "{{count}} in progress",
+    "finished": "Finished",
+    "finishedNote": "{{rate}}% of the ones you stopped playing",
+    "noneFinished": "none yet",
+    "backlog": "To clear your list",
+    "backlogNote_one": "{{count}} game marked \"Later\"",
+    "backlogNote_other": "{{count}} games marked \"Later\""
+  }
+}

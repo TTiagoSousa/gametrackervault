@@ -1,54 +1,279 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Definições: um painel com uma linha por opção — texto à esquerda, controlo
-// segmentado à direita.
+// Definições: índice fixo à esquerda e, à direita, um cartão por secção com a
+// mesma forma — título e descrição em cima, blocos separados por filetes por
+// baixo. O cartão do assistente (Ai_Card) tem a mesma medida.
 .Settings {
   @include Mixin.Pages_Configs;
+  gap: 24px;
 
-  header{
-    @include Mixin.Page_Header;
+  --card-pad: 28px;
+
+  @media (max-width: 720px){ --card-pad: 20px; }
+
+  .Settings_Hero h1{
+    font-family: Font.$font_family_display;
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    color: var(--text-main);
   }
 
-  .Settings_list{
-    @include Mixin.Panel_Surface;
+  .Settings_Layout{
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+
+    @media (max-width: 900px){
+      grid-template-columns: 1fr;
+
+      .Settings_Nav{ display: none; }
+    }
+  }
+
+  // --- Índice -------------------------------------------------------------------------------
+  .Settings_Nav{
+    position: sticky;
+    top: calc(var(--top-nav-height, 76px) + 24px);
     display: flex;
     flex-direction: column;
-    padding: 0 24px;
+    gap: 2px;
+
+    a{
+      padding: 10px 12px;
+      border-radius: var(--ctrl-radius);
+      color: var(--text-soft);
+      font-size: 14.5px;
+      font-weight: 600;
+
+      &:hover{ color: var(--text-main); background: var(--surface-2); }
+      &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+    }
   }
 
-  .Settings_row{
+  .Settings_Content{
+    min-width: 0;
+    max-width: 920px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 24px;
-    padding: 24px 0;
+  }
 
-    & + .Settings_row{ border-top: 1px solid var(--line); }
+  // Ao saltar para uma secção, ela fica por baixo da barra de topo
+  .Settings_Card,
+  .Settings_Anchor{ scroll-margin-top: calc(var(--top-nav-height, 76px) + 24px); }
 
-    @media (max-width: 760px){
-      flex-direction: column;
-      align-items: flex-start;
-    }
+  // --- Cartão -------------------------------------------------------------------------------
+  .Settings_Card{
+    @include Mixin.Panel_Surface;
+    padding: var(--card-pad);
+    display: flex;
+    flex-direction: column;
+  }
 
-    .Settings_row_title{
-      font-family: Font.$font_family_display;
-      font-size: 17px;
-      font-weight: 700;
+  .Settings_Card_Head{
+    padding-bottom: 20px;
+
+    h2{
+      @include Mixin.Section_Title(17px);
       color: var(--text-main);
     }
 
-    .Settings_row_description{
-      max-width: 420px;
-      margin-top: 4px;
-      font-size: 14.5px;
+    p{
+      max-width: 620px;
+      margin-top: 5px;
+      font-size: 14px;
       line-height: 1.5;
       color: var(--text-soft);
     }
   }
 
-  // Controlo segmentado: opções num carril, a ativa em ultramarino
-  .Settings_segmented{
+  // Um bloco dentro do cartão: texto em cima, controlos por baixo. Com "row", o
+  // texto à esquerda e o controlo à direita (tema e língua).
+  .Settings_Block{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+
+    &:last-child{ padding-bottom: 0; }
+
+    &.row{
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+
+      @media (max-width: 760px){
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  .Settings_Block_Text{
+    h3{
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    p{
+      max-width: 520px;
+      margin-top: 3px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    // Com uma ação ao lado do título (ex.: mostrar passwords)
+    &.with-action{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+  }
+
+  // --- Campos -------------------------------------------------------------------------------
+  .Settings_Field{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+
+    &.grow{ flex: 1; }
+
+    span{
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    input{
+      @include Mixin.Control_Surface;
+      width: 100%;
+      height: 44px;
+      padding: 0 12px;
+      box-sizing: border-box;
+      font-size: 14.5px;
+
+      &[aria-invalid='true']{ border-color: var(--danger-color); }
+    }
+  }
+
+  // Campo e botão na mesma linha, alinhados pela base
+  .Settings_Inline{
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+
+    @media (max-width: 560px){
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  // Password: a atual na primeira linha, a nova e a repetida lado a lado
+  .Settings_Grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+
+    @media (max-width: 560px){
+      grid-template-columns: 1fr;
+
+      .Settings_Grid_Spacer{ display: none; }
+    }
+  }
+
+  .Settings_Footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+  }
+
+  // As regras da password nova, com visto quando se cumprem
+  .Settings_Rules{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    font-size: 13px;
+    color: var(--text-faint);
+
+    li{
+      display: flex;
+      align-items: center;
+      gap: 7px;
+
+      &.ok{ color: var(--text-main); }
+      &.bad{ color: var(--danger-color); }
+    }
+  }
+
+  .Settings_Rule_Mark{
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    box-sizing: border-box;
+
+    .ok &{
+      border-color: var(--game-status-finished);
+      background: var(--game-status-finished);
+      // O visto, desenhado com duas bordas
+      position: relative;
+
+      &::after{
+        content: '';
+        position: absolute;
+        left: 3px;
+        top: 0;
+        width: 3px;
+        height: 7px;
+        border: solid var(--status-ink);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  .Settings_Show{
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 2px;
+    border: none;
+    background: none;
+    color: var(--accent);
+    font-family: Font.$font_family_sans;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+
+    svg{ width: 16px; height: 16px; }
+
+    &:hover{ text-decoration: underline; }
+    &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); border-radius: 4px; }
+  }
+
+  .Settings_Save{
+    @include Mixin.Solid_Button;
+    flex-shrink: 0;
+    height: 44px;
+    padding: 0 20px;
+  }
+
+  // --- Controlo segmentado (tema e língua) ---------------------------------------------------
+  .Settings_Segmented{
     display: inline-flex;
     flex-wrap: wrap;
     gap: 4px;
@@ -56,52 +281,46 @@
     border-radius: calc(var(--ctrl-radius) + 4px);
     background: var(--surface-2);
     border: 1px solid var(--line);
+  }
 
-    .Settings_segment{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      border: none;
-      border-radius: var(--ctrl-radius);
-      background: transparent;
-      color: var(--text-soft);
-      font-family: Font.$font_family_sans;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: color .16s ease, background .16s ease;
+  .Settings_Segment{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--ctrl-radius);
+    background: transparent;
+    color: var(--text-soft);
+    font-family: Font.$font_family_sans;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
 
-      &:hover{ color: var(--text-main); }
+    &:hover{ color: var(--text-main); }
 
-      &.active{
-        background: var(--accent);
-        color: var(--on-accent);
-      }
-
-      &:focus-visible{
-        outline: none;
-        box-shadow: 0 0 0 3px var(--accent-soft);
-      }
+    &.active{
+      background: var(--accent);
+      color: var(--on-accent);
     }
 
-    // Amostra do tema: as cores são literais de propósito — a amostra mostra o
-    // OUTRO tema, não o que está em uso.
-    .Settings_swatch{
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: 1px solid var(--line-strong);
+    &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  }
 
-      &.light{ background: #E9EBEF; }
-      &.dark{ background: #0D1230; }
-      &.auto{ background: linear-gradient(135deg, #E9EBEF 0 50%, #0D1230 50% 100%); }
-    }
+  .Settings_Swatch{
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
 
-    .Settings_code{
-      font-family: Font.$font_family_mono;
-      font-size: 11.5px;
-      opacity: .7;
-    }
+    &.light{ background: #E9EBEF; }
+    &.dark{ background: #0D1230; }
+    &.auto{ background: linear-gradient(135deg, #E9EBEF 0 50%, #0D1230 50% 100%); }
+  }
+
+  .Settings_Code{
+    font-family: Font.$font_family_mono;
+    font-size: 11.5px;
+    opacity: .7;
   }
 }

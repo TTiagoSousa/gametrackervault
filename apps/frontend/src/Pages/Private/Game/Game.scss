@@ -1,0 +1,418 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+// Página de um jogo em duas colunas: à esquerda todo o conteúdo (a caixa e a
+// ficha, o resumo com os tempos e os detalhes ao lado, as imagens e as
+// prateleiras de jogos relacionados); à direita o painel "A minha estante",
+// preso de cima a baixo ao fazer scroll (estilos em Library_Panel.scss).
+.Game {
+  --panel-width: 360px;
+  --panel-top: calc(var(--top-nav-height, 76px) + 20px);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--panel-width);
+  gap: 32px;
+  align-items: start;
+  font-family: Font.$font_family_sans;
+  // A página vai até ao fundo: anula a margem de baixo do contentor. Sem isto,
+  // no fim do scroll o painel preso era empurrado para cima por essa margem.
+  margin-bottom: -64px;
+
+  @media (max-width: 1080px){
+    grid-template-columns: 1fr;
+
+    .Library_Panel{ position: static; max-height: none; order: -1; }
+  }
+
+  @media (max-width: 760px){ margin-bottom: -48px; }
+
+  .Game_Main{
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    // O espaço que a página tirou ao contentor volta aqui, por baixo do conteúdo
+    padding-bottom: 64px;
+  }
+
+  .Game_Back{
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: -16px;
+    padding: 6px 10px 6px 4px;
+    border: none;
+    border-radius: var(--ctrl-radius);
+    background: transparent;
+    color: var(--text-soft);
+    font-family: Font.$font_family_sans;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    svg{ width: 16px; height: 16px; transform: rotate(90deg); }
+
+    &:hover{ color: var(--text-main); background: var(--surface-2); }
+  }
+
+  .Game_Muted{
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-faint);
+  }
+
+  .Game_Link{
+    margin-left: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--accent);
+    font-family: Font.$font_family_sans;
+    font-size: inherit;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover{ text-decoration: underline; }
+  }
+
+  .Game_Section_Title{
+    margin-bottom: 14px;
+    font-family: Font.$font_family_display;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .Game_Subsection_Title{
+    margin: 18px 0 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  // --- Topo -----------------------------------------------------------------------------
+  .Game_Top{
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+
+    @media (max-width: 720px){
+      grid-template-columns: 1fr;
+
+      .Game_Cover{ max-width: 240px; }
+    }
+  }
+
+  // A caixa: capa grande com a lombada à esquerda
+  .Game_Cover{
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: var(--spine-radius);
+    overflow: hidden;
+    background: var(--surface-2);
+
+    &::before{
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 10px;
+      background: var(--text-main);
+      z-index: 1;
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .Game_NoCover{
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 16px 16px 16px 26px;
+      font-family: Font.$font_family_display;
+      font-weight: 700;
+      color: var(--text-faint);
+      text-align: center;
+    }
+  }
+
+  .Game_Info{
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .Game_Title{
+    font-family: Font.$font_family_display;
+    font-size: clamp(28px, 3.2vw, 42px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    color: var(--text-main);
+  }
+
+  .Game_Subtitle{
+    margin-top: -8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-soft);
+  }
+
+  .Game_Parent{
+    font-size: 14.5px;
+    color: var(--text-soft);
+
+    .Game_Link{ margin-left: 0; }
+  }
+
+  // Três notas lado a lado, cada uma com o número grande e quantas avaliações
+  .Game_Ratings{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 560px;
+  }
+
+  .Game_Rating{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 16px;
+    border-radius: var(--ctrl-radius);
+    background: var(--surface);
+    border: var(--card-border);
+
+    .Game_Rating_Value{
+      font-family: Font.$font_family_display;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text-main);
+    }
+
+    .Game_Rating_Label{
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .Game_Rating_Count{
+      font-size: 12.5px;
+      color: var(--text-faint);
+    }
+  }
+
+  .Game_Facts{
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 8px 18px;
+    font-size: 14.5px;
+
+    dt{
+      font-weight: 600;
+      color: var(--text-faint);
+    }
+
+    dd{
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .Game_Fact_Row{ display: contents; }
+  }
+
+  // --- Corpo: tempos + resumo + detalhes -------------------------------------------------
+  // O resumo à esquerda (texto para ler) e, ao lado, uma coluna com os tempos
+  // de jogo e os detalhes (dados para consultar)
+  .Game_Body{
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+    gap: 40px;
+    align-items: start;
+
+    @media (max-width: 860px){ grid-template-columns: 1fr; }
+  }
+
+  .Game_Side{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-width: 0;
+  }
+
+  .Time_To_Beat_Bars{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+
+  .Time_To_Beat_Row{
+    --bar-color: var(--game-status-finished);
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'label value'
+      'track track';
+    gap: 6px 10px;
+
+    &.main{ --bar-color: var(--game-status-playing); }
+    &.complete{ --bar-color: var(--game-status-beaten); }
+
+    .Time_To_Beat_Label{
+      grid-area: label;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .Time_To_Beat_Value{
+      grid-area: value;
+      font-family: Font.$font_family_display;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .Time_To_Beat_Track{
+      grid-area: track;
+      position: relative;
+      height: 12px;
+      border-radius: 4px;
+      background: var(--surface-2);
+    }
+
+    .Time_To_Beat_Fill{
+      position: absolute;
+      inset: 0 auto 0 0;
+      border-radius: 4px;
+      background: var(--bar-color);
+    }
+
+    // As horas do utilizador: um traço vertical por cima das três barras
+    .Time_To_Beat_You{
+      position: absolute;
+      top: -4px;
+      bottom: -4px;
+      width: 3px;
+      margin-left: -1px;
+      border-radius: 2px;
+      background: var(--text-main);
+    }
+  }
+
+  .Time_To_Beat_Yours{
+    display: block;
+    margin-top: 4px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .Game_Text{
+    max-width: 70ch;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-main);
+    white-space: pre-line;
+  }
+
+  .Game_Details .Game_Facts{ margin-bottom: 14px; }
+
+  .Game_Details .Game_Link{ margin-left: 0; }
+
+  // --- Imagens e vídeos ------------------------------------------------------------------
+  .Game_Media_Row{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 360px;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+
+    @media (max-width: 720px){ grid-auto-columns: 260px; }
+  }
+
+  .Game_Screenshot,
+  .Game_Video{
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--ctrl-radius);
+    overflow: hidden;
+    background: var(--surface-2);
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  }
+
+  // Botão de "play" desenhado por cima da miniatura do vídeo
+  .Game_Video_Play{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    border-radius: 50%;
+    background: var(--accent);
+
+    &::after{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -10px 0 0 -6px;
+      border-style: solid;
+      border-width: 10px 0 10px 17px;
+      border-color: transparent transparent transparent var(--on-accent);
+    }
+  }
+
+  .Game_Video_Name{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 8px 12px;
+    background: var(--overlay-scrim);
+    color: var(--on-accent);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .Game_Error{
+    @include Mixin.Panel_Surface;
+    padding: 32px 24px;
+
+    h1{
+      font-family: Font.$font_family_display;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    p{
+      margin-top: 8px;
+      color: var(--text-soft);
+    }
+  }
+}

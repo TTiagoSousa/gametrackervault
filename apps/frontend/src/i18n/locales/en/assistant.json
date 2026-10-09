@@ -1,0 +1,62 @@
+{
+  "title": "Assistant",
+  "intro": "Ask about a game, a series or a genre, or ask for a recommendation. Games the assistant mentions open in the app.",
+  "suggestions": {
+    "next": "What should I play next?",
+    "similar": "Recommend games like the ones I rated 9 or 10.",
+    "backlog": "From my backlog, which one should I start with?",
+    "short": "Suggest short games, under 10 hours, that I’d enjoy.",
+    "hidden": "Which lesser-known games fit my taste?"
+  },
+  "placeholder": "Type your question… (Enter sends, Shift+Enter adds a line)",
+  "send": "Send",
+  "stop": "Stop",
+  "thinking": "Thinking…",
+  "tools": {
+    "search_games": "Searched IGDB for \"{{query}}\"",
+    "get_game": "Opened game {{query}} on IGDB"
+  },
+  "errors": {
+    "generic": "The assistant couldn’t answer. Try again.",
+    "network": "The connection to the server dropped mid-answer. Try again.",
+    "stopped": "You stopped the answer.",
+    "settings": "Could not read the assistant settings. Reload the page."
+  },
+  "setup": {
+    "title": "Connect your Claude"
+  },
+  "side": {
+    "noKey": "No key saved",
+    "change": "Change in Settings",
+    "newChat": "New chat",
+    "privacyTitle": "What the assistant reads",
+    "privacy": "With each question, the chat and your shelf (games, statuses, hours, ratings and your notes) go to Anthropic with your key. The chat stays in this tab only.",
+    "help": "How to add a key",
+    "suggestions": "Try asking"
+  },
+  "settings": {
+    "title": "Assistant (Claude)",
+    "description": "Each person uses their own Anthropic key, billed to their account. The key is tested before it’s saved, stays encrypted on the server and never comes back to the browser.",
+    "connected": "Connected",
+    "notConfigured": "Not set up",
+    "provider": "Provider",
+    "apiKey": "API key",
+    "keyKept": "Saved, ends in {{hint}}. Leave blank to keep it.",
+    "model": "Model",
+    "loadModels": "Load my account’s models",
+    "loadingModels": "Loading…",
+    "modelsLoaded_one": "{{count}} model available with this key.",
+    "modelsLoaded_other": "{{count}} models available with this key.",
+    "modelHint": "Pick a suggested one or load the list of models your key can use.",
+    "save": "Save",
+    "saving": "Testing and saving…",
+    "remove": "Remove key",
+    "confirmRemove": "Remove for good",
+    "cancel": "Cancel",
+    "saved": "Assistant set up",
+    "removed": "Assistant key removed",
+    "help": "Don’t have a key yet?",
+    "helpLink": "See how to create one.",
+    "updatedAt": "Updated on {{date}}"
+  }
+}

@@ -1,0 +1,323 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+// "A minha estante": painel preso à direita da página do jogo. O conteúdo rola
+// por dentro (Library_Scroll) e o rodapé com as ações fica sempre no fundo.
+.Library_Panel{
+  @include Mixin.Panel_Surface;
+  position: sticky;
+  top: var(--panel-top, 96px);
+  max-height: calc(100svh - var(--panel-top, 96px) - 20px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: Font.$font_family_sans;
+
+  // Esconde sem tirar o lugar
+  .hidden{ visibility: hidden; }
+
+  .Library_Scroll{
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 18px 18px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  // --- Cabeçalho --------------------------------------------------------------------
+  .Library_Header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .Library_Title{
+    font-family: Font.$font_family_display;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  // Etiqueta com o estado gravado (ou "Fora da estante")
+  .Library_Badge{
+    --status-color: var(--line-strong);
+
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-soft);
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
+
+    &[class*='status-']{
+      background: var(--status-color);
+      color: var(--status-ink);
+    }
+  }
+
+  .Library_Hint{
+    margin-top: -12px;
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+
+  .Library_Error{
+    padding: 12px 14px;
+    border-radius: var(--ctrl-radius);
+    background: var(--danger-color-soft);
+    color: var(--danger-color);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  // --- Grupos ---------------------------------------------------------------------------
+  .Library_Group{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  .Library_Group_Head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .Library_Label{
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-soft);
+  }
+
+  .Library_Clear{
+    padding: 2px 0;
+    border: none;
+    background: none;
+    color: var(--accent);
+    font-family: Font.$font_family_sans;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover{ text-decoration: underline; }
+  }
+
+  // Estados: botões compactos em duas colunas, com um marcador na cor do estado
+  .Library_Status_Group{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .Library_Status_Grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .Library_Status{
+    --status-color: var(--line-strong);
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text-main);
+    font-family: Font.$font_family_sans;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    .Library_Status_Marker{
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 2px solid var(--status-color);
+      box-sizing: border-box;
+    }
+
+    &:hover{ border-color: var(--status-color); }
+
+    &.active{
+      border-color: var(--status-color);
+      background: var(--surface-2);
+      box-shadow: inset 0 0 0 1px var(--status-color);
+
+      .Library_Status_Marker{ background: var(--status-color); }
+    }
+
+    &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  }
+
+  // A mesma cor de estado no botão e na etiqueta do cabeçalho
+  .status-PLAYING{ --status-color: var(--game-status-playing); }
+  .status-FINISHED_MAIN,
+  .status-FINISHED_EXTRAS{ --status-color: var(--game-status-finished); }
+  .status-COMPLETED_100{ --status-color: var(--game-status-beaten); }
+  .status-PLAN_TO_PLAY{ --status-color: var(--accent); }
+  .status-PAUSED{ --status-color: var(--text-soft); }
+  .status-DROPPED{ --status-color: var(--danger-color); }
+
+  .Library_Badge.status-PAUSED,
+  .Library_Badge.status-PLAN_TO_PLAY,
+  .Library_Badge.status-DROPPED{ color: var(--on-accent); }
+
+  // --- Campos -----------------------------------------------------------------------------
+  .Library_Field{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+
+    > span:first-child{
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-faint);
+    }
+
+    input{
+      @include Mixin.Control_Surface;
+      width: 100%;
+      min-width: 0;
+      height: 38px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      font-size: 13.5px;
+    }
+  }
+
+  // Horas com o "h" por dentro, à direita
+  .Library_Hours{ max-width: 150px; }
+
+  .Library_Suffix{
+    position: relative;
+    display: block;
+
+    input{ padding-right: 28px; }
+
+    span{
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-faint);
+      pointer-events: none;
+    }
+  }
+
+  .Library_Dates{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .Library_Rating{
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .Library_Rating_Value{
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text-soft);
+    font-family: Font.$font_family_display;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover{ color: var(--text-main); border-color: var(--text-soft); }
+
+    &.active{
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--on-accent);
+    }
+
+    &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+  }
+
+  .Library_Notes{
+    @include Mixin.Control_Surface;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    resize: vertical;
+  }
+
+  // --- Rodapé ---------------------------------------------------------------------------
+  .Library_Footer{
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 18px 14px;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .Library_Save{
+    @include Mixin.Solid_Button;
+    width: 100%;
+    height: 44px;
+  }
+
+  // Altura fixa: trocar as ações pela confirmação não mexe em nada
+  .Library_Footer_Links{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 24px;
+  }
+
+  .Library_Question{
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .Library_Link{
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--text-soft);
+    font-family: Font.$font_family_sans;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover:not(:disabled){ color: var(--text-main); text-decoration: underline; }
+
+    &.danger:hover:not(:disabled){ color: var(--danger-color); }
+    &.danger.strong{ color: var(--danger-color); }
+    &.push{ margin-left: auto; }
+    &:disabled{ opacity: .5; cursor: default; }
+  }
+}

@@ -9,6 +9,13 @@
   text-decoration: none;
 }
 
+// A barra de scroll está sempre presente: sem isto, uma página que passa a ter
+// scroll (mais resultados) estreitava de repente e tudo saltava para o lado.
+// (scrollbar-gutter no <html> não é aplicado de forma fiável pelos browsers.)
+html{
+  overflow-y: scroll;
+}
+
 body{
   font-family: Font.$font_family_sans;
   color: var(--text-main);

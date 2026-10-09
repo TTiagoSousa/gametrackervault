@@ -2,7 +2,7 @@
   "title": "Definições",
   "theme": {
     "title": "Tema",
-    "description": "Como a interface se apresenta. A cor de acento é fixa em ambos.",
+    "description": "Dia, noite ou automático. A cor de acento é a mesma nos dois.",
     "dark": {
       "name": "Noite",
       "hint": "O cofre à noite"
@@ -19,5 +19,32 @@
   "language": {
     "title": "Língua",
     "description": "A língua da interface. Fica guardada neste browser."
-  }
+  },
+  "sections": {
+    "appearance": "Aparência",
+    "account": "Conta",
+    "assistant": "Assistente"
+  },
+  "account": {
+    "usernameTitle": "Nome",
+    "usernameDescription": "O nome com que entras e que aparece na app. Letras, números, ponto, hífen e sublinhado.",
+    "username": "Nome de utilizador",
+    "saveUsername": "Guardar nome",
+    "usernameSaved": "Nome alterado",
+    "passwordTitle": "Password",
+    "passwordDescription": "Escreve a atual e a nova duas vezes.",
+    "currentPassword": "Password atual",
+    "newPassword": "Password nova",
+    "confirmPassword": "Repete a password nova",
+    "savePassword": "Mudar password",
+    "passwordSaved": "Password alterada",
+    "saving": "A guardar…",
+    "description": "O nome com que entras e a tua password.",
+    "showPasswords": "Mostrar passwords",
+    "hidePasswords": "Esconder passwords",
+    "ruleLength_one": "Pelo menos {{count}} caractere",
+    "ruleLength_other": "Pelo menos {{count}} caracteres",
+    "ruleMatch": "As duas passwords novas são iguais"
+  },
+  "appearanceDescription": "Tema e língua da interface. Ficam guardados neste browser."
 }

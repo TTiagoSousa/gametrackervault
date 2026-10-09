@@ -20,5 +20,101 @@ model User {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
+  libraryEntries LibraryEntry[]
+  aiSettings     AiSettings?
+
   @@index([username])
+}
+
+// Serviços externos configurados pelo admin na app. Uma linha por serviço — a
+// chave é da instalação inteira, não de cada utilizador.
+enum IntegrationProvider {
+  IGDB
+}
+
+model Integration {
+  provider  IntegrationProvider @id
+  clientId  String
+  // Cifrado com TOKEN_ENCRYPTION_KEY (AES-256-GCM); nunca sai do backend
+  secret    String
+  updatedAt DateTime            @updatedAt
+}
+
+// --- Estante -------------------------------------------------------------------------
+
+// Onde está um jogo na estante de um utilizador. As quatro prateleiras do Início
+// agrupam-nos: a jogar (PLAYING, PAUSED), concluídos (FINISHED_MAIN,
+// FINISHED_EXTRAS, COMPLETED_100), para jogar (PLAN_TO_PLAY) e abandonados.
+enum LibraryStatus {
+  PLAYING
+  PAUSED
+  PLAN_TO_PLAY
+  FINISHED_MAIN
+  FINISHED_EXTRAS
+  COMPLETED_100
+  DROPPED
+}
+
+// Cópia mínima de um jogo do IGDB — só o que a estante precisa para se desenhar
+// sem ir à API. Partilhada por todos os utilizadores; o resto da ficha vem
+// sempre do IGDB.
+model Game {
+  igdbId       Int      @id
+  name         String
+  slug         String?
+  coverImageId String?
+  releaseYear  Int?
+  platforms    String[]
+  genres       String[] @default([])
+  // Tempo médio para acabar (horas), dos jogadores do IGDB: história principal,
+  // principal + secundárias e 100%. As estatísticas usam-no quando o utilizador
+  // não escreveu as horas.
+  ttbMain          Float?
+  ttbExtras        Float?
+  ttbCompletionist Float?
+  // Quando os géneros e os tempos foram lidos do IGDB (null = nunca)
+  factsCheckedAt   DateTime?
+  updatedAt    DateTime @updatedAt
+
+  libraryEntries LibraryEntry[]
+}
+
+model LibraryEntry {
+  id          String        @id @default(uuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gameId      Int
+  game        Game          @relation(fields: [gameId], references: [igdbId])
+  status      LibraryStatus
+  hoursPlayed Float?
+  startedAt   DateTime?     @db.Date
+  finishedAt  DateTime?     @db.Date
+  // Nota pessoal de 1 a 10
+  rating      Int?
+  notes       String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([userId, gameId])
+  @@index([userId, status])
+}
+
+// --- Assistente (IA) -------------------------------------------------------------------
+
+// Fornecedor do assistente. Por agora só a Anthropic (Claude).
+enum AiProvider {
+  ANTHROPIC
+}
+
+// A chave e o modelo do assistente de cada utilizador: cada um usa a sua conta.
+model AiSettings {
+  userId    String     @id
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider  AiProvider @default(ANTHROPIC)
+  // Cifrada com TOKEN_ENCRYPTION_KEY (AES-256-GCM); nunca sai do backend
+  apiKey    String
+  // Os últimos 4 caracteres, para mostrar qual chave está guardada
+  keyHint   String
+  model     String
+  updatedAt DateTime   @updatedAt
 }

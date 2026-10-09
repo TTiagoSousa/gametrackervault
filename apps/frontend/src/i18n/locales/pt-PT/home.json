@@ -1,15 +1,40 @@
 {
   "title": "Início",
   "greeting": "Olá, {{name}}",
-  "subtitle": "A tua estante tem uma prateleira para cada estado. Ainda estão vazias.",
-  "stats": {
-    "playing": "A jogar",
-    "finished": "Acabados",
-    "beaten": "Passados"
-  },
+  "subtitle": "Os teus jogos, arrumados por estado. Clica numa capa para abrir o jogo.",
   "empty": {
-    "description": "Quando a biblioteca chegar, cada jogo que marcares entra como uma lombada na prateleira certa."
+    "description": "Encontra jogos na pesquisa (lupa, em cima) e põe-nos na estante a partir da página de cada jogo."
   },
   "count_one": "{{count}} jogo",
-  "count_other": "{{count}} jogos"
+  "count_other": "{{count}} jogos",
+  "loadFailed": "Não foi possível carregar a tua estante. Recarrega a página para tentar outra vez.",
+  "shelves": {
+    "playing": "A jogar",
+    "done": "Concluídos",
+    "later": "Para jogar",
+    "dropped": "Abandonados"
+  },
+  "emptyShelf": {
+    "playing": "Nenhum jogo a meio. Na página de um jogo, escolhe \"A jogar\".",
+    "done": "Ainda nenhum concluído. Quando acabares um, marca a história principal, com secundárias ou 100%.",
+    "later": "Nada na lista. Guarda aqui os jogos que queres jogar com \"Mais tarde\".",
+    "dropped": "Nenhum jogo abandonado."
+  },
+  "hours": "{{hours}} h",
+  "random": {
+    "title": "Não sabes o que jogar?",
+    "description": "Tira um jogo ao calhas da tua lista ou descobre um bem avaliado que ainda não tens.",
+    "fromList_one": "Da minha lista ({{count}})",
+    "fromList_other": "Da minha lista ({{count}})",
+    "discover": "Descobrir um novo",
+    "searching": "A procurar…",
+    "placeholder": "Escolhe uma das opções e aparece aqui um jogo.",
+    "emptyList": "A tua lista está vazia. Marca jogos como \"Mais tarde\" ou \"Em pausa\", ou descobre um novo.",
+    "source": {
+      "list": "Da tua lista",
+      "discover": "Descoberto no IGDB"
+    },
+    "open": "Abrir o jogo",
+    "rating": "nota {{rating}}"
+  }
 }

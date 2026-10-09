@@ -31,7 +31,7 @@
 
     .Admin_Row{
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1fr 150px;
       align-items: center;
       gap: 12px;
       padding: 14px 4px;
@@ -97,16 +97,84 @@
       .Admin_Row_Date{
         color: var(--text-soft);
       }
+
+      .Admin_Row_Me{
+        padding: 2px 8px;
+        border-radius: 6px;
+        background: var(--surface-2);
+        color: var(--text-faint);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .Admin_Row_Actions_Head{ text-align: right; }
+
+      // Editar e apagar; ao apagar, a confirmação fica no mesmo sítio
+      .Admin_Row_Actions{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        height: 36px;
+      }
+
+      .Admin_Row_Icon{
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--ctrl-radius);
+        background: var(--surface);
+        color: var(--text-soft);
+        cursor: pointer;
+
+        svg{ width: 16px; height: 16px; }
+
+        &:hover:not(:disabled){ color: var(--accent); border-color: var(--accent); }
+        &.danger:hover:not(:disabled){ color: var(--danger-color); border-color: var(--danger-color); }
+        &.hidden{ visibility: hidden; }
+        &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+      }
+
+      .Admin_Row_Danger{
+        height: 32px;
+        padding: 0 10px;
+        border: 1px solid var(--danger-color);
+        border-radius: var(--ctrl-radius);
+        background: transparent;
+        color: var(--danger-color);
+        font-family: Font.$font_family_sans;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+
+        &:hover:not(:disabled){ background: var(--danger-color-soft); }
+      }
+
+      .Admin_Row_Link{
+        padding: 0;
+        border: none;
+        background: none;
+        color: var(--text-soft);
+        font-family: Font.$font_family_sans;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover{ color: var(--text-main); text-decoration: underline; }
+      }
     }
 
     @media (max-width: 600px){
       .Admin_Row{
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 1fr auto 150px;
 
         .Admin_Row_Date{ display: none; }
       }
 
-      .Admin_Row_Head span:last-child{ display: none; }
+      .Admin_Row_Head span:nth-child(3){ display: none; }
     }
   }
 }

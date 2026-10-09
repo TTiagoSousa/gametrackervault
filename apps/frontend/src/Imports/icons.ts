@@ -14,3 +14,8 @@ export { default as Chevron } from '../Assets/Icons/Chevron/Chevron';
 export { default as Refresh } from '../Assets/Icons/Refresh/Refresh';
 export { default as Search } from '../Assets/Icons/Search/Search';
 export { default as Eye } from '../Assets/Icons/Eye/Eye';
+export { default as Sparkle } from '../Assets/Icons/Sparkle/Sparkle';
+export { default as Help } from '../Assets/Icons/Help/Help';
+export { default as Dice } from '../Assets/Icons/Dice/Dice';
+export { default as Send } from '../Assets/Icons/Send/Send';
+export { default as Trash } from '../Assets/Icons/Trash/Trash';

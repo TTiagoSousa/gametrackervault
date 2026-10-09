@@ -10,8 +10,10 @@
 #
 # Unattended mode: NONINTERACTIVE=1 plus any of these variables:
 #   CTID CT_HOSTNAME STORAGE TEMPLATE_STORAGE DISK_GB CORES RAM_MB SWAP_MB
-#   BRIDGE NET_MODE (dhcp|static) IP (e.g. 192.168.0.60/24) GATEWAY VLAN DNS
-#   ONBOOT (1|0) BRANCH REPO_URL REPO_TOKEN APP_URL ADMIN_USERNAME ADMIN_PASSWORD
+#   BRIDGE NET_MODE (dhcp|static) IP (e.g. 192.168.0.61/24) GATEWAY VLAN DNS
+#   ONBOOT (1|0) VERSION REPO_URL REPO_TOKEN APP_URL ADMIN_USERNAME ADMIN_PASSWORD
+# VERSION is "latest" (the newest vX.Y.Z release, default), a release such as
+# "v1.1.0", or a branch to test ("staging", "develop"). BRANCH is still accepted.
 # The check_* validators are only called indirectly, through ask().
 # shellcheck disable=SC2329
 set -euo pipefail
@@ -90,7 +92,10 @@ GATEWAY="${GATEWAY:-}"
 VLAN="${VLAN:-}"
 DNS="${DNS:-}"
 ONBOOT="${ONBOOT:-1}"
-BRANCH="${BRANCH:-main}"
+# The newest release by default; BRANCH (older name) still works. "main" is the same
+# as the newest release, since every release is tagged on main.
+VERSION="${VERSION:-${BRANCH:-latest}}"
+[ "$VERSION" = main ] && VERSION=latest
 REPO_URL="${REPO_URL:-https://forgejo.home-sousa.me/Tiago/gameTrackerVault.git}"
 REPO_TOKEN="${REPO_TOKEN:-}"
 APP_URL="${APP_URL:-}"
@@ -189,7 +194,7 @@ advanced_settings() {
     dhcp "Automatic (DHCP)" \
     static "Static IP"
   if [ "$NET_MODE" = static ]; then
-    ask IP "Static IP" "IPv4 address with prefix, e.g. 192.168.0.60/24" valid_cidr
+    ask IP "Static IP" "IPv4 address with prefix, e.g. 192.168.0.61/24" valid_cidr
     [ -n "$GATEWAY" ] || GATEWAY="$(printf '%s' "${IP%/*}" | awk -F. '{print $1"."$2"."$3".1"}')"
     ask GATEWAY "Gateway" "IPv4 gateway, e.g. 192.168.0.1" valid_ipv4
   else
@@ -232,10 +237,10 @@ advanced_settings() {
     || abort "Admin password" $?
   ADMIN_PASSWORD="${pw:-admin}"
 
-  radio BRANCH "Version" "Which branch to install?" \
-    main "Stable" \
-    staging "Release candidate" \
-    develop "Latest development"
+  radio VERSION "Version" "Which version to install?\n\nUpdates always follow the releases (vX.Y.Z tags)." \
+    latest "Latest release (recommended)" \
+    staging "Release candidate, for testing" \
+    develop "Latest development, for testing"
 
   rc=0
   wt --title "Repository" --yesno "Is the repository public?\n\n$REPO_URL" "$(H 10)" "$W" || rc=$?
@@ -244,6 +249,14 @@ advanced_settings() {
     1) REPO_TOKEN="$(wt --title "Repository token" --passwordbox "Read-only access token for the private repository." "$(H 9)" "$W" "")" \
          || abort "Repository token" $? ;;
     *) abort "Repository" "$rc" ;;
+  esac
+}
+
+version_label() {
+  case "$VERSION" in
+    latest) echo "latest release" ;;
+    v*) echo "release $VERSION" ;;
+    *) echo "branch $VERSION (testing)" ;;
   esac
 }
 
@@ -260,7 +273,7 @@ settings_text() {
     "Start on boot   $([ "$ONBOOT" = 1 ] && echo yes || echo no)" \
     "App address     ${APP_URL:-http://<container IP>}" \
     "Admin           $ADMIN_USERNAME / $([ "$ADMIN_PASSWORD" = admin ] && echo 'admin (default)' || echo '(custom)')" \
-    "Version         $BRANCH"
+    "Version         $(version_label)"
 }
 
 interactive() {
@@ -300,7 +313,7 @@ valid_hostname "$CT_HOSTNAME" || die "Invalid hostname: $CT_HOSTNAME"
 [ -n "$STORAGE" ] || die "No storage for the container disk (STORAGE)."
 [ -n "$TEMPLATE_STORAGE" ] || die "No storage for templates (TEMPLATE_STORAGE)."
 if [ "$NET_MODE" = static ]; then
-  valid_cidr "$IP" || die "Invalid static IP '$IP' — use an IPv4 address with prefix, e.g. 192.168.0.60/24."
+  valid_cidr "$IP" || die "Invalid static IP '$IP' — use an IPv4 address with prefix, e.g. 192.168.0.61/24."
   valid_ipv4 "$GATEWAY" || die "Static IP needs a valid GATEWAY (got '$GATEWAY')."
 fi
 check_vlan "$VLAN" || die "Invalid VLAN tag: $VLAN"
@@ -382,13 +395,31 @@ if [ -n "$REPO_TOKEN" ]; then
   CLONE_URL="$(printf '%s' "$REPO_URL" | sed -E "s#^https://#https://oauth2:${REPO_TOKEN}@#")"
 fi
 
-msg "Cloning $APP ($BRANCH)…"
+msg "Cloning $APP ($(version_label))…"
 # C.UTF-8 always exists in the template; the host's LANG (e.g. en_US.UTF-8) does not,
 # and every perl/apt call would print locale warnings.
 CT_ENV=(env LANG=C.UTF-8 LC_ALL=C.UTF-8)
 pct exec "$CTID" -- "${CT_ENV[@]}" bash -c "export DEBIAN_FRONTEND=noninteractive; apt-get update -qq && apt-get install -y -qq git ca-certificates >/dev/null"
-pct exec "$CTID" -- "${CT_ENV[@]}" git clone --quiet --branch "$BRANCH" "$CLONE_URL" /opt/gametracker
-ok "Code in /opt/gametracker"
+# Releases are tags on main: clone main and check out the tag. A branch (staging,
+# develop) is cloned as is.
+case "$VERSION" in
+  latest | v*) CLONE_BRANCH=main ;;
+  *) CLONE_BRANCH="$VERSION" ;;
+esac
+pct exec "$CTID" -- "${CT_ENV[@]}" git clone --quiet --branch "$CLONE_BRANCH" "$CLONE_URL" /opt/gametracker
+INSTALLED="$CLONE_BRANCH"
+if [ "$VERSION" = latest ]; then
+  INSTALLED="$(pct exec "$CTID" -- git -C /opt/gametracker tag -l 'v*' --sort=-v:refname | head -1)"
+  # No release yet: stay on main
+  INSTALLED="${INSTALLED:-main}"
+elif [[ "$VERSION" == v* ]]; then
+  INSTALLED="$VERSION"
+fi
+if [[ "$INSTALLED" == v* ]]; then
+  pct exec "$CTID" -- git -C /opt/gametracker -c advice.detachedHead=false checkout --quiet "refs/tags/$INSTALLED" \
+    || die "Release $INSTALLED does not exist in the repository."
+fi
+ok "Code in /opt/gametracker ($INSTALLED)"
 
 msg "Installing inside the container (a few minutes)…"
 pct exec "$CTID" -- "${CT_ENV[@]}" \

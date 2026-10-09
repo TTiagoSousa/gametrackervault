@@ -6,7 +6,16 @@
     "username": "Usuario",
     "role": "Rol",
     "createdAt": "Creado el",
-    "roles": { "ADMIN": "Administrador", "USER": "Usuario" }
+    "roles": {
+      "ADMIN": "Administrador",
+      "USER": "Usuario"
+    },
+    "actions": "Acciones",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirmDelete": "Eliminar del todo",
+    "deleted": "Usuario eliminado",
+    "you": "tú"
   },
   "createUser": {
     "title": "Nuevo usuario",
@@ -16,5 +25,40 @@
     "passwordPlaceholder": "Mínimo 8 caracteres",
     "role": "Rol",
     "created": "Usuario creado"
+  },
+  "igdb": {
+    "title": "Catálogo de juegos (IGDB)",
+    "description": "La búsqueda de juegos usa la API de IGDB. Una clave sirve a todos los usuarios de esta instalación.",
+    "connected": "Conectado",
+    "notConfigured": "Sin configurar",
+    "clientId": "Client ID",
+    "clientSecret": "Client Secret",
+    "secretKept": "Guardado, termina en {{hint}}. Déjalo vacío para mantenerlo.",
+    "save": "Guardar",
+    "saving": "Guardando…",
+    "test": "Probar conexión",
+    "testing": "Probando…",
+    "remove": "Quitar credenciales",
+    "confirmRemove": "Quitarlas",
+    "cancel": "Cancelar",
+    "saved": "Credenciales de IGDB guardadas",
+    "removed": "Credenciales de IGDB quitadas",
+    "testOk": "La conexión con IGDB funciona",
+    "testFail": {
+      "not-configured": "IGDB todavía no está configurado",
+      "rejected": "Twitch rechazó las credenciales guardadas",
+      "unreachable": "No se pudo contactar con Twitch",
+      "unreadable": "Las credenciales guardadas ya no se pueden leer. Vuelve a introducir el Client Secret."
+    },
+    "help": "Las credenciales vienen de una aplicación de Twitch (tipo Confidential).",
+    "helpLink": "Abrir la consola de Twitch",
+    "updatedAt": "Actualizado el {{date}}",
+    "unreadable": "Las credenciales guardadas ya no se pueden leer. Vuelve a introducir el Client Secret."
+  },
+  "editUser": {
+    "title": "Editar usuario",
+    "newPassword": "Contraseña nueva",
+    "passwordPlaceholder": "En blanco mantiene la actual",
+    "saved": "Usuario guardado"
   }
 }

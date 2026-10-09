@@ -4,6 +4,7 @@ import http from "../../Service/httpService";
 import { useAlert } from "../../Contexts/Alert_Context";
 import type { UserRole } from "../../Contexts/Auth_Context";
 import i18n from '../../i18n';
+import { apiMessage } from '../apiMessage';
 
 export interface CreateUserPayload {
   username: string;
@@ -11,24 +12,40 @@ export interface CreateUserPayload {
   role?: UserRole;
 }
 
+// Na edição tudo é opcional: a password só muda se vier preenchida
+export interface UpdateUserPayload {
+  username?: string;
+  password?: string;
+  role?: UserRole;
+}
+
+/** Ações do admin sobre as contas: criar, editar e apagar. */
 export const useUser = () => {
   const [loading, setLoading] = useState(false);
   const { setAlert } = useAlert();
 
-  const createUser = async (data: CreateUserPayload) => {
+  const run = async (request: () => Promise<unknown>, successKey: string) => {
     setLoading(true);
     try {
-      await http.post(End_Points.Admin_Users_Endpoint(), data, { withCredentials: true });
-      setAlert({ open: true, message: i18n.t('admin:createUser.created'), type: 'success' });
+      await request();
+      setAlert({ open: true, message: i18n.t(successKey), type: 'success' });
       return true;
-    } catch (error: any) {
-      const msg = error.response?.data?.message || error.message || i18n.t("common:errors.generic");
-      setAlert({ open: true, message: msg, type: 'error' });
+    } catch (error) {
+      setAlert({ open: true, message: apiMessage(error), type: 'error' });
       return false;
     } finally {
       setLoading(false);
     }
   };
 
-  return { createUser, loading };
+  const createUser = (data: CreateUserPayload) =>
+    run(() => http.post(End_Points.Admin_Users_Endpoint(), data), 'admin:createUser.created');
+
+  const updateUser = (id: string, data: UpdateUserPayload) =>
+    run(() => http.patch(End_Points.Admin_User_Endpoint(id), data), 'admin:editUser.saved');
+
+  const deleteUser = (id: string) =>
+    run(() => http.delete(End_Points.Admin_User_Endpoint(id)), 'admin:users.deleted');
+
+  return { createUser, updateUser, deleteUser, loading };
 };

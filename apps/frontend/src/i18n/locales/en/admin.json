@@ -6,7 +6,16 @@
     "username": "Username",
     "role": "Role",
     "createdAt": "Created",
-    "roles": { "ADMIN": "Administrator", "USER": "User" }
+    "roles": {
+      "ADMIN": "Administrator",
+      "USER": "User"
+    },
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Delete for good",
+    "deleted": "User deleted",
+    "you": "you"
   },
   "createUser": {
     "title": "New user",
@@ -16,5 +25,40 @@
     "passwordPlaceholder": "At least 8 characters",
     "role": "Role",
     "created": "User created"
+  },
+  "igdb": {
+    "title": "Game catalogue (IGDB)",
+    "description": "Game search uses the IGDB API. One key serves every user of this installation.",
+    "connected": "Connected",
+    "notConfigured": "Not configured",
+    "clientId": "Client ID",
+    "clientSecret": "Client Secret",
+    "secretKept": "Saved, ends in {{hint}}. Leave empty to keep it.",
+    "save": "Save",
+    "saving": "Saving…",
+    "test": "Test connection",
+    "testing": "Testing…",
+    "remove": "Remove credentials",
+    "confirmRemove": "Remove them",
+    "cancel": "Cancel",
+    "saved": "IGDB credentials saved",
+    "removed": "IGDB credentials removed",
+    "testOk": "The IGDB connection works",
+    "testFail": {
+      "not-configured": "IGDB is not configured yet",
+      "rejected": "Twitch rejected the saved credentials",
+      "unreachable": "Could not reach Twitch",
+      "unreadable": "The saved credentials can no longer be read. Enter the Client Secret again."
+    },
+    "help": "The credentials come from a Twitch application (Confidential type).",
+    "helpLink": "Open the Twitch console",
+    "updatedAt": "Updated on {{date}}",
+    "unreadable": "The saved credentials can no longer be read. Enter the Client Secret again."
+  },
+  "editUser": {
+    "title": "Edit user",
+    "newPassword": "New password",
+    "passwordPlaceholder": "Leave blank to keep it",
+    "saved": "User saved"
   }
 }

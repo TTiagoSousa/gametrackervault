@@ -1,0 +1,102 @@
+@use '../../../Styles/Fonts.scss' as Font;
+@use '../../../Styles/Mixins.scss' as Mixin;
+
+// Ajuda: uma lista de secções que abrem e fecham (details/summary). Fechadas,
+// mostram só o título; abertas, o texto até 72 caracteres por linha.
+.Help {
+  @include Mixin.Pages_Configs;
+
+  .Help_Hero{
+
+    h1{
+      font-family: Font.$font_family_display;
+      font-size: clamp(28px, 3.4vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+    }
+
+    p{
+      max-width: 620px;
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+  }
+
+  .Help_List{
+    @include Mixin.Panel_Surface;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .Help_Section{
+    scroll-margin-top: calc(var(--top-nav-height, 76px) + 16px);
+
+    & + .Help_Section{ border-top: 1px solid var(--line); }
+
+    summary{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 24px;
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker{ display: none; }
+
+      &:hover .Help_Section_Title{ color: var(--accent); }
+
+      &:focus-visible{
+        outline: none;
+        box-shadow: inset 0 0 0 3px var(--accent-soft);
+      }
+
+      @media (max-width: 720px){ padding: 16px; }
+    }
+
+    &[open] summary .Help_Section_Chevron{ transform: rotate(180deg); }
+  }
+
+  .Help_Section_Title{
+    @include Mixin.Section_Title(17px);
+    color: var(--text-main);
+  }
+
+  .Help_Section_Tag{
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-soft);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .Help_Section_Chevron{
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    flex-shrink: 0;
+    color: var(--text-faint);
+  }
+
+  .Help_Section_Body{
+    padding: 0 24px 24px;
+
+    .Markdown{
+      max-width: 72ch;
+      font-size: 15px;
+      color: var(--text-soft);
+
+      strong{ color: var(--text-main); }
+
+      h3,
+      h4{ color: var(--text-main); }
+    }
+
+    @media (max-width: 720px){ padding: 0 16px 18px; }
+  }
+}

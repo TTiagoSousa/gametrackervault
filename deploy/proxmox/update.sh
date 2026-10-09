@@ -154,7 +154,7 @@ step() { STEP="$1"; status running "$1" "$2"; }
 step build "Installing dependencies and building";   build_app
 step migrate "Applying database migrations";          migrate_db
 step publish "Publishing the frontend";                publish_frontend
-step configure "Updating services and nginx";         configure_service; configure_updater; install_commands
+step configure "Updating services and nginx";         ensure_encryption_key; configure_service; configure_updater; install_commands
 step restart "Restarting the backend";                 restart_backend
 configure_nginx
 

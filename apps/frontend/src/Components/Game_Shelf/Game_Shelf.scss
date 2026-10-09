@@ -1,0 +1,114 @@
+@use '../../Styles/Fonts.scss' as Font;
+
+.Game_Shelf{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+
+  .Game_Shelf_Title{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: Font.$font_family_display;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .Game_Shelf_Count{
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    box-sizing: border-box;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-soft);
+    font-family: Font.$font_family_sans;
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+
+  // As capas lado a lado, a rolar na horizontal; a altura não muda com o
+  // número de jogos
+  .Game_Shelf_Row{
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 140px;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .Game_Shelf_Item{
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: inherit;
+
+    &:hover .Game_Shelf_Name{ color: var(--accent); }
+
+    &:focus-visible{
+      outline: none;
+
+      .Game_Shelf_Case{ box-shadow: 0 0 0 3px var(--accent-soft); }
+    }
+  }
+
+  .Game_Shelf_Case{
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: var(--spine-radius);
+    overflow: hidden;
+    background: var(--surface-2);
+
+    // Lombada da caixa
+    &::before{
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      background: var(--text-main);
+      z-index: 1;
+    }
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .Game_Shelf_NoCover{
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 10px 10px 10px 16px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-align: center;
+  }
+
+  .Game_Shelf_Name{
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.3;
+    min-height: calc(13.5px * 1.3 * 2);
+    color: var(--text-main);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .Game_Shelf_Year{
+    font-size: 12.5px;
+    color: var(--text-faint);
+  }
+}

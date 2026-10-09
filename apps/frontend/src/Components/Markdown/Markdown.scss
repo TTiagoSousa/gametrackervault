@@ -1,0 +1,69 @@
+@use '../../Styles/Fonts.scss' as Font;
+
+// Texto das respostas do assistente
+.Markdown{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-main);
+  overflow-wrap: anywhere;
+
+  h3,
+  h4{
+    margin-top: 4px;
+    font-family: Font.$font_family_display;
+    font-weight: 700;
+    letter-spacing: -.01em;
+  }
+
+  h3{ font-size: 16px; }
+  h4{ font-size: 14.5px; }
+
+  ul,
+  ol{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 22px;
+  }
+
+  ul{ list-style: disc; }
+  ol{ list-style: decimal; }
+
+  li::marker{ color: var(--text-faint); }
+
+  strong{ font-weight: 700; }
+
+  code{
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    font-family: Font.$font_family_mono;
+    font-size: .9em;
+  }
+
+  pre{
+    padding: 12px 14px;
+    border-radius: var(--ctrl-radius);
+    background: var(--surface-2);
+    overflow-x: auto;
+
+    code{ padding: 0; background: none; }
+  }
+
+  a{
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  // Jogo com página na app: sublinhado em tracejado, como uma etiqueta
+  .Markdown_Game{
+    text-decoration-style: dashed;
+
+    &:hover{ text-decoration-style: solid; }
+  }
+}

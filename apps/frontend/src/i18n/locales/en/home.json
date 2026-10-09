@@ -1,15 +1,40 @@
 {
   "title": "Home",
   "greeting": "Hi, {{name}}",
-  "subtitle": "Your shelf has one row for each status. They are still empty.",
-  "stats": {
-    "playing": "Playing",
-    "finished": "Finished",
-    "beaten": "Beaten"
-  },
+  "subtitle": "Your games, sorted by status. Click a cover to open the game.",
   "empty": {
-    "description": "When the library arrives, every game you mark goes in as a spine on the right row."
+    "description": "Find games in the search (magnifier, top right) and add them from each game page."
   },
   "count_one": "{{count}} game",
-  "count_other": "{{count}} games"
+  "count_other": "{{count}} games",
+  "loadFailed": "Could not load your shelf. Reload the page to try again.",
+  "shelves": {
+    "playing": "Playing",
+    "done": "Finished",
+    "later": "Up next",
+    "dropped": "Dropped"
+  },
+  "emptyShelf": {
+    "playing": "Nothing in progress. On a game page, pick \"Playing\".",
+    "done": "Nothing finished yet. When you finish one, mark main story, with side content or 100%.",
+    "later": "The list is empty. Keep the games you want to play here with \"Later\".",
+    "dropped": "No dropped games."
+  },
+  "hours": "{{hours}} h",
+  "random": {
+    "title": "Not sure what to play?",
+    "description": "Pick a random game from your list, or discover a well-rated one you don’t have yet.",
+    "fromList_one": "From my list ({{count}})",
+    "fromList_other": "From my list ({{count}})",
+    "discover": "Discover a new one",
+    "searching": "Searching…",
+    "placeholder": "Pick one of the options and a game shows up here.",
+    "emptyList": "Your list is empty. Mark games as \"Later\" or \"Paused\", or discover a new one.",
+    "source": {
+      "list": "From your list",
+      "discover": "Discovered on IGDB"
+    },
+    "open": "Open the game",
+    "rating": "rated {{rating}}"
+  }
 }

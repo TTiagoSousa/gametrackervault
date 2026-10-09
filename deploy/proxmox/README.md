@@ -34,7 +34,7 @@ bash -c "$(curl -fsSL https://forgejo.home-sousa.me/Tiago/gameTrackerVault/raw/b
 Abre um menu (em inglês, ao estilo dos community-scripts):
 
 - **Default settings** — próximo CT livre, primeiro storage ativo, 16 GB, 2 CPUs,
-  2 GB de RAM, DHCP, DNS do host, endereço `http://<IP do CT>`, branch `main`.
+  2 GB de RAM, DHCP, DNS do host, endereço `http://<IP do CT>`, a última versão.
 - **Advanced settings** — ecrã a ecrã, já preenchido com a sugestão:
   - ID e hostname (valida se o ID está livre);
   - storage do disco e dos templates, escolhidos de uma lista com o espaço livre;
@@ -44,7 +44,9 @@ Abre um menu (em inglês, ao estilo dos community-scripts):
   - arrancar com o host;
   - endereço da app: IP do container ou domínio próprio;
   - utilizador e password do admin (em branco = `admin`);
-  - versão: `main`, `staging` ou `develop`; token só se o repo for privado.
+  - versão: **a última release** (a tag `vX.Y.Z` mais recente, por omissão) ou, para
+    testar, a branch `staging` ou `develop`; token só se o repo for privado. As
+    atualizações seguem sempre as releases.
 
 Um valor inválido volta a ser pedido em vez de abortar. No fim aparece o ecrã **Review**
 com tudo o que foi escolhido: *Create the container*, *Edit settings* ou *Cancel*.
@@ -57,7 +59,7 @@ Sem menus (automação): `NONINTERACTIVE=1` e as variáveis que quiseres mudar �
 no cabeçalho do `ct-create.sh`:
 
 ```bash
-NONINTERACTIVE=1 STORAGE=zfs_pool NET_MODE=static IP=192.168.0.60/24 GATEWAY=192.168.0.1 APP_URL=https://gametracker.home-sousa.me bash -c "$(curl -fsSL https://forgejo.home-sousa.me/Tiago/gameTrackerVault/raw/branch/main/deploy/proxmox/ct-create.sh)"
+NONINTERACTIVE=1 STORAGE=zfs_pool NET_MODE=static IP=192.168.0.61/24 GATEWAY=192.168.0.1 APP_URL=https://gametracker.home-sousa.me bash -c "$(curl -fsSL https://forgejo.home-sousa.me/Tiago/gameTrackerVault/raw/branch/main/deploy/proxmox/ct-create.sh)"
 ```
 
 ## 2. Domínio e SSL
@@ -81,6 +83,19 @@ Abre um menu com as definições e o valor atual de cada uma (segredos mascarado
 backend para aplicar. As alteradas ficam marcadas com `*`; **Quit** sai sem gravar.
 A base de dados e o `JWT_SECRET` não aparecem no menu.
 `gametracker-config --raw` abre o ficheiro inteiro no nano.
+
+### Pesquisa de jogos (IGDB)
+
+A chave do IGDB não vai no ficheiro de configuração: o admin põe-na na app, em
+**Admin → Catálogo de jogos (IGDB)**, com o Client ID e o Client Secret de uma
+aplicação Twitch (https://dev.twitch.tv/console/apps, tipo *Confidential*). A app
+valida-as com a Twitch antes de gravar e guarda o secret cifrado na base de dados.
+
+> ⚠ **`TOKEN_ENCRYPTION_KEY` não se muda.** É gerada pelo instalador (cópia em
+> `/root/gametracker-credentials.txt`) e cifra os segredos das integrações. Com
+> outra chave, o admin tem de voltar a introduzir o Client Secret. O
+> `gametracker-config` recusa gravar uma alteração a essa linha; instalações
+> antigas sem ela recebem-na na primeira atualização.
 
 ## 4. Atualizar
 

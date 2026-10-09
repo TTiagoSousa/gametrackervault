@@ -2,12 +2,18 @@
   "menu": {
     "home": "Inicio",
     "settings": "Ajustes",
-    "admin": "Admin"
+    "admin": "Admin",
+    "stats": "Estadísticas",
+    "assistant": "Asistente"
   },
   "sidebar": {
     "menu": "Menú",
     "lightMode": "Modo claro",
     "darkMode": "Modo oscuro",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "search": "Buscar",
+    "account": "Mi cuenta",
+    "assistantKey": "Asistente (Claude)",
+    "help": "Ayuda"
   }
 }

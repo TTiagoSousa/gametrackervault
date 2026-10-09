@@ -1,0 +1,62 @@
+{
+  "title": "Assistente",
+  "intro": "Pergunta sobre um jogo, uma saga ou um género, ou pede uma recomendação. Os jogos que o assistente mencionar abrem na app.",
+  "suggestions": {
+    "next": "Que jogo devo jogar a seguir?",
+    "similar": "Recomenda-me jogos parecidos com os que dei 9 ou 10.",
+    "backlog": "Da minha lista para jogar, por qual começo?",
+    "short": "Sugere jogos curtos, de menos de 10 horas, que eu ia gostar.",
+    "hidden": "Que jogos menos conhecidos combinam com o meu gosto?"
+  },
+  "placeholder": "Escreve a tua pergunta… (Enter envia, Shift+Enter muda de linha)",
+  "send": "Enviar",
+  "stop": "Parar",
+  "thinking": "A pensar…",
+  "tools": {
+    "search_games": "Pesquisou \"{{query}}\" no IGDB",
+    "get_game": "Abriu a ficha do jogo {{query}} no IGDB"
+  },
+  "errors": {
+    "generic": "O assistente não conseguiu responder. Tenta outra vez.",
+    "network": "Perdeu-se a ligação ao servidor a meio da resposta. Tenta outra vez.",
+    "stopped": "Paraste a resposta.",
+    "settings": "Não foi possível ler as definições do assistente. Recarrega a página."
+  },
+  "setup": {
+    "title": "Liga o teu Claude"
+  },
+  "side": {
+    "noKey": "Sem chave guardada",
+    "change": "Mudar nas Definições",
+    "newChat": "Nova conversa",
+    "privacyTitle": "O que o assistente lê",
+    "privacy": "A cada pergunta vão para a Anthropic a conversa e a tua estante (jogos, estados, horas, notas e o que escreveste), com a tua chave. A conversa fica só neste separador.",
+    "help": "Como pôr a chave",
+    "suggestions": "Experimenta perguntar"
+  },
+  "settings": {
+    "title": "Assistente (Claude)",
+    "description": "Cada pessoa usa a sua própria chave da Anthropic, paga na sua conta. A chave é testada antes de ser guardada, fica cifrada no servidor e nunca volta ao browser.",
+    "connected": "Ligado",
+    "notConfigured": "Por configurar",
+    "provider": "Fornecedor",
+    "apiKey": "Chave da API",
+    "keyKept": "Guardada, termina em {{hint}}. Deixa em branco para manter.",
+    "model": "Modelo",
+    "loadModels": "Carregar modelos da conta",
+    "loadingModels": "A carregar…",
+    "modelsLoaded_one": "{{count}} modelo disponível com esta chave.",
+    "modelsLoaded_other": "{{count}} modelos disponíveis com esta chave.",
+    "modelHint": "Escolhe um dos sugeridos ou carrega a lista de modelos a que a tua chave tem acesso.",
+    "save": "Guardar",
+    "saving": "A testar e a guardar…",
+    "remove": "Remover chave",
+    "confirmRemove": "Remover mesmo",
+    "cancel": "Cancelar",
+    "saved": "Assistente configurado",
+    "removed": "Chave do assistente removida",
+    "help": "Ainda não tens uma chave?",
+    "helpLink": "Vê como criar uma.",
+    "updatedAt": "Atualizado a {{date}}"
+  }
+}

@@ -1,15 +1,40 @@
 {
   "title": "Inicio",
   "greeting": "Hola, {{name}}",
-  "subtitle": "Tu estantería tiene una balda para cada estado. Todavía están vacías.",
-  "stats": {
-    "playing": "Jugando",
-    "finished": "Terminados",
-    "beaten": "Completados"
-  },
+  "subtitle": "Tus juegos, ordenados por estado. Haz clic en una portada para abrir el juego.",
   "empty": {
-    "description": "Cuando llegue la biblioteca, cada juego que marques entrará como un lomo en la balda correcta."
+    "description": "Encuentra juegos en la búsqueda (lupa, arriba) y ponlos en la estantería desde la página de cada juego."
   },
   "count_one": "{{count}} juego",
-  "count_other": "{{count}} juegos"
+  "count_other": "{{count}} juegos",
+  "loadFailed": "No se pudo cargar tu estantería. Recarga la página para volver a intentarlo.",
+  "shelves": {
+    "playing": "Jugando",
+    "done": "Terminados",
+    "later": "Por jugar",
+    "dropped": "Abandonados"
+  },
+  "emptyShelf": {
+    "playing": "Ningún juego a medias. En la página de un juego, elige \"Jugando\".",
+    "done": "Aún no has terminado ninguno. Cuando acabes uno, marca historia principal, con secundarias o 100%.",
+    "later": "La lista está vacía. Guarda aquí los juegos que quieres jugar con \"Más tarde\".",
+    "dropped": "Ningún juego abandonado."
+  },
+  "hours": "{{hours}} h",
+  "random": {
+    "title": "¿No sabes a qué jugar?",
+    "description": "Saca un juego al azar de tu lista o descubre uno bien valorado que aún no tienes.",
+    "fromList_one": "De mi lista ({{count}})",
+    "fromList_other": "De mi lista ({{count}})",
+    "discover": "Descubrir uno nuevo",
+    "searching": "Buscando…",
+    "placeholder": "Elige una de las opciones y aquí aparecerá un juego.",
+    "emptyList": "Tu lista está vacía. Marca juegos como \"Más tarde\" o \"En pausa\", o descubre uno nuevo.",
+    "source": {
+      "list": "De tu lista",
+      "discover": "Descubierto en IGDB"
+    },
+    "open": "Abrir el juego",
+    "rating": "nota {{rating}}"
+  }
 }

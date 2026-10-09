@@ -2,7 +2,7 @@
   "title": "Settings",
   "theme": {
     "title": "Theme",
-    "description": "How the interface looks. The accent colour is the same in both.",
+    "description": "Day, night or automatic. The accent colour is the same in both.",
     "dark": {
       "name": "Night",
       "hint": "The vault at night"
@@ -19,5 +19,32 @@
   "language": {
     "title": "Language",
     "description": "The interface language. Saved in this browser."
-  }
+  },
+  "sections": {
+    "appearance": "Appearance",
+    "account": "Account",
+    "assistant": "Assistant"
+  },
+  "account": {
+    "usernameTitle": "Name",
+    "usernameDescription": "The name you sign in with and that shows in the app. Letters, numbers, dot, hyphen and underscore.",
+    "username": "Username",
+    "saveUsername": "Save name",
+    "usernameSaved": "Name changed",
+    "passwordTitle": "Password",
+    "passwordDescription": "Type the current one and the new one twice.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat the new password",
+    "savePassword": "Change password",
+    "passwordSaved": "Password changed",
+    "saving": "Saving…",
+    "description": "The name you sign in with and your password.",
+    "showPasswords": "Show passwords",
+    "hidePasswords": "Hide passwords",
+    "ruleLength_one": "At least {{count}} character",
+    "ruleLength_other": "At least {{count}} characters",
+    "ruleMatch": "The two new passwords match"
+  },
+  "appearanceDescription": "Theme and language of the interface. Saved in this browser."
 }

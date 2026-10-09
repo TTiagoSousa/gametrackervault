@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # gametracker-config — edit the backend settings from a menu.
 #
-# Arrow keys pick a setting (for now only FRONTEND_URL), Enter edits it; "Save" writes the file and offers to
-# restart the backend (Nest only reads the settings at start-up). The database URL
-# and JWT_SECRET are not offered: changing them by mistake breaks the connection to
-# the database or logs everyone out.
+# Arrow keys pick a setting, Enter edits it; "Save" writes the file and offers to
+# restart the backend (Nest only reads the settings at start-up). The database URL,
+# JWT_SECRET and TOKEN_ENCRYPTION_KEY are not offered: changing them by mistake
+# breaks the database, logs everyone out or makes the stored integration secrets
+# unreadable.
 #
 #   gametracker-config          menu
 #   gametracker-config --raw    open the whole file in $EDITOR (nano) instead
@@ -23,9 +24,14 @@ ok() { printf '\033[1;32m ✓\033[0m %s\n' "$*"; }
 # --- raw mode: the whole file in an editor ---------------------------------------------
 
 raw_edit() {
+  key_of() { sed -n 's/^TOKEN_ENCRYPTION_KEY=//p' "$1"; }
   cp -p "$ENV_FILE" "$ENV_FILE.bak"
   ${EDITOR:-nano} "$ENV_FILE"
   if cmp -s "$ENV_FILE" "$ENV_FILE.bak"; then msg "No changes."; exit 0; fi
+  if [ "$(key_of "$ENV_FILE")" != "$(key_of "$ENV_FILE.bak")" ]; then
+    cp -p "$ENV_FILE.bak" "$ENV_FILE"
+    die "TOKEN_ENCRYPTION_KEY must not change — the previous file was restored. If you really need to, edit it by hand and enter the integration secrets again in Admin → Integrations."
+  fi
   restart_backend && ok "Configuration applied, backend restarted."
   exit 0
 }

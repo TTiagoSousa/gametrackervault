@@ -1,0 +1,150 @@
+@use '../../Styles/Fonts.scss' as Font;
+@use '../../Styles/Mixins.scss' as Mixin;
+
+// Cartão das credenciais do IGDB, ao lado do cartão da versão na página Admin
+.Igdb_Card{
+  @include Mixin.Panel_Surface;
+  padding: 28px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .Igdb_Card_Head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .Igdb_Card_Title{
+    @include Mixin.Section_Title(17px);
+    color: var(--text-main);
+  }
+
+  .Igdb_Card_Description{
+    max-width: 560px;
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-soft);
+  }
+
+  .Igdb_Card_Status{
+    flex-shrink: 0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--text-soft);
+    font-size: 13px;
+    font-weight: 700;
+
+    &.on{
+      background: var(--game-status-finished);
+      color: var(--status-ink);
+    }
+  }
+
+  .Igdb_Card_Warning{
+    padding: 12px 14px;
+    border-radius: var(--ctrl-radius);
+    background: var(--danger-color-soft);
+    color: var(--danger-color);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .Igdb_Card_Form{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+
+    @media (max-width: 720px){ grid-template-columns: 1fr; }
+
+    label{
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    input{
+      @include Mixin.Control_Surface;
+      height: 44px;
+      padding: 0 12px;
+      box-sizing: border-box;
+      font-family: Font.$font_family_mono;
+      font-size: 13.5px;
+    }
+  }
+
+  .Igdb_Card_Actions{
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .Igdb_Card_Save{
+    @include Mixin.Solid_Button;
+    height: 42px;
+    padding: 0 20px;
+  }
+
+  .Igdb_Card_Button{
+    @include Mixin.Ghost_Button;
+    height: 42px;
+    padding: 0 18px;
+  }
+
+  .Igdb_Card_Danger{
+    @include Mixin.Ghost_Button;
+    height: 42px;
+    padding: 0 18px;
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+
+    &:hover:not(:disabled){
+      color: var(--danger-color);
+      border-color: var(--danger-color);
+      background: var(--danger-color-soft);
+    }
+  }
+
+  .Igdb_Card_Confirm{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .Igdb_Card_Link{
+    border: none;
+    background: none;
+    padding: 6px 2px;
+    color: var(--text-soft);
+    font-family: Font.$font_family_sans;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover:not(:disabled){ color: var(--text-main); text-decoration: underline; }
+    &.danger:hover:not(:disabled){ color: var(--danger-color); }
+    &:disabled{ opacity: .5; cursor: default; }
+  }
+
+  .Igdb_Card_Help{
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-faint);
+
+    a{ color: var(--accent); font-weight: 600; }
+
+    .Igdb_Card_Updated{
+      display: block;
+      margin-top: 4px;
+    }
+  }
+}

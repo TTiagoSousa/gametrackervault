@@ -1,7 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { UserRepository } from '../user-repository';
+import { PublicUser, UserRepository } from '../user-repository';
 import { Role, User } from 'src/generated/prisma/client/client';
+
+// Tudo menos a hash da password
+const PUBLIC_FIELDS = {
+  id: true,
+  username: true,
+  role: true,
+  createdAt: true,
+  updatedAt: true,
+} as const;
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -19,32 +28,44 @@ export class PrismaUserRepository implements UserRepository {
     return this.prisma.user.create({ data });
   }
 
-  async findById(id: string): Promise<Omit<User, 'hashedPassword'> | null> {
+  async findById(id: string): Promise<PublicUser | null> {
     return this.prisma.user.findUnique({
       where: { id },
-      select: {
-        id: true,
-        username: true,
-        role: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: PUBLIC_FIELDS,
     });
   }
 
-  async findAll(): Promise<Omit<User, 'hashedPassword'>[]> {
+  async findByIdWithPassword(id: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async update(
+    id: string,
+    data: { username?: string; hashedPassword?: string; role?: Role },
+  ): Promise<PublicUser> {
+    return this.prisma.user.update({
+      where: { id },
+      data,
+      select: PUBLIC_FIELDS,
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.user.delete({ where: { id } });
+  }
+
+  async findAll(): Promise<PublicUser[]> {
     return this.prisma.user.findMany({
-      select: {
-        id: true,
-        username: true,
-        role: true,
-        createdAt: true,
-        updatedAt: true,
-      },
+      select: PUBLIC_FIELDS,
+      orderBy: { createdAt: 'asc' },
     });
   }
 
   async count(): Promise<number> {
     return this.prisma.user.count();
+  }
+
+  async countAdmins(): Promise<number> {
+    return this.prisma.user.count({ where: { role: Role.ADMIN } });
   }
 }

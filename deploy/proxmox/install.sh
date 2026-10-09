@@ -49,6 +49,9 @@ random_secret() { openssl rand -base64 "$1" | tr -d '\n'; }
 msg "Installing system packages…"
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -qq
+# postgresql-common first: otherwise the postgresql package's debconf script runs
+# before pg_lsclusters exists and prints a (harmless) "not found" line.
+apt-get install -y -qq postgresql-common >/dev/null
 apt-get install -y -qq \
   ca-certificates curl git xz-utils openssl \
   nginx postgresql \
@@ -140,8 +143,15 @@ FRONTEND_URL="${APP_URL}"
 
 JWT_SECRET="$(random_secret 48)"
 
+# ⚠ NÃO ALTERAR: cifra os segredos das integrações guardados na base de dados
+# (ex. o Client Secret do IGDB, que o admin põe em Admin → Integrações). Se mudar,
+# têm de ser introduzidos outra vez. Cópia em ${CREDS_FILE}.
+TOKEN_ENCRYPTION_KEY="$(random_secret 32)"
+
 EOF
 fi
+# Reinstalação por cima de um ficheiro antigo, sem a chave de cifra
+ensure_encryption_key
 chown root:"$APP_USER" "$ENV_FILE"
 chmod 640 "$ENV_FILE"
 
@@ -202,6 +212,7 @@ if [ -n "$ADMIN_CREATED" ] || [ ! -f "$CREDS_FILE" ]; then
     [ -n "$ADMIN_CREATED" ] && echo "Password:             ${ADMIN_PASSWORD}"
     echo
     echo "Database:             ${DATABASE_URL}"
+    echo "TOKEN_ENCRYPTION_KEY: ${TOKEN_ENCRYPTION_KEY}   (never change it)"
   } > "$CREDS_FILE"
   chmod 600 "$CREDS_FILE"
 fi
@@ -221,5 +232,8 @@ $( [ -n "$ADMIN_CREATED" ] && printf '  User:           %s\n  Password:       %s
   Backups:        ${BACKUP_DIR}   (daily at 03:30)
 
 $( [ -n "$ADMIN_CREATED" ] && [ "$ADMIN_PASSWORD" = "admin" ] && printf '  \033[1;33m⚠ The admin password is "admin". Change it before exposing the app to the internet.\033[0m\n\n')
+  Still to configure, in the app (Admin → Integrations):
+    - IGDB Client ID and Client Secret for the game search
+      (a Twitch application: https://dev.twitch.tv/console/apps)
 
 EOF

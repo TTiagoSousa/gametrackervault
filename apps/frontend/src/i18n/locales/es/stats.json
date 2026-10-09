@@ -1,0 +1,67 @@
+{
+  "title": "Estadísticas",
+  "loading": "Haciendo las cuentas…",
+  "loadFailed": "No se pudieron cargar las estadísticas. Recarga la página para volver a intentarlo.",
+  "empty": "Aún no tienes juegos en la estantería. Cuando añadas algunos, las cuentas aparecerán aquí.",
+  "emptyAction": "Buscar juegos",
+  "factsIncomplete": "IGDB no respondió: pueden faltar algunos tiempos medios y géneros. Recarga más tarde.",
+  "hours": {
+    "title": "Horas jugadas",
+    "aria": "{{logged}} horas anotadas por ti y {{estimated}} estimadas",
+    "logged_one": "{{hours}} h anotadas por ti, en {{count}} juego",
+    "logged_other": "{{hours}} h anotadas por ti, en {{count}} juegos",
+    "estimated_one": "{{hours}} h estimadas con la media de IGDB, en {{count}} juego",
+    "estimated_other": "{{hours}} h estimadas con la media de IGDB, en {{count}} juegos",
+    "missing_one": "{{count}} juego sin horas (a medias, en pausa, abandonado o sin media)",
+    "missing_other": "{{count}} juegos sin horas (a medias, en pausa, abandonados o sin media)"
+  },
+  "shelf": {
+    "title": "La estantería",
+    "games_one": "{{count}} juego",
+    "games_other": "{{count}} juegos"
+  },
+  "years": {
+    "title": "Terminados por año",
+    "count_one": "{{count}} juego terminado",
+    "count_other": "{{count}} juegos terminados",
+    "empty": "Aún no has terminado ningún juego."
+  },
+  "rating": {
+    "title": "Tus notas",
+    "average_one": "media {{average}} en {{count}} juego",
+    "average_other": "media {{average}} en {{count}} juegos",
+    "count_one": "{{count}} juego con {{rating}}",
+    "count_other": "{{count}} juegos con {{rating}}",
+    "empty": "Aún no has puesto nota a ningún juego."
+  },
+  "genres": {
+    "title": "Géneros que más juegas",
+    "empty": "Sin géneros por ahora."
+  },
+  "mostPlayed": {
+    "title": "Más horas",
+    "estimated": "estimado",
+    "empty": "Aún no hay horas que mostrar."
+  },
+  "topRated": {
+    "title": "Mejor valorados"
+  },
+  "note": "Las horas estimadas son medias de los jugadores de IGDB, usadas cuando no anotaste las horas de un juego terminado.",
+  "noteLink": "Cómo se calculan",
+  "subtitle": "Las cuentas de tu estantería: horas, estados, lo que terminaste y lo que te falta por jugar.",
+  "summary": {
+    "title": "Resumen",
+    "hours": "Horas jugadas",
+    "hoursNote": "de las que {{hours}} h son estimadas",
+    "hoursAllLogged": "todas anotadas por ti",
+    "games": "Juegos en la estantería",
+    "gamesNote_one": "{{count}} a medias",
+    "gamesNote_other": "{{count}} a medias",
+    "finished": "Terminados",
+    "finishedNote": "el {{rate}}% de los que dejaste de jugar",
+    "noneFinished": "ninguno aún",
+    "backlog": "Para acabar la lista",
+    "backlogNote_one": "{{count}} juego marcado como \"Más tarde\"",
+    "backlogNote_other": "{{count}} juegos marcados como \"Más tarde\""
+  }
+}

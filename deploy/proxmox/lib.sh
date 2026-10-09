@@ -85,6 +85,20 @@ wait_backend() {
   return 1
 }
 
+# TOKEN_ENCRYPTION_KEY cifra os segredos das integrações na base de dados. Uma
+# instalação anterior a esta chave não a tem no ficheiro: gera-a uma vez, sem
+# nunca mexer numa que já exista.
+ensure_encryption_key() {
+  [ -f "$ENV_FILE" ] || return 0
+  grep -q '^TOKEN_ENCRYPTION_KEY=' "$ENV_FILE" && return 0
+  msg "Adding TOKEN_ENCRYPTION_KEY to $ENV_FILE…"
+  {
+    echo
+    echo "# ⚠ NÃO ALTERAR: cifra os segredos das integrações guardados na base de dados."
+    echo "TOKEN_ENCRYPTION_KEY=\"$(openssl rand -base64 32 | tr -d '\n')\""
+  } >> "$ENV_FILE"
+}
+
 # The systemd unit and the nginx site are (re)written by install.sh and by
 # gametracker-update, so changes to them in the repo reach installed containers.
 configure_service() {
