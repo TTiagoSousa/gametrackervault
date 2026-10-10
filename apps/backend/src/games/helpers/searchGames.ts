@@ -3,7 +3,7 @@ import { SearchGamesDto } from '../dto/search-games.dto';
 import { buildSearchQuery } from './buildSearchQuery';
 import { IgdbGame, mapGame } from './mapGame';
 
-/** Pesquisa no IGDB: uma página de resultados e o total que existe. */
+/** IGDB search: one page of results and the total available. */
 export async function searchGames(dto: SearchGamesDto, igdb: IgdbClient) {
   const { query, countQuery, page, pageSize } = buildSearchQuery(dto);
 

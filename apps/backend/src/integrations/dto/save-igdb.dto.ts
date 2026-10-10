@@ -1,6 +1,6 @@
 import { IsOptional, IsString, Matches } from 'class-validator';
 
-// Os ids e secrets da Twitch são cadeias alfanuméricas minúsculas (~30)
+// Twitch ids and secrets are lowercase alphanumeric strings (~30)
 const TWITCH_KEY = /^[a-z0-9]{20,64}$/;
 
 export class SaveIgdbDto {
@@ -10,7 +10,7 @@ export class SaveIgdbDto {
   })
   clientId: string;
 
-  // Em branco ao editar = manter o secret que já está guardado
+  // Blank when editing = keep the already stored secret
   @IsOptional()
   @IsString()
   @Matches(TWITCH_KEY, {

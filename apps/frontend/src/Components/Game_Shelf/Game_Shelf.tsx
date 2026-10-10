@@ -8,8 +8,8 @@ interface Game_Shelf_Props {
 }
 
 /**
- * Uma prateleira de caixas: o título e as capas lado a lado, a rolar na
- * horizontal. Cada capa abre a página desse jogo. Não desenha nada sem jogos.
+ * A shelf of boxes: the title and the covers side by side, scrolling
+ * horizontally. Each cover opens that game's page. Renders nothing without games.
  */
 const Game_Shelf = ({ title, games }: Game_Shelf_Props) => {
   if (!games.length) return null;

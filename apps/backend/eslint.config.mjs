@@ -29,7 +29,7 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      // `const { hashedPassword: _, ...user }` tira um campo de propósito
+      // `const { hashedPassword: _, ...user }` drops a field on purpose
       '@typescript-eslint/no-unused-vars': [
         'error',
         { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },

@@ -4,10 +4,10 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { createUser } from 'src/user/helpers/createUser';
 
 /**
- * O registo público só existe para criar o primeiro utilizador, que fica ADMIN — é
- * assim que o instalador deixa a conta pronta. A partir daí as contas criam-se no
- * painel de Admin (POST /user). Aberto, qualquer pessoa que chegasse à app pela
- * internet criava conta.
+ * Public registration only exists to create the first user, who becomes ADMIN — that is
+ * how the installer sets up the account. From then on accounts are created in the
+ * Admin panel (POST /user). If it stayed open, anyone reaching the app from the
+ * internet could create an account.
  */
 export async function registerFirstUser(
   dto: CreateUserDto,

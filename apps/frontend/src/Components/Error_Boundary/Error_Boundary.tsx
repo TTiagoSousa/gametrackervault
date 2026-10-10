@@ -11,10 +11,10 @@ interface Error_Boundary_State {
 }
 
 /**
- * Sem isto, um erro ao desenhar uma página desmontava a app inteira e o ecrã ficava
- * preto. Assim só a página mostra o
- * erro, o menu continua a funcionar, e quem chama usa `key` para limpar o erro ao
- * mudar de página.
+ * Without this, an error while rendering a page unmounted the whole app and the screen went
+ * black. This way only the page shows the
+ * error, the menu keeps working, and the caller uses `key` to clear the error when
+ * changing page.
  */
 class Error_Boundary extends Component<Error_Boundary_Props, Error_Boundary_State> {
   state: Error_Boundary_State = { error: null };

@@ -24,21 +24,21 @@ import java.net.URL;
 import java.security.MessageDigest;
 
 /**
- * Atualiza a própria app a partir do servidor, sem passar pelo browser.
+ * Updates the app itself from the server, without going through the browser.
  *
- * O servidor publica o APK em /downloads/gametracker-vault.apk e a ficha dele em
- * /downloads/android.json (versão, versionCode, tamanho, sha256). Ao abrir, a app
- * lê a ficha; se houver um versionCode maior, pergunta "Atualizar / Mais tarde".
- * Ao atualizar, descarrega o APK para uma sessão do PackageInstaller (confere o
- * sha256 pelo caminho) e pede ao Android para o instalar. O Android pede
- * confirmação ao utilizador — exceto, a partir do Android 12, quando esta app já é
- * a que instalou a versão atual.
+ * The server publishes the APK at /downloads/gametracker-vault.apk and its manifest at
+ * /downloads/android.json (version, versionCode, size, sha256). On launch, the app
+ * reads the manifest; if there is a higher versionCode, it asks "Update / Later".
+ * When updating, it downloads the APK into a PackageInstaller session (checking the
+ * sha256 along the way) and asks Android to install it. Android asks the user for
+ * confirmation — except, from Android 12 on, when this app is the one that
+ * installed the current version.
  */
 final class Updater {
 
     private static final String ACTION_STATUS = "me.homesousa.gametracker.INSTALL_STATUS";
 
-    // Uma pergunta por arranque da app: "Mais tarde" vale até a app ser fechada
+    // One prompt per app launch: "Later" holds until the app is closed
     private static boolean askedThisRun = false;
 
     private final Activity activity;
@@ -48,7 +48,7 @@ final class Updater {
         this.activity = activity;
     }
 
-    /** Ficha do APK publicado no servidor. */
+    /** Manifest of the APK published on the server. */
     private static final class Release {
         String version;
         int versionCode;
@@ -57,9 +57,9 @@ final class Updater {
     }
 
     /**
-     * Procura uma versão nova. Automática (ao abrir): só pergunta uma vez por
-     * arranque e não diz nada se não houver. Manual (pela Ajuda): diz sempre o
-     * resultado.
+     * Looks for a new version. Automatic (on launch): asks only once per launch
+     * and says nothing if there is none. Manual (from Help): always reports the
+     * result.
      */
     void check(String server, boolean manual) {
         if (server == null) return;
@@ -120,7 +120,7 @@ final class Updater {
         new AlertDialog.Builder(activity).setMessage(text).setPositiveButton(android.R.string.ok, null).show();
     }
 
-    // --- Descarregar e instalar -----------------------------------------------------------
+    // --- Download and install ------------------------------------------------------------
 
     private void install(String server, Release release) {
         ProgressBar bar = new ProgressBar(activity, null, android.R.attr.progressBarStyleHorizontal);
@@ -146,7 +146,7 @@ final class Updater {
                 params.setAppPackageName(activity.getPackageName());
                 if (release.size > 0) params.setSize(release.size);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    // Sem perguntar, quando o Android o permite (esta app instalou a atual)
+                    // Without asking, when Android allows it (this app installed the current one)
                     params.setRequireUserAction(PackageInstaller.SessionParams.USER_ACTION_NOT_REQUIRED);
                 }
                 sessionId = installer.createSession(params);
@@ -166,7 +166,7 @@ final class Updater {
                 }
             } catch (Exception e) {
                 if (sessionId != -1) {
-                    try { installer.abandonSession(sessionId); } catch (Exception ignored) { /* já fechada */ }
+                    try { installer.abandonSession(sessionId); } catch (Exception ignored) { /* already closed */ }
                 }
                 error = activity.getString(R.string.update_failed, e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName());
             }
@@ -178,7 +178,7 @@ final class Updater {
         }).start();
     }
 
-    /** Copia o APK para a sessão, atualiza a barra e devolve o sha256 do que veio. */
+    /** Copies the APK into the session, updates the bar and returns the sha256 of what arrived. */
     private String download(String url, PackageInstaller.Session session, long size, ProgressBar bar) throws Exception {
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
         connection.setConnectTimeout(10000);
@@ -215,14 +215,14 @@ final class Updater {
     }
 
     /**
-     * O resultado da instalação chega por broadcast. Se o Android precisar da
-     * confirmação do utilizador, abre o ecrã dele; se falhar, diz porquê. Com
-     * sucesso, a app é substituída (e fechada) pelo próprio Android.
+     * The install result arrives by broadcast. If Android needs the user's
+     * confirmation, it opens its screen; if it fails, it says why. On
+     * success, the app is replaced (and closed) by Android itself.
      */
     private void listenForResult() {
         if (receiver != null) return;
         receiver = new BroadcastReceiver() {
-            @SuppressWarnings("deprecation") // getParcelableExtra antigo, só abaixo do Android 13
+            @SuppressWarnings("deprecation") // old getParcelableExtra, only below Android 13
             @Override
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra(PackageInstaller.EXTRA_STATUS, PackageInstaller.STATUS_FAILURE);
@@ -250,7 +250,7 @@ final class Updater {
 
     void release() {
         if (receiver != null) {
-            try { activity.unregisterReceiver(receiver); } catch (Exception ignored) { /* já desligado */ }
+            try { activity.unregisterReceiver(receiver); } catch (Exception ignored) { /* already unregistered */ }
             receiver = null;
         }
     }

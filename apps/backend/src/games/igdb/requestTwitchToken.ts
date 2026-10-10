@@ -6,9 +6,9 @@ export interface TwitchToken {
 }
 
 /**
- * Pede um token de aplicação à Twitch (client credentials) — é o que o IGDB
- * aceita. Devolve null quando a Twitch rejeita as credenciais; um erro de rede
- * propaga-se como exceção.
+ * Requests an app token from Twitch (client credentials) — it's what IGDB
+ * accepts. Returns null when Twitch rejects the credentials; a network error
+ * propagates as an exception.
  */
 export async function requestTwitchToken(
   clientId: string,

@@ -1,37 +1,37 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Pesquisa como uma área de trabalho fixa:
-//   · barra da pesquisa (campo, ordenação) colada por baixo da barra de topo;
-//   · coluna de filtros colada por baixo dela, da altura do ecrã, com scroll
-//     próprio e separada por uma linha;
-//   · só a grelha de resultados rola.
-// Abaixo de 900px os filtros abrem num painel lateral.
+// Search as a fixed workspace:
+//   · search bar (field, sorting) stuck below the top bar;
+//   · filter column stuck below it, screen height, with its own
+//     scroll and separated by a line;
+//   · only the results grid scrolls.
+// Below 900px the filters open in a side panel.
 //
-// As alturas vêm medidas do DOM: --top-nav-height (Top_Nav) e
-// --search-toolbar-height (aqui). Nada aparece nem desaparece a empurrar o resto:
-// o ✕ do campo, o "Limpar filtros" e as contagens têm sempre o seu lugar.
+// Heights are measured from the DOM: --top-nav-height (Top_Nav) and
+// --search-toolbar-height (here). Nothing appears or disappears pushing the rest:
+// the field's ✕, "Clear filters" and the counts always have their place.
 
 $filters-width: 300px;
 
 .Search {
   --sticky-top: calc(var(--top-nav-height, 76px) + var(--search-toolbar-height, 80px));
-  // Altura da linha da contagem e dos filtros ativos (também presa)
+  // Height of the count and active filters row (also sticky)
   --results-head-height: 60px;
 
   @include Mixin.Pages_Configs;
   gap: 0;
-  // A pesquisa vai até ao fundo da página: anula a margem de baixo do contentor.
-  // Sem isto, ao chegar ao fim do scroll, a coluna de filtros e as linhas presas
-  // eram empurradas para cima pela margem que ficava de fora.
+  // Search goes to the bottom of the page: cancels the container's bottom margin.
+  // Without this, at the end of the scroll, the filter column and the sticky rows
+  // were pushed up by the margin left outside.
   margin-bottom: -64px;
 
-  // Esconde sem tirar o lugar
+  // Hides without giving up the space
   .hidden{ visibility: hidden; }
 
-  // --- Barra fixa ---------------------------------------------------------------------
-  // Estende-se até às margens do conteúdo, com fundo opaco: o que rola por baixo
-  // não aparece pelas pontas
+  // --- Fixed bar ----------------------------------------------------------------------
+  // Extends to the content margins, with an opaque background: what scrolls underneath
+  // doesn't show at the edges
   .Search_Toolbar{
     position: sticky;
     top: var(--top-nav-height, 76px);
@@ -45,7 +45,7 @@ $filters-width: 300px;
     border-bottom: 1px solid var(--line);
   }
 
-  // --- Campo de pesquisa --------------------------------------------------------------
+  // --- Search field ---------------------------------------------------------------------
   .Search_Field{
     flex: 1;
     min-width: 0;
@@ -139,15 +139,15 @@ $filters-width: 300px;
     padding: 0 14px;
   }
 
-  // --- Corpo: coluna de filtros + resultados -------------------------------------------
+  // --- Body: filter column + results ---------------------------------------------------
   .Search_Body{
     display: grid;
     grid-template-columns: $filters-width minmax(0, 1fr);
     align-items: start;
   }
 
-  // Coluna de filtros: presa por baixo da barra, ocupa o resto do ecrã e rola
-  // sozinha. Sem cartão — é uma coluna da página, separada por uma linha.
+  // Filter column: stuck below the bar, fills the rest of the screen and scrolls
+  // on its own. No card — it's a page column, separated by a line.
   .Search_Filters{
     position: sticky;
     top: var(--sticky-top);
@@ -191,7 +191,7 @@ $filters-width: 300px;
     &:hover{ text-decoration: underline; }
   }
 
-  // Grupos de filtros
+  // Filter groups
   .Filter_Group{
     padding: 12px 0;
 
@@ -210,7 +210,7 @@ $filters-width: 300px;
 
       &::-webkit-details-marker{ display: none; }
 
-      // Seta desenhada: aponta para baixo aberto, para a direita fechado
+      // Drawn arrow: points down when open, right when closed
       &::after{
         content: '';
         margin-left: auto;
@@ -248,8 +248,8 @@ $filters-width: 300px;
     gap: 6px;
   }
 
-  // As fichas não mudam de tamanho ao ativar: só a cor muda (a borda é igual nos
-  // dois estados)
+  // Chips don't change size when active: only the color changes (the border is the same in
+  // both states)
   .Filter_Chip{
     padding: 7px 11px;
     border-radius: 8px;
@@ -282,7 +282,7 @@ $filters-width: 300px;
       font-size: 13.5px;
     }
 
-    // Altura fixa: filtrar a lista não faz o resto do painel saltar
+    // Fixed height: filtering the list doesn't make the rest of the panel jump
     .Filter_Platforms_List{
       height: 240px;
       overflow-y: auto;
@@ -360,7 +360,7 @@ $filters-width: 300px;
     color: var(--text-faint);
   }
 
-  // --- Resultados -----------------------------------------------------------------------
+  // --- Results --------------------------------------------------------------------------
   .Search_Results{
     min-width: 0;
     display: flex;
@@ -369,9 +369,9 @@ $filters-width: 300px;
     padding: 0 0 64px 24px;
   }
 
-  // Linha presa por baixo da barra da pesquisa, de altura fixa: a contagem, as
-  // fichas dos filtros ativos (a rolar na horizontal se não couberem) e
-  // "Remover todos". A grelha passa por baixo dela e nunca é empurrada.
+  // Row stuck below the search bar, with fixed height: the count, the
+  // active filter chips (scrolling horizontally if they don't fit) and
+  // "Remove all". The grid passes under it and is never pushed.
   .Search_Results_Head{
     position: sticky;
     top: var(--sticky-top);
@@ -437,8 +437,8 @@ $filters-width: 300px;
     &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
   }
 
-  // Grelha de caixas — enquanto chega uma pesquisa nova, os resultados anteriores
-  // ficam tal como estão (sem esbatimento nem saltos)
+  // Grid of boxes — while a new search arrives, the previous results
+  // stay as they are (no fading or jumps)
   .Search_Grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -465,7 +465,7 @@ $filters-width: 300px;
       overflow: hidden;
       background: var(--surface-2);
 
-      // A lombada da caixa, colada à esquerda da capa
+      // The box spine, stuck to the left of the cover
       &::before{
         content: '';
         position: absolute;
@@ -514,8 +514,8 @@ $filters-width: 300px;
       font-weight: 700;
     }
 
-    // Duas linhas reservadas para o nome: nomes curtos e compridos ocupam o
-    // mesmo, e as linhas da grelha ficam alinhadas
+    // Two lines reserved for the name: short and long names take the
+    // same space, and the grid rows stay aligned
     .Game_Result_Name{
       margin-top: 10px;
       min-height: calc(14.5px * 1.3 * 2);
@@ -583,7 +583,7 @@ $filters-width: 300px;
 
   .Search_Scrim{ display: none; }
 
-  // --- Ecrãs pequenos: filtros num painel lateral -----------------------------------------
+  // --- Small screens: filters in a side panel ---------------------------------------------
   @media (max-width: 900px){
     margin-bottom: -48px;
 
@@ -656,7 +656,7 @@ $filters-width: 300px;
     }
   }
 
-  // Telemóvel: o contentor tem 16px por cima (não 20px)
+  // Mobile: the container has 16px on top (not 20px)
   @media (max-width: 760px){
     .Search_Toolbar{ margin-top: -16px; }
   }

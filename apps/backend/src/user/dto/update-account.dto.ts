@@ -8,12 +8,12 @@ import {
 } from 'class-validator';
 import { Role } from 'src/generated/prisma/client/client';
 
-// Letras, números, ponto, hífen e sublinhado — sem espaços
+// Letters, digits, dot, hyphen and underscore — no spaces
 const USERNAME = /^[\p{L}\p{N}._-]+$/u;
 const USERNAME_MESSAGE =
   'O nome só pode ter letras, números, ponto, hífen e sublinhado.';
 
-/** O próprio utilizador muda o nome. */
+/** The user changes their own username. */
 export class UpdateUsernameDto {
   @IsString()
   @MinLength(3, { message: 'O nome tem de ter pelo menos 3 caracteres.' })
@@ -22,7 +22,7 @@ export class UpdateUsernameDto {
   username: string;
 }
 
-/** O próprio utilizador muda a password: tem de dizer a atual. */
+/** The user changes their own password: must provide the current one. */
 export class ChangePasswordDto {
   @IsString()
   currentPassword: string;
@@ -35,7 +35,7 @@ export class ChangePasswordDto {
   newPassword: string;
 }
 
-/** O admin muda o nome, o papel ou define uma password nova de outra conta. */
+/** The admin changes another account's username, role or sets a new password. */
 export class AdminUpdateUserDto {
   @IsOptional()
   @IsString()

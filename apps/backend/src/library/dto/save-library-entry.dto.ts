@@ -14,13 +14,13 @@ import { LibraryStatus } from 'src/generated/prisma/client/client';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-// PUT substitui a entrada inteira: um campo que não venha (ou venha a null)
-// fica vazio
+// PUT replaces the whole entry: a field that is missing (or null)
+// becomes empty
 export class SaveLibraryEntryDto {
   @IsEnum(LibraryStatus)
   status: LibraryStatus;
 
-  // Horas jogadas, com até duas casas decimais (1.5 = hora e meia)
+  // Hours played, with up to two decimal places (1.5 = an hour and a half)
   @IsOptional()
   @Type(() => Number)
   @IsNumber({ maxDecimalPlaces: 2 })
@@ -38,7 +38,7 @@ export class SaveLibraryEntryDto {
   @Matches(DATE, { message: 'finishedAt tem de ser AAAA-MM-DD' })
   finishedAt?: string | null;
 
-  // Nota pessoal de 1 a 10
+  // Personal rating from 1 to 10
   @IsOptional()
   @Type(() => Number)
   @IsInt()

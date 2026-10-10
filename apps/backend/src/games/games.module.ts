@@ -8,7 +8,7 @@ import { IgdbClient } from './igdb/igdb.client';
   imports: [IntegrationsModule],
   controllers: [GamesController],
   providers: [GamesService, IgdbClient],
-  // A estante usa o GamesService para guardar a cópia mínima dos jogos
+  // The shelf uses GamesService to store the minimal copy of games
   exports: [GamesService],
 })
 export class GamesModule {}

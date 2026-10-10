@@ -17,7 +17,7 @@ import { SaveLibraryEntryDto } from './dto/save-library-entry.dto';
 
 type AuthRequest = Request & { user: JwtPayload };
 
-// A estante do utilizador com sessão. Cada um só vê e mexe na sua.
+// The signed-in user's shelf. Each user only sees and edits their own.
 @Controller('library')
 @UseGuards(JwtAuthGuard)
 export class LibraryController {
@@ -28,7 +28,7 @@ export class LibraryController {
     return this.libraryService.list(req.user.id);
   }
 
-  // Antes de ':gameId', senão "stats" seria lido como um id
+  // Before ':gameId', otherwise "stats" would be read as an id
   @Get('stats')
   stats(@Req() req: AuthRequest) {
     return this.libraryService.stats(req.user.id);

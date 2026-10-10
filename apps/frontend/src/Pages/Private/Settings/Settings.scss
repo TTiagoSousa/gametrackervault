@@ -1,9 +1,9 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Definições: índice fixo à esquerda e, à direita, um cartão por secção com a
-// mesma forma — título e descrição em cima, blocos separados por filetes por
-// baixo. O cartão do assistente (Ai_Card) tem a mesma medida.
+// Settings: fixed index on the left and, on the right, one card per section with the
+// same shape — title and description on top, blocks separated by rules
+// below. The assistant card (Ai_Card) has the same size.
 .Settings {
   @include Mixin.Pages_Configs;
   gap: 24px;
@@ -34,7 +34,7 @@
     }
   }
 
-  // --- Índice -------------------------------------------------------------------------------
+  // --- Index ----------------------------------------------------------------------------------
   .Settings_Nav{
     position: sticky;
     top: calc(var(--top-nav-height, 76px) + 24px);
@@ -62,11 +62,11 @@
     gap: 24px;
   }
 
-  // Ao saltar para uma secção, ela fica por baixo da barra de topo
+  // When jumping to a section, it lands below the top bar
   .Settings_Card,
   .Settings_Anchor{ scroll-margin-top: calc(var(--top-nav-height, 76px) + 24px); }
 
-  // --- Cartão -------------------------------------------------------------------------------
+  // --- Card -----------------------------------------------------------------------------------
   .Settings_Card{
     @include Mixin.Panel_Surface;
     padding: var(--card-pad);
@@ -91,8 +91,8 @@
     }
   }
 
-  // Um bloco dentro do cartão: texto em cima, controlos por baixo. Com "row", o
-  // texto à esquerda e o controlo à direita (tema e língua).
+  // A block inside the card: text on top, controls below. With "row", the
+  // text on the left and the control on the right (theme and language).
   .Settings_Block{
     display: flex;
     flex-direction: column;
@@ -130,7 +130,7 @@
       color: var(--text-soft);
     }
 
-    // Com uma ação ao lado do título (ex.: mostrar passwords)
+    // With an action next to the title (e.g. show passwords)
     &.with-action{
       display: flex;
       align-items: flex-start;
@@ -139,7 +139,7 @@
     }
   }
 
-  // --- Campos -------------------------------------------------------------------------------
+  // --- Fields ---------------------------------------------------------------------------------
   .Settings_Field{
     display: flex;
     flex-direction: column;
@@ -166,7 +166,7 @@
     }
   }
 
-  // Campo e botão na mesma linha, alinhados pela base
+  // Field and button on the same row, aligned at the baseline
   .Settings_Inline{
     display: flex;
     align-items: flex-end;
@@ -178,7 +178,7 @@
     }
   }
 
-  // Password: a atual na primeira linha, a nova e a repetida lado a lado
+  // Password: the current one on the first row, the new and repeated side by side
   .Settings_Grid{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -199,7 +199,7 @@
     gap: 12px 20px;
   }
 
-  // As regras da password nova, com visto quando se cumprem
+  // The new password's rules, ticked when met
   .Settings_Rules{
     display: flex;
     flex-wrap: wrap;
@@ -228,7 +228,7 @@
     .ok &{
       border-color: var(--game-status-finished);
       background: var(--game-status-finished);
-      // O visto, desenhado com duas bordas
+      // The tick, drawn with two borders
       position: relative;
 
       &::after{
@@ -272,7 +272,7 @@
     padding: 0 20px;
   }
 
-  // --- Controlo segmentado (tema e língua) ---------------------------------------------------
+  // --- Segmented control (theme and language) ------------------------------------------------
   .Settings_Segmented{
     display: inline-flex;
     flex-wrap: wrap;
@@ -324,7 +324,7 @@
     opacity: .7;
   }
 
-  // --- Telemóvel: tema e língua em botões de largura igual ---------------------------------
+  // --- Mobile: theme and language in equal-width buttons -----------------------------------
   @media (max-width: 760px){
     gap: 16px;
     --card-pad: 16px;

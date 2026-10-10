@@ -31,8 +31,8 @@
     font-weight: 700;
   }
 
-  // As capas lado a lado, a rolar na horizontal; a altura não muda com o
-  // número de jogos
+  // Covers side by side, scrolling horizontally; the height doesn't change with the
+  // number of games
   .Game_Shelf_Row{
     display: grid;
     grid-auto-flow: column;
@@ -65,7 +65,7 @@
     overflow: hidden;
     background: var(--surface-2);
 
-    // Lombada da caixa
+    // Box spine
     &::before{
       content: '';
       position: absolute;

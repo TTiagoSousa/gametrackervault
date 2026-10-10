@@ -1,7 +1,7 @@
 import { PrismaLibraryRepository } from '../repositories/prisma/prisma-library-repository';
 import { mapEntry } from './mapEntry';
 
-/** A entrada de um jogo na estante do utilizador, ou null se ainda não está lá. */
+/** A game's entry on the user's shelf, or null if it isn't there yet. */
 export async function getLibraryEntry(
   userId: string,
   gameId: number,

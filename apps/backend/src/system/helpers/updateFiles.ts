@@ -2,13 +2,13 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 
 /**
- * Ficheiros partilhados com o atualizador (deploy/proxmox/update.sh), na pasta
- * SYSTEM_UPDATES_DIR. O backend corre sem privilégios e não atualiza nada sozinho:
- * escreve `request` com a versão pedida, e uma unit .path do systemd (root) vê o
- * ficheiro aparecer e corre a atualização. O progresso volta em `status.json` e o
- * output em `update.log`.
+ * Files shared with the updater (deploy/proxmox/update.sh), in the
+ * SYSTEM_UPDATES_DIR folder. The backend runs unprivileged and doesn't update anything itself:
+ * it writes `request` with the requested version, and a systemd .path unit (root) sees the
+ * file appear and runs the update. Progress comes back in `status.json` and the
+ * output in `update.log`.
  *
- * Sem SYSTEM_UPDATES_DIR (desenvolvimento) as atualizações estão desligadas.
+ * Without SYSTEM_UPDATES_DIR (development) updates are disabled.
  */
 export function updatesDir(): string | null {
   return process.env.SYSTEM_UPDATES_DIR || null;
@@ -38,7 +38,7 @@ const IDLE: UpdateStatus = {
   log: [],
 };
 
-// Códigos de cor do terminal que o update.sh escreve no log.
+// Terminal colour codes that update.sh writes to the log.
 const ESC = String.fromCharCode(27);
 const ANSI_COLOURS = new RegExp(`${ESC}\\[[0-9;]*m`, 'g');
 
@@ -61,11 +61,11 @@ export async function readUpdateStatus(logLines = 40): Promise<UpdateStatus> {
         log: [],
       };
     } catch {
-      // ficheiro a meio de ser escrito: fica o estado anterior na próxima leitura
+      // file half-written: the previous status stays until the next read
     }
   }
 
-  // Pedido escrito mas o atualizador ainda não lhe pegou.
+  // Request written but the updater hasn't picked it up yet.
   if (pending && status.state !== 'running') {
     status = { ...IDLE, state: 'queued', target: pending.trim() };
   }
@@ -81,7 +81,7 @@ export async function readUpdateStatus(logLines = 40): Promise<UpdateStatus> {
   return status;
 }
 
-/** Escreve o pedido de forma atómica (o atualizador nunca lê meio ficheiro). */
+/** Writes the request atomically (the updater never reads half a file). */
 export async function writeUpdateRequest(version: string): Promise<void> {
   const dir = updatesDir();
   if (!dir) throw new Error('Updates are disabled');

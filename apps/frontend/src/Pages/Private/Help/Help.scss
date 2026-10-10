@@ -1,8 +1,8 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Ajuda: uma lista de secções que abrem e fecham (details/summary). Fechadas,
-// mostram só o título; abertas, o texto até 72 caracteres por linha.
+// Help: a list of sections that open and close (details/summary). Closed,
+// they show only the title; open, the text at up to 72 characters per line.
 .Help {
   @include Mixin.Pages_Configs;
 
@@ -100,7 +100,7 @@
     @media (max-width: 720px){ padding: 0 16px 18px; }
   }
 
-  // --- Telemóvel ------------------------------------------------------------------------------
+  // --- Mobile ---------------------------------------------------------------------------------
   @media (max-width: 760px){
     gap: 16px;
 

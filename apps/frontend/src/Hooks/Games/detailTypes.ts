@@ -1,4 +1,4 @@
-// Formatos de GET /games/:id e das rotas /library
+// Shapes of GET /games/:id and the /library routes
 
 export interface GameRef {
   id: number;
@@ -35,7 +35,7 @@ export interface GameDetail {
     users: number | null;
     usersCount: number;
   };
-  // Tempos médios em horas (null quando o IGDB não tem dados suficientes)
+  // Average times in hours (null when IGDB doesn't have enough data)
   timeToBeat: {
     main: number | null;
     mainExtras: number | null;
@@ -51,7 +51,7 @@ export interface GameDetail {
   sameSeries: GameRef[];
 }
 
-// Estados na estante — a ordem é a de apresentação no painel
+// Shelf statuses — the order is the display order in the panel
 export const LIBRARY_STATUSES = [
   'PLAYING',
   'PAUSED',
@@ -63,7 +63,7 @@ export const LIBRARY_STATUSES = [
 ] as const;
 export type LibraryStatus = (typeof LIBRARY_STATUSES)[number];
 
-// As prateleiras do Início, por esta ordem; cada estado vai para uma delas
+// The Home shelves, in this order; each status goes to one of them
 export const SHELVES = ['playing', 'done', 'later', 'dropped'] as const;
 export type Shelf = (typeof SHELVES)[number];
 export const SHELF_OF: Record<LibraryStatus, Shelf> = {

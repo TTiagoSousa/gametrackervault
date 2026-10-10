@@ -3,11 +3,11 @@ import { EntryWithGame } from '../repositories/library-repository';
 const coverUrl = (imageId: string) =>
   `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`;
 
-// Datas só com dia (coluna DATE) → "AAAA-MM-DD"
+// Day-only dates (DATE column) → "YYYY-MM-DD"
 const day = (date: Date | null) =>
   date ? date.toISOString().slice(0, 10) : null;
 
-/** Entrada da estante no formato da app, com o jogo já resumido. */
+/** Shelf entry in the app format, with the game already summarised. */
 export function mapEntry(entry: EntryWithGame) {
   return {
     gameId: entry.gameId,

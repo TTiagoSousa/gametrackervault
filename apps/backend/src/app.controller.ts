@@ -11,8 +11,8 @@ export class AppController {
   }
 
   /**
-   * Público: diz que este servidor é um GameTracker Vault. A app Android usa-o
-   * para confirmar o endereço que o utilizador escreveu antes de o guardar.
+   * Public: says this server is a GameTracker Vault. The Android app uses it
+   * to confirm the address the user typed before saving it.
    */
   @Get('health')
   health() {

@@ -8,9 +8,9 @@ import { androidBridge } from '../../../Service/androidApp';
 import * as Icon from '../../../Imports/icons';
 import './Top_Nav.scss';
 
-// Barra de topo da app autenticada: marca à esquerda, separadores ao centro e, à
-// direita, o tema e o avatar com o menu da conta. No telemóvel os separadores
-// passam para uma linha própria por baixo.
+// Top bar of the authenticated app: brand on the left, tabs in the centre and,
+// on the right, the theme and the avatar with the account menu. On mobile the tabs
+// move to their own row below.
 const Top_Nav = () => {
   const { t } = useTranslation('nav');
   const { t: tAdmin } = useTranslation('admin');
@@ -21,9 +21,9 @@ const Top_Nav = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLElement>(null);
 
-  // Publica a altura real da barra em --top-nav-height: o que fica colado por
-  // baixo dela (a barra da pesquisa, o painel de filtros) usa-a como topo. No
-  // telemóvel a barra tem duas linhas, por isso não serve um valor fixo.
+  // Publishes the actual bar height in --top-nav-height: whatever sticks
+  // below it (the search bar, the filters panel) uses it as its top. On
+  // mobile the bar has two rows, so a fixed value will not do.
   useEffect(() => {
     const bar = barRef.current;
     if (!bar) return;
@@ -37,16 +37,16 @@ const Top_Nav = () => {
 
   const visibleItems = menuItems.filter((item) => !item.adminOnly || role === 'ADMIN');
 
-  // O separador ativo é o de caminho mais comprido que bate com a rota. O /Vault
-  // (início) é prefixo de todos os outros, por isso só conta quando é exato — senão
-  // ficaria ativo em páginas sem separador, como a pesquisa.
+  // The active tab is the one with the longest path matching the route. /Vault
+  // (home) is a prefix of all the others, so it only counts on an exact match — otherwise
+  // it would be active on pages without a tab, such as search.
   const matches = (path: string) =>
     path === '/Vault' ? pathname === '/Vault' || pathname === '/Vault/' : pathname.startsWith(path);
   const activeId = visibleItems
     .filter((item) => matches(item.path))
     .sort((a, b) => b.path.length - a.path.length)[0]?.id;
 
-  // Fecha o menu da conta ao clicar fora ou ao carregar em Esc
+  // Closes the account menu on an outside click or on Esc
   useEffect(() => {
     if (!menuOpen) return;
     const onClick = (event: MouseEvent) => {
@@ -69,7 +69,7 @@ const Top_Nav = () => {
   };
 
   const initial = (username ?? '?').charAt(0).toUpperCase();
-  // Dentro da app Android: "Mudar de servidor"; no browser: onde a descarregar
+  // Inside the Android app: "Change server"; in the browser: where to download it
   const bridge = androidBridge();
 
   return (
@@ -143,7 +143,7 @@ const Top_Nav = () => {
                   <Icon.Help />
                   <span>{t('sidebar.help')}</span>
                 </Link>
-                {/* No telemóvel o Admin não cabe na barra do fundo: fica aqui */}
+                {/* On mobile Admin does not fit in the bottom bar: it goes here */}
                 {role === 'ADMIN' && (
                   <Link to="/Vault/Admin" role="menuitem" className="Top_Nav_Menu_Item mobile-only" onClick={() => setMenuOpen(false)}>
                     <Icon.Settings />

@@ -4,20 +4,20 @@ import './Spine.scss';
 export type GameStatus = 'playing' | 'finished' | 'beaten';
 
 interface Spine_Props {
-  /** Cor da caixa (1–6, tokens --spine-N). Ignorada quando é um lugar vazio. */
+  /** Box color (1–6, --spine-N tokens). Ignored for an empty slot. */
   tone?: number;
-  /** Título impresso ao alto na lombada. */
+  /** Title printed upright on the spine. */
   title?: string;
-  /** Estado do jogo: pinta a etiqueta no topo da lombada. */
+  /** Game status: colors the label at the top of the spine. */
   status?: GameStatus;
-  /** Lugar vazio na prateleira — tracejado, sem cor nem título. */
+  /** Empty slot on the shelf — dashed, no color or title. */
   empty?: boolean;
-  /** Altura relativa (0.7–1): as caixas reais não têm todas o mesmo tamanho. */
+  /** Relative height (0.7–1): real boxes aren't all the same size. */
   height?: number;
 }
 
-// Lombada de uma caixa de jogo vista na estante. É o motivo visual da app: a
-// estante do login, as prateleiras do Início e, mais tarde, a biblioteca.
+// Spine of a game box seen on the shelf. It's the app's visual motif: the
+// login shelf, the Home shelves and, later, the library.
 const Spine = ({ tone = 1, title, status, empty = false, height = 1 }: Spine_Props) => {
   const style = {
     '--spine-color': `var(--spine-${tone})`,

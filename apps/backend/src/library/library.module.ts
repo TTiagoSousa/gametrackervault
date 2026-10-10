@@ -8,7 +8,7 @@ import { PrismaLibraryRepository } from './repositories/prisma/prisma-library-re
   imports: [GamesModule],
   controllers: [LibraryController],
   providers: [LibraryService, PrismaLibraryRepository],
-  // O assistente lê a estante para recomendar jogos
+  // The assistant reads the shelf to recommend games
   exports: [PrismaLibraryRepository],
 })
 export class LibraryModule {}

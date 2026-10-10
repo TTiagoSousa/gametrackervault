@@ -9,8 +9,8 @@ import { UserRepository } from '../repositories/user-repository';
 import { AdminUpdateUserDto } from '../dto/update-account.dto';
 
 /**
- * O admin muda o nome, o papel ou a password de uma conta. Nunca deixa a
- * instalação sem nenhum administrador.
+ * The admin changes an account's username, role or password. Never leaves the
+ * installation without an administrator.
  */
 export async function updateUserByAdmin(
   id: string,

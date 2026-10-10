@@ -54,8 +54,8 @@
   }
 }
 
-// Portal'd para document.body — fica fora da árvore de .Dropdown_Field de propósito,
-// para escapar a qualquer overflow:hidden/z-index de cards ancestrais.
+// Portal'd to document.body — deliberately outside the .Dropdown_Field tree,
+// to escape any overflow:hidden/z-index of ancestor cards.
 .Dropdown_Field_Panel{
   position: fixed;
   z-index: 1200;
@@ -125,7 +125,7 @@
     white-space: nowrap;
     transition: background .13s ease, color .13s ease;
 
-    // Marca de seleção à esquerda em vez de fundo cheio: mantém a lista leve.
+    // Selection mark on the left instead of a full background: keeps the list light.
     &::before{
       content: '';
       position: absolute;

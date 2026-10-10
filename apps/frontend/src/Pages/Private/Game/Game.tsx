@@ -10,12 +10,12 @@ import Library_Panel from './Library_Panel';
 import Time_To_Beat from './Time_To_Beat';
 import './Game.scss';
 
-// Resumos maiores do que isto aparecem cortados, com "Ler mais"
+// Summaries longer than this show truncated, with "Read more"
 const SUMMARY_LIMIT = 480;
 
 /**
- * Página de um jogo: a ficha do IGDB (capa, produção, notas, tempos, resumo,
- * imagens, DLCs, saga) e, ao lado, "A minha estante" para o pôr, alterar ou tirar.
+ * Game page: the IGDB info sheet (cover, production, ratings, times, summary,
+ * images, DLCs, series) and, beside it, "My shelf" to add, change or remove it.
  */
 const Game = () => {
   const { t } = useTranslation('game');
@@ -25,17 +25,17 @@ const Game = () => {
   const { game, error, loading } = useGameDetail(gameId);
   const library = useLibraryEntry(gameId);
   const [expanded, setExpanded] = useState<{ id: number; summary: boolean; story: boolean }>({ id: gameId, summary: false, story: false });
-  // Ao mudar de jogo, os "Ler mais" voltam a fechar
+  // When the game changes, the "Read more" sections close again
   const open = expanded.id === gameId ? expanded : { id: gameId, summary: false, story: false };
   const toggle = (key: 'summary' | 'story') => setExpanded({ ...open, [key]: !open[key] });
 
-  // Telemóvel e tablet: "A minha estante" abre como uma folha por cima da página.
-  // Fica aberta só para o jogo em que foi aberta.
+  // Mobile and tablet: "My shelf" opens as a sheet over the page.
+  // It stays open only for the game it was opened on.
   const { t: tl } = useTranslation('library');
   const [sheetFor, setSheetFor] = useState<number | null>(null);
   const sheetOpen = sheetFor === gameId;
 
-  // Com a folha aberta a página não rola por trás, e Esc fecha-a
+  // With the sheet open the page doesn't scroll behind it, and Esc closes it
   useEffect(() => {
     if (!sheetOpen) return;
     const previous = document.body.style.overflow;
@@ -54,7 +54,7 @@ const Game = () => {
     <button
       type='button'
       className='Game_Back'
-      // Aberta por link direto não há para onde voltar dentro da app: vai à pesquisa
+      // Opened via a direct link there's nowhere to go back to in the app: go to search
       onClick={() => ((window.history.state as { idx?: number } | null)?.idx ? navigate(-1) : navigate('/Vault/Search'))}
     >
       <Icon.Chevron />
@@ -223,10 +223,10 @@ const Game = () => {
       <Game_Shelf title={t('sameSeries')} games={game.sameSeries} />
       </div>
 
-      {/* No computador, coluna da direita fixa ao fazer scroll (o invólucro não
-          existe para o layout: display contents). No telemóvel e no tablet, uma
-          folha que abre por cima a partir da barra "A minha estante".
-          key: o rascunho recomeça ao abrir outro jogo (ex.: uma DLC) */}
+      {/* On desktop, right column pinned while scrolling (the wrapper doesn't
+          exist for layout: display contents). On mobile and tablet, a
+          sheet that opens on top from the "My shelf" bar.
+          key: the draft resets when opening another game (e.g. a DLC) */}
       <div className={`Game_Dock${sheetOpen ? ' open' : ''}`} onClick={() => setSheetFor(null)}>
         <div className='Game_Dock_Sheet' role={sheetOpen ? 'dialog' : undefined} aria-modal={sheetOpen || undefined} onClick={(e) => e.stopPropagation()}>
           <div className='Game_Dock_Head'>

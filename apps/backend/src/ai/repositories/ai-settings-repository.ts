@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AiSettings } from 'src/generated/prisma/client/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-/** A chave (já cifrada) e o modelo do assistente de cada utilizador. */
+/** Each user's assistant key (already encrypted) and model. */
 @Injectable()
 export class AiSettingsRepository {
   constructor(private readonly prisma: PrismaService) {}

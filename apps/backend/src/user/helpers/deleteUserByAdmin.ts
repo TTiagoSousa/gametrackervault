@@ -3,8 +3,8 @@ import { Role } from 'src/generated/prisma/client/client';
 import { UserRepository } from '../repositories/user-repository';
 
 /**
- * O admin apaga uma conta (a estante e a chave do assistente vão com ela).
- * Não se apaga a si próprio nem o último administrador.
+ * The admin deletes an account (the shelf and assistant key go with it).
+ * Can't delete themselves or the last administrator.
  */
 export async function deleteUserByAdmin(
   id: string,

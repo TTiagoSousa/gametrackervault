@@ -1,8 +1,8 @@
 @use '../../Styles/Fonts.scss' as Font;
 
-// Lombada: tira vertical da altura dada pelo pai (a prateleira), com o título
-// impresso ao alto — de baixo para cima, como nas caixas reais — e uma etiqueta
-// de estado no topo.
+// Spine: vertical strip with the height given by the parent (the shelf), with the title
+// printed upright — bottom to top, like on real boxes — and a status
+// label at the top.
 .Spine{
   position: relative;
   flex: 0 0 auto;
@@ -19,7 +19,7 @@
   color: var(--spine-ink);
   overflow: hidden;
 
-  // Vinco da lombada: uma faixa mais clara junto à aresta esquerda
+  // Spine crease: a lighter band along the left edge
   &::before{
     content: '';
     position: absolute;
@@ -58,7 +58,7 @@
     max-height: 100%;
   }
 
-  // Lugar vazio: o contorno de uma caixa que ainda não está lá
+  // Empty slot: the outline of a box that isn't there yet
   &.empty{
     background: transparent;
     border: 2px dashed var(--line-strong);

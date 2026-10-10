@@ -1,7 +1,7 @@
 @use '../../../Styles/Fonts.scss' as Font;
 
-// Barra de topo como a borda de uma prateleira: superfície lisa assente num
-// bordo grosso cor de tinta.
+// Top bar as the edge of a shelf: a flat surface resting on a
+// thick ink-coloured border.
 .Top_Nav{
   position: sticky;
   top: 0;
@@ -22,7 +22,7 @@
     gap: 16px;
   }
 
-  // --- Marca ----------------------------------------------------------------------
+  // --- Brand ----------------------------------------------------------------------
   .Top_Nav_Brand{
     display: inline-flex;
     align-items: center;
@@ -49,7 +49,7 @@
     }
   }
 
-  // --- Separadores: texto simples, o ativo ganha fundo ultramarino suave ---------------
+  // --- Tabs: plain text, the active one gets a soft ultramarine background ---------------
   .Top_Nav_Tabs{
     display: flex;
     gap: 4px;
@@ -80,7 +80,7 @@
     }
   }
 
-  // --- Ações: tema e conta -----------------------------------------------------------------
+  // --- Actions: theme and account -----------------------------------------------------------------
   .Top_Nav_Actions{
     justify-self: end;
     display: flex;
@@ -207,8 +207,8 @@
 
   .mobile-only{ display: none !important; }
 
-  // --- Telemóvel: barra baixa só com a marca, o tema e o avatar; as secções vão
-  // para a barra do fundo (Bottom_Nav) -----------------------------------------------------
+  // --- Mobile: short bar with only the brand, theme and avatar; the sections move
+  // to the bottom bar (Bottom_Nav) -----------------------------------------------------
   @media (max-width: 760px){
     border-bottom-width: 3px;
 

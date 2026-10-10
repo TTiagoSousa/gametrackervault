@@ -4,15 +4,15 @@ import { PrismaLibraryRepository } from '../repositories/prisma/prisma-library-r
 import { SaveLibraryEntryDto } from '../dto/save-library-entry.dto';
 import { mapEntry } from './mapEntry';
 
-// A cópia do jogo (nome, capa, plataformas) é refrescada se tiver mais disto
+// The game's copy (name, cover, platforms) is refreshed if older than this
 const GAME_REFRESH_MS = 7 * 24 * 60 * 60 * 1000;
 
 const toDate = (value?: string | null) =>
   value ? new Date(`${value}T00:00:00.000Z`) : null;
 
 /**
- * Põe um jogo na estante ou altera a entrada que já lá está. Garante primeiro a
- * cópia mínima do jogo (tabela Game), vinda do IGDB.
+ * Puts a game on the shelf or updates the existing entry. First ensures the
+ * game's minimal copy (Game table), fetched from IGDB.
  */
 export async function saveLibraryEntry(
   userId: string,

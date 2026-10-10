@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom';
 import './Markdown.scss';
 
 /**
- * Markdown simples para as respostas do assistente — títulos, parágrafos,
- * listas, negrito, itálico, código e ligações. Monta elementos React (nunca HTML
- * cru), por isso o texto do modelo não consegue injetar nada na página.
+ * Simple Markdown for the assistant's replies — headings, paragraphs,
+ * lists, bold, italic, code and links. Builds React elements (never raw
+ * HTML), so the model's text can't inject anything into the page.
  *
- * Ligações "game:<id>" abrem a página desse jogo na app, "/Vault/…" outra página
- * da app e http(s) abrem noutra janela; qualquer outro esquema fica só como texto.
+ * "game:<id>" links open that game's page in the app, "/Vault/…" another app
+ * page and http(s) open in a new window; any other scheme stays as plain text.
  */
 
-// Negrito, itálico, código e ligações dentro de uma linha. O itálico é só com
-// asteriscos: com sublinhados apanharia nomes como "game_time_to_beats".
+// Bold, italic, code and links within a line. Italic is asterisks
+// only: underscores would catch names like "game_time_to_beats".
 const INLINE = /(\*\*([^*]+)\*\*|__([^_]+)__|\*([^*\s][^*]*)\*|`([^`]+)`|\[([^\]]+)\]\(([^)\s]+)\))/g;
 
 function inline(text: string, keyBase: string): ReactNode[] {
@@ -100,7 +100,7 @@ function parse(source: string): Block[] {
       continue;
     }
 
-    // Linha que continua o item anterior de uma lista
+    // Line continuing the previous list item
     if (list && /^\s{2,}/.test(line)) {
       list.items[list.items.length - 1] += ` ${line.trim()}`;
       continue;

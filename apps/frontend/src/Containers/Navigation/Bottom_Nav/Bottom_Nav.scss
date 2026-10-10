@@ -1,7 +1,7 @@
 @use '../../../Styles/Fonts.scss' as Font;
 
-// Barra de navegação do telemóvel, fixa no fundo. A altura é a variável
-// --bottom-nav-height (definida no Main.scss), que as páginas descontam.
+// Mobile navigation bar, fixed at the bottom. Its height is the
+// --bottom-nav-height variable (defined in Main.scss), which pages subtract.
 .Bottom_Nav{
   display: none;
 

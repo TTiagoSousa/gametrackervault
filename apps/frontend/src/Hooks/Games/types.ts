@@ -1,4 +1,4 @@
-// Formatos devolvidos por GET /games/search e GET /games/filters
+// Shapes returned by GET /games/search and GET /games/filters
 
 export interface GameSummary {
   id: number;
@@ -34,7 +34,7 @@ export interface GameFilters {
   types: FilterOption[];
 }
 
-// Os filtros que são listas de ids — o nome é o do parâmetro no URL e na API
+// Filters that are id lists — the name is the URL and API parameter name
 export const LIST_FILTERS = ['platforms', 'genres', 'themes', 'modes', 'perspectives', 'types'] as const;
 export type ListFilter = (typeof LIST_FILTERS)[number];
 

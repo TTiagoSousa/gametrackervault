@@ -15,7 +15,7 @@ const Admin = () => {
   const { username: me } = useAuth();
   const { users, fetchUsers } = useUsers();
   const { deleteUser, loading } = useUser();
-  // null = fechado; 'new' = criar; um utilizador = editá-lo
+  // null = closed; 'new' = create; a user = edit them
   const [modal, setModal] = useState<AdminUser | 'new' | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
 
@@ -39,10 +39,10 @@ const Admin = () => {
         </div>
       </header>
 
-      {/* Versão instalada e atualizações. */}
+      {/* Installed version and updates. */}
       <Version_Card />
 
-      {/* Credenciais do IGDB, usadas pela pesquisa de jogos de toda a instalação */}
+      {/* IGDB credentials, used by the game search across the whole install */}
       <Igdb_Card />
 
       <div className='Admin_List'>
@@ -67,7 +67,7 @@ const Admin = () => {
               </span>
               <span className='Admin_Row_Date'>{new Date(user.createdAt).toLocaleDateString(dateLocale())}</span>
 
-              {/* Largura fixa: a confirmação ocupa o lugar dos botões */}
+              {/* Fixed width: the confirmation takes the buttons' place */}
               <span className='Admin_Row_Actions'>
                 {confirmDelete === user.id ? (
                   <>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- As cores do design "Lombadas": noite e ultramarino -->
+    <!-- The "Lombadas" design colours: night and ultramarine -->
     <color name="background">#0D1230</color>
     <color name="accent">#2F3BE3</color>
     <color name="icon_background">#2F3BE3</color>

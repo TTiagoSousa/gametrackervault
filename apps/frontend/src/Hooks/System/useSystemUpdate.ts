@@ -6,9 +6,9 @@ import { errorMessage, type UpdateStatus, type VersionOverview } from "./types";
 const POLL_MS = 2000;
 
 /**
- * Pede uma atualização e acompanha-a até ao fim. A meio, o backend reinicia: os
- * pedidos falham durante uns segundos e isso é normal — conta como "a reiniciar".
- * Acaba quando o estado é success e o backend já responde com a versão pedida.
+ * Requests an update and follows it to the end. Midway, the backend restarts:
+ * requests fail for a few seconds and that is normal — it counts as "restarting".
+ * Done when the state is success and the backend responds with the requested version.
  */
 export const useSystemUpdate = () => {
   const [status, setStatus] = useState<UpdateStatus | null>(null);
@@ -17,12 +17,12 @@ export const useSystemUpdate = () => {
   const [error, setError] = useState('');
   const timer = useRef<number | null>(null);
   const target = useRef<string | null>(null);
-  // O status.json da atualização anterior: enquanto o atualizador não escreve o novo,
-  // é ele que se lê, e um "failed" antigo não pode passar por resultado desta.
+  // The previous update's status.json: until the updater writes the new one,
+  // that is what gets read, and an old "failed" must not pass for this one's result.
   const previousRun = useRef<string | null>(null);
 
-  // O próximo ciclo chama a versão atual do poll através de uma ref (o poll não se
-  // pode referir a si próprio na sua definição).
+  // The next cycle calls the current version of poll through a ref (poll cannot
+  // refer to itself in its own definition).
   const pollRef = useRef<() => void>(() => {});
   const schedule = () => {
     timer.current = window.setTimeout(() => pollRef.current(), POLL_MS);
@@ -49,7 +49,7 @@ export const useSystemUpdate = () => {
         return;
       }
       if (next.state === 'success') {
-        // Confirma que quem responde já é o backend novo antes de recarregar.
+        // Confirms the new backend is the one responding before reloading.
         const version = await http.get<VersionOverview>(End_Points.System_Version_Endpoint(), {
           withCredentials: true,
         });
@@ -60,7 +60,7 @@ export const useSystemUpdate = () => {
         }
       }
     } catch {
-      // O backend está a reiniciar.
+      // The backend is restarting.
       setRestarting(true);
     }
     schedule();
@@ -93,7 +93,7 @@ export const useSystemUpdate = () => {
     }
   };
 
-  /** Retoma o acompanhamento de uma atualização que já estava a correr. */
+  /** Resumes following an update that was already running. */
   const follow = (version: string | null) => {
     target.current = version;
     previousRun.current = null;

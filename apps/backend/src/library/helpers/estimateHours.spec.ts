@@ -4,7 +4,7 @@ import { estimateHours } from './estimateHours';
 const game = { ttbMain: 20, ttbExtras: 40, ttbCompletionist: 80 };
 
 describe('estimateHours', () => {
-  it('usa as horas escritas pelo utilizador, mesmo com média', () => {
+  it('uses the hours entered by the user, even with an average', () => {
     expect(
       estimateHours(
         { status: LibraryStatus.FINISHED_MAIN, hoursPlayed: 12 },
@@ -13,13 +13,13 @@ describe('estimateHours', () => {
     ).toEqual({ hours: 12, estimated: false });
   });
 
-  it('conta 0 horas escritas como horas escritas', () => {
+  it('counts 0 entered hours as entered hours', () => {
     expect(
       estimateHours({ status: LibraryStatus.PLAYING, hoursPlayed: 0 }, game),
     ).toEqual({ hours: 0, estimated: false });
   });
 
-  it('usa a média de cada tipo de fim quando não há horas', () => {
+  it('uses the average for each finish type when there are no hours', () => {
     const at = (status: LibraryStatus) =>
       estimateHours({ status, hoursPlayed: null }, game);
     expect(at(LibraryStatus.FINISHED_MAIN)).toEqual({
@@ -36,7 +36,7 @@ describe('estimateHours', () => {
     });
   });
 
-  it('recua para a média mais próxima quando falta a do tipo de fim', () => {
+  it('falls back to the closest average when the finish type one is missing', () => {
     const partial = { ttbMain: 20, ttbExtras: null, ttbCompletionist: null };
     expect(
       estimateHours(
@@ -46,7 +46,7 @@ describe('estimateHours', () => {
     ).toEqual({ hours: 20, estimated: true });
   });
 
-  it('não estima jogos a meio, em pausa, por jogar ou abandonados', () => {
+  it('does not estimate in-progress, paused, unplayed or dropped games', () => {
     for (const status of [
       LibraryStatus.PLAYING,
       LibraryStatus.PAUSED,
@@ -60,7 +60,7 @@ describe('estimateHours', () => {
     }
   });
 
-  it('fica sem horas quando o IGDB não tem média', () => {
+  it('has no hours when IGDB has no average', () => {
     const none = { ttbMain: null, ttbExtras: null, ttbCompletionist: null };
     expect(
       estimateHours(

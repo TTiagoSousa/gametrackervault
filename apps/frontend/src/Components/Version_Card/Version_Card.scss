@@ -1,7 +1,7 @@
 @use '../../Styles/Fonts.scss' as Font;
 @use '../../Styles/Mixins.scss' as Mixin;
 
-// Largura total, no mesmo estilo das secções das Definições.
+// Full width, in the same style as the Settings sections.
 .Version_Card{
   @include Mixin.Panel_Surface;
   width: 100%;

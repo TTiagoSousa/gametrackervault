@@ -1,16 +1,16 @@
-# Dependências e builds
+# Dependencies and builds
 node_modules/
 dist/
 *.tsbuildinfo
 coverage/
 
-# Segredos e configuração local — nunca no git
+# Secrets and local configuration — never in git
 .env
 .env.*
 !.env.example
 *.local
 
-# Ferramentas e sistema
+# Tools and OS
 .DS_Store
 Thumbs.db
 *.log
@@ -18,8 +18,10 @@ Thumbs.db
 !.vscode/extensions.json
 .idea/
 
-# Ficheiros soltos para análise (exports, documentos) — ficam só nesta máquina
+# Loose files for analysis (exports, documents) — stay on this machine only
 study/
 
-# Permissões locais do Claude Code — podem ter caminhos e chaves desta máquina
+# Local tooling (not part of the project)
 .claude/settings.local.json
+/CLAUDE.md
+.claude/

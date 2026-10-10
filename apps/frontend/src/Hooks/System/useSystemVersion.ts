@@ -5,7 +5,7 @@ import { End_Points } from "../../Service/endPoints";
 import http from "../../Service/httpService";
 import { errorMessage, type VersionOverview } from "./types";
 
-/** Versão instalada, a última release e se há atualização — para o card do Admin. */
+/** Installed version, latest release and whether an update is available — for the Admin card. */
 export const useSystemVersion = () => {
   const [overview, setOverview] = useState<VersionOverview | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ export const useSystemVersion = () => {
     }
   };
 
-  // As notas da última versão vêm na língua da interface: muda a língua, volta a pedir.
+  // The latest version's notes come in the UI language: when the language changes, fetch again.
   const { i18n } = useTranslation();
   useEffect(() => {
     fetchVersion();

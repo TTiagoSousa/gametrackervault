@@ -1,7 +1,7 @@
 import { ConflictException } from '@nestjs/common';
 import { UserRepository } from '../repositories/user-repository';
 
-/** Muda o nome do próprio utilizador; o nome é único na instalação. */
+/** Changes the user's own username; usernames are unique in the installation. */
 export async function updateOwnUsername(
   userId: string,
   username: string,

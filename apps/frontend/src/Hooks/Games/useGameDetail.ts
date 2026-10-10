@@ -10,7 +10,7 @@ const messageOf = (err: ApiError) => {
   return (Array.isArray(message) ? message[0] : message) ?? err.message ?? 'error';
 };
 
-/** A ficha de um jogo (GET /games/:id). Muda de jogo quando o id muda. */
+/** A game's details (GET /games/:id). Switches game when the id changes. */
 export const useGameDetail = (id: number) => {
   const [state, setState] = useState<{ id: number; game: GameDetail | null; error: string | null } | null>(null);
 
@@ -29,7 +29,7 @@ export const useGameDetail = (id: number) => {
     };
   }, [id]);
 
-  // Um resultado de outro jogo não conta — é o "a carregar" ao navegar entre jogos
+  // A result for another game does not count — that is the "loading" state when navigating between games
   const current = state?.id === id ? state : null;
   return { game: current?.game ?? null, error: current?.error ?? null, loading: !current };
 };

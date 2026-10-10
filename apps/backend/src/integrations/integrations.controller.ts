@@ -15,7 +15,7 @@ import { Role } from 'src/generated/prisma/client/client';
 import { IntegrationsService } from './integrations.service';
 import { SaveIgdbDto } from './dto/save-igdb.dto';
 
-// Credenciais de serviços externos da instalação — só administradores.
+// The installation's external service credentials — admins only.
 @Controller('integrations')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.ADMIN)

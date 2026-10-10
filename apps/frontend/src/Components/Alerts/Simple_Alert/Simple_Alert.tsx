@@ -12,7 +12,7 @@ const ICONS: Record<AlertType, string> = {
   info:    'ℹ',
 };
 
-// Chaves de tradução (namespace 'ui')
+// Translation keys ('ui' namespace)
 const LABELS: Record<AlertType, string> = {
   success: 'alert.labels.success',
   error:   'alert.labels.error',

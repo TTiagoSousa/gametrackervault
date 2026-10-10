@@ -26,8 +26,8 @@ model User {
   @@index([username])
 }
 
-// Serviços externos configurados pelo admin na app. Uma linha por serviço — a
-// chave é da instalação inteira, não de cada utilizador.
+// External services configured by the admin in the app. One row per service — the
+// key belongs to the whole installation, not to each user.
 enum IntegrationProvider {
   IGDB
 }
@@ -35,16 +35,16 @@ enum IntegrationProvider {
 model Integration {
   provider  IntegrationProvider @id
   clientId  String
-  // Cifrado com TOKEN_ENCRYPTION_KEY (AES-256-GCM); nunca sai do backend
+  // Encrypted with TOKEN_ENCRYPTION_KEY (AES-256-GCM); never leaves the backend
   secret    String
   updatedAt DateTime            @updatedAt
 }
 
-// --- Estante -------------------------------------------------------------------------
+// --- Shelf ---------------------------------------------------------------------------
 
-// Onde está um jogo na estante de um utilizador. As quatro prateleiras do Início
-// agrupam-nos: a jogar (PLAYING, PAUSED), concluídos (FINISHED_MAIN,
-// FINISHED_EXTRAS, COMPLETED_100), para jogar (PLAN_TO_PLAY) e abandonados.
+// Where a game sits on a user's shelf. The four shelves on Home
+// group them: playing (PLAYING, PAUSED), finished (FINISHED_MAIN,
+// FINISHED_EXTRAS, COMPLETED_100), to play (PLAN_TO_PLAY) and dropped.
 enum LibraryStatus {
   PLAYING
   PAUSED
@@ -55,9 +55,9 @@ enum LibraryStatus {
   DROPPED
 }
 
-// Cópia mínima de um jogo do IGDB — só o que a estante precisa para se desenhar
-// sem ir à API. Partilhada por todos os utilizadores; o resto da ficha vem
-// sempre do IGDB.
+// Minimal copy of an IGDB game — only what the shelf needs to render
+// without calling the API. Shared by all users; the rest of the details always
+// come from IGDB.
 model Game {
   igdbId       Int      @id
   name         String
@@ -66,13 +66,13 @@ model Game {
   releaseYear  Int?
   platforms    String[]
   genres       String[] @default([])
-  // Tempo médio para acabar (horas), dos jogadores do IGDB: história principal,
-  // principal + secundárias e 100%. As estatísticas usam-no quando o utilizador
-  // não escreveu as horas.
+  // Average time to beat (hours), from IGDB players: main story,
+  // main + extras and 100%. Stats use it when the user
+  // didn't enter the hours.
   ttbMain          Float?
   ttbExtras        Float?
   ttbCompletionist Float?
-  // Quando os géneros e os tempos foram lidos do IGDB (null = nunca)
+  // When genres and times were fetched from IGDB (null = never)
   factsCheckedAt   DateTime?
   updatedAt    DateTime @updatedAt
 
@@ -89,7 +89,7 @@ model LibraryEntry {
   hoursPlayed Float?
   startedAt   DateTime?     @db.Date
   finishedAt  DateTime?     @db.Date
-  // Nota pessoal de 1 a 10
+  // Personal rating from 1 to 10
   rating      Int?
   notes       String?
   createdAt   DateTime      @default(now())
@@ -99,21 +99,21 @@ model LibraryEntry {
   @@index([userId, status])
 }
 
-// --- Assistente (IA) -------------------------------------------------------------------
+// --- Assistant (AI) --------------------------------------------------------------------
 
-// Fornecedor do assistente. Por agora só a Anthropic (Claude).
+// Assistant provider. For now only Anthropic (Claude).
 enum AiProvider {
   ANTHROPIC
 }
 
-// A chave e o modelo do assistente de cada utilizador: cada um usa a sua conta.
+// Each user's assistant key and model: everyone uses their own account.
 model AiSettings {
   userId    String     @id
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   provider  AiProvider @default(ANTHROPIC)
-  // Cifrada com TOKEN_ENCRYPTION_KEY (AES-256-GCM); nunca sai do backend
+  // Encrypted with TOKEN_ENCRYPTION_KEY (AES-256-GCM); never leaves the backend
   apiKey    String
-  // Os últimos 4 caracteres, para mostrar qual chave está guardada
+  // The last 4 characters, to show which key is stored
   keyHint   String
   model     String
   updatedAt DateTime   @updatedAt

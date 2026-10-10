@@ -1,30 +1,30 @@
 // ---------------------------------------------------------------------------
-// Paleta base — "Lombadas". As cores vêm do plástico das caixas de jogos: o
-// cinza-caixa como fundo, a tinta azul-marinho das letras impressas e o
-// ultramarino como acento. Os três estados de jogo têm cores de lombada
-// próprias (amarelo, verde, magenta).
+// Base palette — "Spines". The colours come from game case plastic:
+// case grey as the background, the navy ink of the printed lettering and
+// ultramarine as the accent. The three game statuses have their own spine
+// colours (yellow, green, magenta).
 //
-// O escuro é a mesma estante à noite: ultramarino profundo, nunca preto neutro.
+// Dark is the same shelf at night: deep ultramarine, never neutral black.
 //
-// Só Tokens.scss lê daqui. Os componentes usam sempre os tokens, nunca isto.
+// Only Tokens.scss reads from here. Components always use the tokens, never this.
 // ---------------------------------------------------------------------------
 
-// --- Dia ---
-$day-bg:        #E9EBEF;  // cinza-caixa: fundo da aplicação
-$day-surface:   #F7F8FA;  // painéis
-$day-surface-2: #DFE2E8;  // superfícies encaixadas (inputs, carris)
-$day-surface-3: #D3D7DF;  // hover de superfícies
+// --- Day ---
+$day-bg:        #E9EBEF;  // case grey: app background
+$day-surface:   #F7F8FA;  // panels
+$day-surface-2: #DFE2E8;  // inset surfaces (inputs, tracks)
+$day-surface-3: #D3D7DF;  // surface hover
 $day-line:      rgba(15, 26, 60, .12);
 $day-line-2:    rgba(15, 26, 60, .22);
-$day-text:      #0F1A3C;  // tinta azul-marinho
+$day-text:      #0F1A3C;  // navy ink
 $day-soft:      #4A5576;
 $day-faint:     #7F88A3;
 
-$day-accent:        #2F3BE3;  // ultramarino
+$day-accent:        #2F3BE3;  // ultramarine
 $day-accent-bright: #1F29C4;
 $day-accent-deep:   #C9CCF8;
 
-// --- Noite ---
+// --- Night ---
 $night-bg:        #0D1230;
 $night-surface:   #151B42;
 $night-surface-2: #1C2352;
@@ -39,7 +39,7 @@ $night-accent:        #7C86FF;
 $night-accent-bright: #A5ACFF;
 $night-accent-deep:   #2A3290;
 
-// --- Estados de jogo (cores de lombada) ---
+// --- Game statuses (spine colours) ---
 $playing-day:    #F5B700;
 $playing-night:  #FFD23F;
 $finished-day:   #13A383;
@@ -47,7 +47,7 @@ $finished-night: #3EDDB6;
 $beaten-day:     #D6337F;
 $beaten-night:   #FF6FAE;
 
-// --- Semântico ---
+// --- Semantic ---
 $success-night: #3EDDB6;
 $success-day:   #13865F;
 $warning-night: #FFD23F;

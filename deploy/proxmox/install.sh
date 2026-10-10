@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# Instala o GameTracker Vault dentro de um container Debian 13 (o ct-create.sh chama-o; também
-# se pode correr à mão dentro do CT). Corre como root, a partir do repo já clonado.
+# Installs GameTracker Vault inside a Debian 13 container (ct-create.sh calls it; it can
+# also be run by hand inside the CT). Runs as root, from the already cloned repo.
 #
-# Deixa a correr: PostgreSQL local, o backend como serviço systemd (127.0.0.1:3000) e
-# o nginx na porta 80 a servir o frontend e a encaminhar /api para o backend.
+# Leaves running: local PostgreSQL, the backend as a systemd service (127.0.0.1:3000) and
+# nginx on port 80 serving the frontend and proxying /api to the backend.
 #
-# Pode correr-se outra vez sem estragar nada: os segredos e a base de dados que já
-# existem ficam como estão.
+# Safe to run again: existing secrets and database are left as they are.
 #
-# Variáveis (todas opcionais):
-#   APP_URL         endereço por onde se abre a app (omissão: http://<IP do CT>)
-#   ADMIN_USERNAME  primeiro utilizador, fica ADMIN (omissão: admin)
-#   ADMIN_PASSWORD  password dele (omissão: admin — trocar depois de instalar)
-#   NODE_MAJOR      versão do Node (omissão: 22)
+# Variables (all optional):
+#   APP_URL         address the app is opened at (default: http://<CT IP>)
+#   ADMIN_USERNAME  first user, becomes ADMIN (default: admin)
+#   ADMIN_PASSWORD  their password (default: admin — change it after installing)
+#   NODE_MAJOR      Node version (default: 22)
+#   TZ_NAME         time zone, e.g. Europe/Lisbon (default: Europe/Lisbon)
 set -euo pipefail
 
 # The Debian template only ships the C locale; a LANG inherited from the host shell
@@ -34,7 +34,9 @@ NODE_MAJOR="${NODE_MAJOR:-22}"
 DB_NAME="gametracker"
 DB_USER="gametracker"
 CREDS_FILE="/root/gametracker-credentials.txt"
-TZ_NAME="Europe/Lisbon"
+# Container time zone: the Proxmox host's (ct-create passes it) or Europe/Lisbon
+TZ_NAME="${TZ_NAME:-Europe/Lisbon}"
+[ -e "/usr/share/zoneinfo/$TZ_NAME" ] || TZ_NAME="Etc/UTC"
 
 ip_address() { hostname -I 2>/dev/null | awk '{print $1}'; }
 APP_URL="${APP_URL:-http://$(ip_address)}"
@@ -44,7 +46,7 @@ ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin}"
 
 random_secret() { openssl rand -base64 "$1" | tr -d '\n'; }
 
-# --- sistema ------------------------------------------------------------------------
+# --- system -------------------------------------------------------------------------
 
 msg "Installing system packages…"
 export DEBIAN_FRONTEND=noninteractive
@@ -58,8 +60,8 @@ apt-get install -y -qq \
   build-essential python3 \
   tzdata cron >/dev/null
 
-# As datas e as horas "de hoje" dependem do fuso do processo; sem isto o
-# container fica em UTC.
+# "Today's" dates and times depend on the process time zone; without this the
+# container stays on UTC.
 msg "Timezone: $TZ_NAME"
 ln -sf "/usr/share/zoneinfo/$TZ_NAME" /etc/localtime
 echo "$TZ_NAME" > /etc/timezone
@@ -91,7 +93,7 @@ if ! command -v node >/dev/null || [ "$(node -p 'process.versions.node.split("."
 fi
 msg "Node $(node -v), npm $(npm -v)"
 
-# --- utilizador da app --------------------------------------------------------------
+# --- app user -----------------------------------------------------------------------
 
 if ! id "$APP_USER" >/dev/null 2>&1; then
   msg "Creating system user $APP_USER…"
@@ -110,7 +112,7 @@ chmod 750 /etc/gametracker
 
 if [ -f "$ENV_FILE" ]; then
   msg "Existing configuration in $ENV_FILE — kept (secrets and database)."
-  # Reaproveita a password da base de dados para o caso de ser preciso recriar o role.
+  # Reuse the database password in case the role has to be recreated.
   DB_PASS="$(sed -n 's#^DATABASE_URL="postgresql://[^:]*:\([^@]*\)@.*#\1#p' "$ENV_FILE")"
 else
   DB_PASS="$(random_secret 24 | tr -d '/+=')"
@@ -123,13 +125,13 @@ if ! runuser -u postgres -- psql -tAc "SELECT 1 FROM pg_database WHERE datname='
   runuser -u postgres -- psql -qc "CREATE DATABASE $DB_NAME OWNER $DB_USER;"
 fi
 
-# --- configuração do backend ---------------------------------------------------------
+# --- backend configuration ----------------------------------------------------------
 
 if [ ! -f "$ENV_FILE" ]; then
   msg "Generating $ENV_FILE…"
   cat > "$ENV_FILE" <<EOF
-# Configuração do GameTracker Vault. Edita com:  gametracker-config
-# (abre este ficheiro e reinicia o backend se houver alterações)
+# GameTracker Vault configuration. Edit with:  gametracker-config
+# (it opens this file and restarts the backend if anything changed)
 
 NODE_ENV=production
 HOST=127.0.0.1
@@ -138,37 +140,37 @@ TZ=${TZ_NAME}
 
 DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@127.0.0.1:5432/${DB_NAME}"
 
-# Endereço por onde se abre a app (origem aceite pelo CORS).
+# Address the app is opened on (the origin accepted by CORS).
 FRONTEND_URL="${APP_URL}"
 
 JWT_SECRET="$(random_secret 48)"
 
-# ⚠ NÃO ALTERAR: cifra os segredos das integrações guardados na base de dados
-# (ex. o Client Secret do IGDB, que o admin põe em Admin → Integrações). Se mudar,
-# têm de ser introduzidos outra vez. Cópia em ${CREDS_FILE}.
+# ⚠ DO NOT CHANGE: encrypts the integration secrets stored in the database
+# (e.g. the IGDB Client Secret, entered by the admin in the app). If it changes,
+# they must all be entered again. Copy in ${CREDS_FILE}.
 TOKEN_ENCRYPTION_KEY="$(random_secret 32)"
 
 EOF
 fi
-# Reinstalação por cima de um ficheiro antigo, sem a chave de cifra
+# Reinstall over an old file that lacks the encryption key
 ensure_encryption_key
 chown root:"$APP_USER" "$ENV_FILE"
 chmod 640 "$ENV_FILE"
 
-# --- build e base de dados -----------------------------------------------------------
+# --- build and database -------------------------------------------------------------
 
 build_app
 migrate_db
 publish_frontend
 
-# --- serviço systemd e nginx (lib.sh) -----------------------------------------------
+# --- systemd service and nginx (lib.sh) ---------------------------------------------
 
 configure_service
 configure_updater
 restart_backend
 configure_nginx
 
-# --- comandos de manutenção e backups ------------------------------------------------
+# --- maintenance commands and backups -----------------------------------------------
 
 msg "Installing the gametracker-update and gametracker-config commands…"
 install_commands
@@ -176,16 +178,16 @@ install_commands
 mkdir -p "$BACKUP_DIR"
 chmod 700 "$BACKUP_DIR"
 cat > /etc/cron.d/gametracker-backup <<EOF
-# Dump diário da base de dados às 03:30 (guarda 14 dias). Um snapshot do container
-# com o Postgres a correr nem sempre é consistente; o dump é.
+# Daily database dump at 03:30 (keeps 14 days). A container snapshot taken
+# with Postgres running is not always consistent; the dump is.
 30 3 * * * root ${SCRIPT_DIR}/backup.sh >/var/log/gametracker-backup.log 2>&1
 EOF
 systemctl enable --now cron >/dev/null
 
-# --- primeiro utilizador ------------------------------------------------------------
+# --- first user ---------------------------------------------------------------------
 
-# Direto na base de dados (create-admin.cjs) e não por POST /auth/register: a omissão
-# é admin/admin e o registo exige 8 caracteres de password.
+# Directly in the database (create-admin.cjs) rather than via POST /auth/register: the
+# default is admin/admin and registration requires an 8-character password.
 USERS="$(runuser -u postgres -- psql -d "$DB_NAME" -tAc 'SELECT count(*) FROM "User"')"
 ADMIN_CREATED=""
 if [ "$USERS" = "0" ]; then
@@ -200,7 +202,7 @@ if [ "$USERS" = "0" ]; then
   fi
 fi
 
-# --- credenciais --------------------------------------------------------------------
+# --- credentials --------------------------------------------------------------------
 
 if [ -n "$ADMIN_CREATED" ] || [ ! -f "$CREDS_FILE" ]; then
   load_env
@@ -217,7 +219,7 @@ if [ -n "$ADMIN_CREATED" ] || [ ! -f "$CREDS_FILE" ]; then
   chmod 600 "$CREDS_FILE"
 fi
 
-# --- resumo -------------------------------------------------------------------------
+# --- summary ------------------------------------------------------------------------
 
 cat <<EOF
 

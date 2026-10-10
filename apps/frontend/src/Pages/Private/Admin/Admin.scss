@@ -22,7 +22,7 @@
     }
   }
 
-  // Lista de utilizadores num painel, uma linha por conta
+  // User list in a panel, one row per account
   .Admin_List{
     @include Mixin.Panel_Surface;
     display: flex;
@@ -109,7 +109,7 @@
 
       .Admin_Row_Actions_Head{ text-align: right; }
 
-      // Editar e apagar; ao apagar, a confirmação fica no mesmo sítio
+      // Edit and delete; when deleting, the confirmation stays in the same place
       .Admin_Row_Actions{
         display: flex;
         align-items: center;

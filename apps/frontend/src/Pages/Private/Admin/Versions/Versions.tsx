@@ -13,9 +13,9 @@ const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString(dateLocale(), { day: '2-digit', month: 'long', year: 'numeric' });
 
 /**
- * Todas as releases com as notas. Pode instalar-se qualquer versão mais recente do
- * que a instalada — saltar versões é seguro, as migrações aplicam-se todas. Voltar
- * para trás não: a base de dados não desfaz as migrações.
+ * All releases with their notes. Any version newer than the installed one can be
+ * installed — skipping versions is safe, all migrations get applied. Going
+ * back isn't: the database doesn't undo migrations.
  */
 const Versions = () => {
   const { t } = useTranslation('system');
@@ -71,7 +71,7 @@ const Versions = () => {
                 key={release.version}
                 className={`Versions_item${release.installed ? ' installed' : ''}${expanded ? ' expanded' : ''}`}
               >
-                {/* Fechada mostra só a versão e a data; clicar abre as notas. */}
+                {/* Closed shows only the version and date; clicking opens the notes. */}
                 <div
                   className='Versions_item_head'
                   role='button'

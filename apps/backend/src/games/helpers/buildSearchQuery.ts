@@ -2,10 +2,10 @@ import { SearchGamesDto, Sort } from '../dto/search-games.dto';
 
 export const DEFAULT_PAGE_SIZE = 24;
 
-// Na ordem "melhor nota", só entram jogos com pelo menos isto de avaliações
+// When sorting by "top rated", only games with at least this many ratings are included
 export const MIN_RATINGS_FOR_TOP = 25;
 
-// Separado para os testes poderem fixar o "agora"
+// Separate so tests can pin "now"
 export const now = () => Date.now();
 
 export const GAME_FIELDS = [
@@ -29,10 +29,10 @@ const SORT_CLAUSE: Record<Exclude<Sort, 'relevance'>, string> = {
   name: 'name asc',
 };
 
-// 1 de janeiro do ano, em segundos (o IGDB guarda datas em Unix time)
+// January 1st of the year, in seconds (IGDB stores dates as Unix time)
 const startOfYear = (year: number) => Date.UTC(year, 0, 1) / 1000;
 
-// As aspas e as barras do texto não podem fechar a string do Apicalypse
+// Quotes and backslashes in the text must not close the Apicalypse string
 const escapeText = (text: string) =>
   text.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
@@ -40,11 +40,11 @@ const anyOf = (field: string, ids?: number[]) =>
   ids && ids.length ? `${field} = (${ids.join(',')})` : null;
 
 /**
- * Traduz os filtros da pesquisa para duas consultas Apicalypse: a dos
- * resultados (com campos, ordem e página) e a da contagem total.
+ * Translates the search filters into two Apicalypse queries: the
+ * results one (with fields, order and page) and the total count one.
  *
- * Com texto, o IGDB ordena por relevância e não aceita outra ordem — a ordem
- * escolhida só se aplica quando se navega só com filtros.
+ * With text, IGDB sorts by relevance and accepts no other order — the chosen
+ * order only applies when browsing with filters alone.
  */
 export function buildSearchQuery(dto: SearchGamesDto) {
   const pageSize = dto.pageSize ?? DEFAULT_PAGE_SIZE;
@@ -63,12 +63,12 @@ export function buildSearchQuery(dto: SearchGamesDto) {
     dto.minRating !== undefined ? `total_rating >= ${dto.minRating}` : null,
   ].filter((condition): condition is string => Boolean(condition));
 
-  // Sem texto, algumas ordens precisam de um mínimo de dados para fazer sentido:
-  // a melhor nota seria ganha por jogos com uma só avaliação de 100, e os mais
-  // recentes seriam anúncios com datas de 2040. A popularidade não filtra nada —
-  // o IGDB põe os jogos sem avaliações no fim, por isso a contagem é a do
-  // catálogo inteiro e a ordem continua a abrir pelos mais populares.
-  // "relevance" só existe com texto; sem texto vale como popularidade
+  // Without text, some orders need a minimum of data to make sense:
+  // top rated would be won by games with a single 100 rating, and the newest
+  // would be announcements dated 2040. Popularity doesn't filter anything —
+  // IGDB puts unrated games at the end, so the count is that of the
+  // whole catalogue and the order still starts with the most popular.
+  // "relevance" only exists with text; without text it counts as popularity
   const browseSort: Exclude<Sort, 'relevance'> =
     dto.sort && dto.sort !== 'relevance' ? dto.sort : 'popular';
 

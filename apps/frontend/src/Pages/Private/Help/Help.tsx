@@ -7,7 +7,7 @@ import Android_Download from '../../../Components/Android_Download/Android_Downl
 import * as Icon from '../../../Imports/icons';
 import './Help.scss';
 
-// As secções, por esta ordem. As de admin só aparecem a administradores.
+// The sections, in this order. The admin ones only show to administrators.
 const SECTIONS: { id: string; adminOnly?: boolean }[] = [
   { id: 'android' },
   { id: 'claude' },
@@ -16,12 +16,12 @@ const SECTIONS: { id: string; adminOnly?: boolean }[] = [
   { id: 'shelf' },
   { id: 'account' },
   { id: 'igdb', adminOnly: true },
-  { id: 'forgejo', adminOnly: true },
+  { id: 'code', adminOnly: true },
 ];
 
 /**
- * Ajuda: uma secção que abre e fecha por tema. O texto de cada uma está em
- * help:<id>.body (Markdown). Um endereço com #<id> abre logo essa secção.
+ * Help: one section per topic that opens and closes. Each one's text is in
+ * help:<id>.body (Markdown). A URL with #<id> opens that section right away.
  */
 const Help = () => {
   const { t } = useTranslation('help');
@@ -29,11 +29,11 @@ const Help = () => {
   const { hash } = useLocation();
   const visible = SECTIONS.filter((s) => !s.adminOnly || role === 'ADMIN');
   const target = hash.slice(1);
-  // O que o utilizador abriu ou fechou; o resto segue o endereço (#<id> abre-a)
+  // What the user opened or closed; the rest follows the URL (#<id> opens it)
   const [toggled, setToggled] = useState<Record<string, boolean>>({});
   const isOpen = (id: string) => toggled[id] ?? id === target;
 
-  // Ao chegar com #<id> (ex.: a partir das Definições), mostra essa secção
+  // When arriving with #<id> (e.g. from Settings), shows that section
   useEffect(() => {
     if (target) requestAnimationFrame(() => document.getElementById(target)?.scrollIntoView({ block: 'start' }));
   }, [target]);

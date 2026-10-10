@@ -10,8 +10,8 @@ import { SaveIgdbDto } from '../dto/save-igdb.dto';
 import { getIgdbStatus } from './getIgdbStatus';
 
 /**
- * Grava as credenciais do IGDB depois de confirmar com a Twitch que funcionam —
- * umas credenciais erradas nunca chegam a substituir as boas.
+ * Saves the IGDB credentials after confirming with Twitch that they work —
+ * wrong credentials never replace the good ones.
  */
 export async function saveIgdbCredentials(
   dto: SaveIgdbDto,

@@ -1,6 +1,6 @@
-/* Ecrãs locais da app (ligar ao servidor, sem ligação), nas cores "Lombadas":
-   noite, ultramarino e as lombadas de estado. Letra do sistema — sem rede, as
-   fontes da app web não estão disponíveis. */
+/* The app's local screens (connect to server, offline), in the "Lombadas" colours:
+   night, ultramarine and the status spines. System font — with no network, the
+   web app's fonts are not available. */
 :root {
   --bg: #0D1230;
   --surface: #161C45;
@@ -36,7 +36,7 @@ main {
   margin: 0 auto;
 }
 
-/* Uma fila de lombadas nas cores dos estados, como na entrada da app web */
+/* A row of spines in the status colours, as on the web app's entry screen */
 .spines { display: flex; align-items: flex-end; gap: 6px; height: 64px; }
 .spines span { width: 18px; border-radius: 4px; }
 .spines span:nth-child(1) { height: 90%; background: #FFD23F; }
@@ -85,5 +85,5 @@ button.primary { background: var(--accent); color: var(--on-accent); }
 button.primary:disabled { opacity: .55; }
 button.ghost { background: transparent; color: var(--text); border-color: var(--line); }
 
-/* Lugar reservado para o erro: aparece sem empurrar o botão */
+/* Reserved space for the error: it appears without pushing the button */
 .error { min-height: 40px; font-size: 14px; line-height: 1.45; color: var(--danger); }

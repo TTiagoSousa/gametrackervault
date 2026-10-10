@@ -19,8 +19,8 @@ const FETCH_EVERY_MS = 5 * 60 * 1000;
 let lastFetch = 0;
 let lastFetchFailed = false;
 
-// As notas vivem na mensagem da tag anotada (escrita pelo scripts/release.mjs):
-//   ### Features / ### Fixes / ### Improvements, cada linha começada por "- ".
+// The notes live in the annotated tag message (written by scripts/release.mjs):
+//   ### Features / ### Fixes / ### Improvements, each line starting with "- ".
 const SECTION_KEYS: Record<string, keyof ReleaseNotes> = {
   features: 'features',
   'new features': 'features',
@@ -62,7 +62,7 @@ function parseNotes(message: string): {
   return { title, notes };
 }
 
-// Línguas com notas próprias. As notas vivem em releases/<versão>/<língua>.md.
+// Languages with their own notes. The notes live in releases/<version>/<language>.md.
 export const NOTE_LANGUAGES = ['pt-PT', 'en', 'es'] as const;
 export type NoteLanguage = (typeof NOTE_LANGUAGES)[number];
 
@@ -72,8 +72,8 @@ export function noteLanguage(value: string | undefined): NoteLanguage {
     : 'en';
 }
 
-// Notas já lidas, por commit de origem: uma tag não muda, e o main só muda quando
-// o fetch traz commits novos (e então o sha é outro).
+// Notes already read, by source commit: a tag doesn't change, and main only changes when
+// fetch brings new commits (and then the sha is different).
 const notesCache = new Map<string, string | null>();
 
 async function readFile(ref: string, path: string): Promise<string | null> {
@@ -85,10 +85,10 @@ async function readFile(ref: string, path: string): Promise<string | null> {
 }
 
 /**
- * As notas de uma release na língua pedida. Procura releases/<versão>/<língua>.md
- * primeiro no main (assim as traduções podem chegar ou ser corrigidas depois da
- * release) e depois na própria tag; sem ficheiro nessa língua usa o inglês, e sem
- * ficheiro nenhum a mensagem da tag (é o que as releases antigas têm).
+ * A release's notes in the requested language. Looks for releases/<version>/<language>.md
+ * first on main (so translations can arrive or be fixed after the
+ * release) and then on the tag itself; with no file in that language it uses English, and with
+ * no file at all the tag message (which is what old releases have).
  */
 async function notesFor(
   version: string,
@@ -108,9 +108,9 @@ async function notesFor(
 }
 
 /**
- * Todas as releases (tags vX.Y.Z), da mais recente para a mais antiga, com as notas
- * na língua pedida. Vai buscar as tags novas ao remoto no máximo de 5 em 5 minutos;
- * sem rede, usa as que já tem.
+ * All releases (vX.Y.Z tags), newest to oldest, with the notes
+ * in the requested language. Fetches new tags from the remote at most every 5 minutes;
+ * without network, uses the ones it has.
  */
 export async function getReleases(
   force = false,

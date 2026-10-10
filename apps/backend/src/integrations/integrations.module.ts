@@ -11,7 +11,7 @@ import { PrismaIntegrationRepository } from './repositories/prisma/prisma-integr
     IntegrationCredentialsService,
     PrismaIntegrationRepository,
   ],
-  // O cliente do IGDB (módulo games) lê as credenciais por aqui
+  // The IGDB client (games module) reads the credentials through here
   exports: [IntegrationCredentialsService],
 })
 export class IntegrationsModule {}

@@ -3,8 +3,8 @@ import i18n from '../i18n';
 type ApiError = { response?: { data?: { message?: string | string[] } }; message?: string };
 
 /**
- * A mensagem de erro de um pedido à API: a que o backend mandou (a primeira, se
- * for uma lista de validação) ou, sem ela, a genérica.
+ * The error message of an API request: the one the backend sent (the first, if
+ * it's a validation list) or, failing that, the generic one.
  */
 export const apiMessage = (error: unknown): string => {
   const e = error as ApiError;

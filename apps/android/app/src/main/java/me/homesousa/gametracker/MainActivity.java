@@ -26,24 +26,24 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * A app inteira: uma WebView com o GameTracker Vault do servidor do utilizador.
+ * The whole app: a WebView showing GameTracker Vault from the user's server.
  *
- * No primeiro arranque mostra o ecrã local "Ligar ao servidor" (assets/setup.html),
- * confirma o endereço em /api/health (ou /health) e guarda-o. Daí em diante abre
- * logo o servidor. Os links do próprio servidor ficam na app; os outros (YouTube,
- * IGDB, Twitch, Anthropic…) abrem no browser. Sem ligação, mostra
- * assets/offline.html com "Tentar outra vez" e "Mudar de servidor".
+ * On first launch it shows the local "Connect to your server" screen (assets/setup.html),
+ * checks the address at /api/health (or /health) and saves it. From then on it opens
+ * the server straight away. Links to the server itself stay in the app; others (YouTube,
+ * IGDB, Twitch, Anthropic…) open in the browser. With no connection, it shows
+ * assets/offline.html with "Try again" and "Change server".
  */
 public class MainActivity extends Activity {
 
     private static final String PREFS = "gametracker";
     private static final String KEY_SERVER = "server_url";
-    // O último servidor usado, para o ecrã "Ligar ao servidor" vir preenchido depois
-    // de "Mudar de servidor"
+    // The last server used, so the "Connect to your server" screen comes pre-filled after
+    // "Change server"
     private static final String KEY_LAST_SERVER = "last_server_url";
     private static final String SETUP_PAGE = "file:///android_asset/setup.html";
     private static final String OFFLINE_PAGE = "file:///android_asset/offline.html";
-    // A cor de fundo da app (noite): por trás das barras do sistema
+    // The app's background colour (night): behind the system bars
     private static final int BACKGROUND = Color.parseColor("#0D1230");
 
     private WebView webView;
@@ -65,8 +65,8 @@ public class MainActivity extends Activity {
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         setContentView(root);
 
-        // Android 15 desenha a app por trás das barras do sistema: o conteúdo fica
-        // entre elas (e acima do teclado)
+        // Android 15 draws the app behind the system bars: the content stays
+        // between them (and above the keyboard)
         root.setOnApplyWindowInsetsListener((view, insets) -> {
             int types = WindowInsets.Type.systemBars() | WindowInsets.Type.ime() | WindowInsets.Type.displayCutout();
             android.graphics.Insets bars = insets.getInsets(types);
@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
-        // target=_blank abre na mesma vista e passa pelo shouldOverrideUrlLoading
+        // target=_blank opens in the same view and goes through shouldOverrideUrlLoading
         settings.setSupportMultipleWindows(false);
         settings.setUserAgentString(settings.getUserAgentString()
                 + " GameTrackerVaultApp/" + BuildConfig.VERSION_NAME + " (Android)");
@@ -93,11 +93,11 @@ public class MainActivity extends Activity {
             openStart();
         }
 
-        // Há uma versão nova da app no servidor? (uma vez por arranque)
+        // Is there a new app version on the server? (once per launch)
         updater.check(prefs.getString(KEY_SERVER, null), false);
     }
 
-    /** O servidor guardado, ou o ecrã para escolher um. */
+    /** The saved server, or the screen to pick one. */
     private void openStart() {
         String server = prefs.getString(KEY_SERVER, null);
         webView.loadUrl(server != null ? server + "/" : SETUP_PAGE);
@@ -121,7 +121,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        // A sessão (cookie) fica gravada mesmo que o Android feche a app
+        // The session (cookie) is persisted even if Android closes the app
         CookieManager.getInstance().flush();
     }
 
@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    // --- Navegação ----------------------------------------------------------------------
+    // --- Navigation ----------------------------------------------------------------------
 
     private class Client extends WebViewClient {
         @Override
@@ -145,32 +145,32 @@ public class MainActivity extends Activity {
             if ("file".equals(scheme)) return false;
             boolean web = "http".equals(scheme) || "https".equals(scheme);
             if (web && uri.getHost() != null && uri.getHost().equals(serverHost())) return false;
-            // Tudo o resto (outros sites, mailto:, intent:…) vai para fora da app
+            // Everything else (other sites, mailto:, intent:…) goes outside the app
             try {
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             } catch (ActivityNotFoundException ignored) {
-                // nenhuma app sabe abrir isto
+                // no app can open this
             }
             return true;
         }
 
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            // Só a página principal: uma imagem que falha não deve tapar a app
+            // Main frame only: a failing image should not cover the app
             if (request.isForMainFrame() && !isLocalPage(request.getUrl().toString())) {
                 view.loadUrl(OFFLINE_PAGE);
             }
         }
     }
 
-    // --- Ponte com as páginas (window.GameTrackerApp) ------------------------------------
+    // --- Bridge to the pages (window.GameTrackerApp) -------------------------------------
 
     private class Bridge {
-        /** Ecrã "Ligar ao servidor": confirma o endereço e, se for válido, guarda-o e abre-o. */
+        /** "Connect to your server" screen: checks the address and, if valid, saves and opens it. */
         @JavascriptInterface
         public void connect(String input) {
             runOnUiThread(() -> {
-                // Só o ecrã local pode mudar o servidor por aqui
+                // Only the local screen can change the server through here
                 if (!isLocalPage(webView.getUrl())) return;
                 new Thread(() -> {
                     String server = normalize(input);
@@ -189,13 +189,13 @@ public class MainActivity extends Activity {
             });
         }
 
-        /** Ecrã "Sem ligação": tenta abrir o servidor outra vez. */
+        /** Offline screen: tries to open the server again. */
         @JavascriptInterface
         public void retry() {
             runOnUiThread(MainActivity.this::openStart);
         }
 
-        /** Esquece o servidor e volta ao ecrã para escolher outro (também do menu da conta). */
+        /** Forgets the server and goes back to the screen to pick another (also from the account menu). */
         @JavascriptInterface
         public void changeServer() {
             runOnUiThread(() -> {
@@ -205,7 +205,7 @@ public class MainActivity extends Activity {
             });
         }
 
-        /** O servidor guardado ou, depois de "Mudar de servidor", o último usado. */
+        /** The saved server or, after "Change server", the last one used. */
         @JavascriptInterface
         public String currentServer() {
             String server = prefs.getString(KEY_SERVER, prefs.getString(KEY_LAST_SERVER, null));
@@ -217,20 +217,20 @@ public class MainActivity extends Activity {
             return BuildConfig.VERSION_NAME;
         }
 
-        /** O número interno da versão, para a página comparar com o APK publicado. */
+        /** The internal version number, for the page to compare with the published APK. */
         @JavascriptInterface
         public int versionCode() {
             return BuildConfig.VERSION_CODE;
         }
 
-        /** "Procurar atualizações" na Ajuda: diz sempre o resultado. */
+        /** "Check for updates" in Help: always reports the result. */
         @JavascriptInterface
         public void checkUpdate() {
             runOnUiThread(() -> updater.check(prefs.getString(KEY_SERVER, null), true));
         }
     }
 
-    /** "gametracker.exemplo.pt" → "https://gametracker.exemplo.pt", sem barra no fim. */
+    /** "gametracker.exemplo.pt" → "https://gametracker.exemplo.pt", without a trailing slash. */
     private static String normalize(String input) {
         if (input == null) return null;
         String value = input.trim();
@@ -243,8 +243,8 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Confirma que o endereço é um GameTracker Vault: no container o backend está
-     * em /api (nginx); em desenvolvimento, na raiz.
+     * Checks that the address is a GameTracker Vault: in the container the backend is
+     * at /api (nginx); in development, at the root.
      */
     private static String check(String server) {
         boolean reached = false;
@@ -265,12 +265,12 @@ public class MainActivity extends Activity {
                 }
                 if ("gametracker-vault".equals(new JSONObject(body.toString()).optString("app"))) return "ok";
             } catch (Exception ignored) {
-                // tenta o caminho seguinte
+                // try the next path
             } finally {
                 if (connection != null) connection.disconnect();
             }
         }
-        // Respondeu mas não é um GameTracker Vault, ou não respondeu de todo
+        // Answered but is not a GameTracker Vault, or did not answer at all
         return reached ? "not-gametracker" : "unreachable";
     }
 

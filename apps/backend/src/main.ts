@@ -7,9 +7,9 @@ import cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // No container os pedidos chegam pelo nginx local; confiar só nele (loopback) faz o
-  // req.secure refletir o https do Nginx Proxy Manager, que decide o cookie seguro.
-  // Ligações diretas de outros IPs continuam a não poder fingir o protocolo.
+  // In the container requests arrive via the local nginx; trusting only it (loopback) makes
+  // req.secure reflect Nginx Proxy Manager's https, which decides the secure cookie.
+  // Direct connections from other IPs still cannot fake the protocol.
   app.set('trust proxy', 'loopback');
 
   app.use(cookieParser());
@@ -26,12 +26,12 @@ async function bootstrap() {
     credentials: true,
   });
 
-  // O systemd para o serviço com SIGTERM; sem isto o Nest não corre o
-  // onModuleDestroy e as ligações ao Postgres ficam por fechar.
+  // systemd stops the service with SIGTERM; without this Nest doesn't run
+  // onModuleDestroy and the Postgres connections are left open.
   app.enableShutdownHooks();
 
-  // No container o backend só precisa de ouvir o nginx (HOST=127.0.0.1); em
-  // desenvolvimento fica em todas as interfaces, como antes.
+  // In the container the backend only needs to listen to nginx (HOST=127.0.0.1); in
+  // development it listens on all interfaces, as before.
   const port = process.env.PORT ?? 3000;
   const host = process.env.HOST ?? '0.0.0.0';
   await app.listen(port, host);

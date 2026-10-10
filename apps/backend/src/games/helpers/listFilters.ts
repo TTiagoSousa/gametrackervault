@@ -14,12 +14,12 @@ export interface GameFilters {
   types: FilterOption[];
 }
 
-// As listas mudam raramente (uma plataforma nova de vez em quando): ficam um dia
-// em memória e, depois disso, continuam a ser servidas enquanto se renovam por
-// trás — nunca ninguém espera pelo IGDB a não ser na primeiríssima vez.
+// The lists rarely change (a new platform now and then): they stay in memory for a day
+// and, after that, keep being served while they refresh in the
+// background — nobody ever waits for IGDB except the very first time.
 const CACHE_MS = 24 * 60 * 60 * 1000;
 let cache: { value: GameFilters; at: number } | null = null;
-// O pedido em curso, para vários pedidos ao mesmo tempo não irem todos ao IGDB
+// The in-flight request, so concurrent requests don't all hit IGDB
 let inFlight: Promise<GameFilters> | null = null;
 
 const byName = (a: FilterOption, b: FilterOption) =>
@@ -32,7 +32,7 @@ async function fetchFilters(igdb: IgdbClient): Promise<GameFilters> {
       'fields name; limit 500; sort name asc;',
     );
 
-  // Em paralelo: a fila do IgdbClient já os espaça para não passar o limite
+  // In parallel: the IgdbClient queue already spaces them out to stay under the limit
   const [platforms, genres, themes, modes, perspectives, types] =
     await Promise.all([
       named('platforms'),
@@ -40,7 +40,7 @@ async function fetchFilters(igdb: IgdbClient): Promise<GameFilters> {
       named('themes'),
       named('game_modes'),
       named('player_perspectives'),
-      // Os tipos (jogo principal, DLC, expansão, remake…) têm o nome em "type"
+      // Types (main game, DLC, expansion, remake…) have their name in "type"
       igdb.query<{ id: number; type: string }[]>(
         'game_types',
         'fields type; limit 100;',
@@ -67,13 +67,13 @@ function refresh(igdb: IgdbClient): Promise<GameFilters> {
 }
 
 /**
- * Todas as opções de filtro que o IGDB conhece, com os ids que a pesquisa usa.
- * Com a cache expirada devolve-a na mesma e renova-a em segundo plano.
+ * All filter options IGDB knows, with the ids the search uses.
+ * With an expired cache it still returns it and refreshes it in the background.
  */
 export async function listFilters(igdb: IgdbClient): Promise<GameFilters> {
   if (!cache) return refresh(igdb);
   if (Date.now() - cache.at >= CACHE_MS) {
-    // Se a renovação falhar, fica a lista antiga até à próxima tentativa
+    // If the refresh fails, the old list stays until the next attempt
     refresh(igdb).catch(() => undefined);
   }
   return cache.value;

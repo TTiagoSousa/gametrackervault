@@ -1,164 +1,187 @@
-# Instalar no Proxmox (LXC)
+# Install on Proxmox (LXC)
 
-Um script no host do Proxmox cria um container Debian 13 e instala lá dentro tudo o que
-a app precisa. Sem Docker e sem Coolify.
+*[Português](./README.pt-PT.md)*
+
+A script on the Proxmox host creates a Debian 13 container and installs everything the
+app needs inside it. No Docker, no Coolify.
 
 ```
 ┌─────────────────────── CT (Debian 13, unprivileged) ───────────────────────┐
 │                                                                             │
-│   nginx :80 ──┬── /        → /var/www/gametracker (frontend, ficheiros)     │
+│   nginx :80 ──┬── /        → /var/www/gametracker (frontend, static files)  │
 │               └── /api/*   → 127.0.0.1:3000       (backend, systemd)        │
 │                                    │                                        │
-│                               PostgreSQL 17 (só localhost)                  │
+│                               PostgreSQL 17 (localhost only)                │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-| Peça | Onde |
+| Piece | Where |
 |---|---|
-| Código | `/opt/gametracker` (clone do repo, utilizador `gametracker`) |
-| Configuração | `/etc/gametracker/gametracker.env` |
-| Serviço | `gametracker.service` (`node dist/src/main.js`) |
-| Frontend publicado | `/var/www/gametracker` |
-| Base de dados | PostgreSQL local, base e utilizador `gametracker` |
-| Backups | `/var/backups/gametracker`, todos os dias às 03:30, 14 dias |
-| Credenciais geradas | `/root/gametracker-credentials.txt` |
+| Code | `/opt/gametracker` (clone of the repo, user `gametracker`) |
+| Configuration | `/etc/gametracker/gametracker.env` |
+| Service | `gametracker.service` (`node dist/src/main.js`) |
+| Published frontend | `/var/www/gametracker` |
+| Database | local PostgreSQL, database and user `gametracker` |
+| Backups | `/var/backups/gametracker`, daily at 03:30, kept 14 days |
+| Generated credentials | `/root/gametracker-credentials.txt` |
 
-## 1. Criar e instalar
+## 1. Create and install
 
-Na **Shell do host** do Proxmox (Datacenter → nó → Shell), uma linha:
-
-```bash
-bash -c "$(curl -fsSL https://forgejo.home-sousa.me/Tiago/gameTrackerVault/raw/branch/main/deploy/proxmox/ct-create.sh)"
-```
-
-Abre um menu (em inglês, ao estilo dos community-scripts):
-
-- **Default settings** — próximo CT livre, primeiro storage ativo, 16 GB, 2 CPUs,
-  2 GB de RAM, DHCP, DNS do host, endereço `http://<IP do CT>`, a última versão.
-- **Advanced settings** — ecrã a ecrã, já preenchido com a sugestão:
-  - ID e hostname (valida se o ID está livre);
-  - storage do disco e dos templates, escolhidos de uma lista com o espaço livre;
-  - disco, CPUs, RAM, swap;
-  - bridge (lista), **DHCP ou IP estático** (IP/prefixo + gateway), VLAN opcional;
-  - DNS do host ou servidores próprios;
-  - arrancar com o host;
-  - endereço da app: IP do container ou domínio próprio;
-  - utilizador e password do admin (em branco = `admin`);
-  - versão: **a última release** (a tag `vX.Y.Z` mais recente, por omissão) ou, para
-    testar, a branch `staging` ou `develop`; token só se o repo for privado. As
-    atualizações seguem sempre as releases.
-
-Um valor inválido volta a ser pedido em vez de abortar. No fim aparece o ecrã **Review**
-com tudo o que foi escolhido: *Create the container*, *Edit settings* ou *Cancel*.
-
-
-**Utilizador inicial: `admin` / `admin`.** Troca a password antes de abrires a app à
-internet.
-
-Sem menus (automação): `NONINTERACTIVE=1` e as variáveis que quiseres mudar — lista
-no cabeçalho do `ct-create.sh`:
+In the Proxmox **host Shell** (Datacenter → node → Shell), one line:
 
 ```bash
-NONINTERACTIVE=1 STORAGE=zfs_pool NET_MODE=static IP=192.168.0.61/24 GATEWAY=192.168.0.1 APP_URL=https://gametracker.home-sousa.me bash -c "$(curl -fsSL https://forgejo.home-sousa.me/Tiago/gameTrackerVault/raw/branch/main/deploy/proxmox/ct-create.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/TTiagoSousa/gametrackervault/main/deploy/proxmox/ct-create.sh)"
 ```
 
-## 2. Domínio e SSL
+It opens a menu in the style of the community-scripts:
 
-No Nginx Proxy Manager: `gametracker.home-sousa.me` → `http://<IP do CT>:80`, com SSL.
+- **Default settings** — next free CT ID, first active storage, 16 GB, 2 CPUs,
+  2 GB of RAM, DHCP, the host's DNS, address `http://<CT IP>`, the latest release, the
+  host's timezone.
+- **Advanced settings** — screen by screen, prefilled with the suggestion:
+  - ID and hostname (checks the ID is free);
+  - disk and template storage, picked from a list showing free space;
+  - disk, CPUs, RAM, swap;
+  - bridge (list), **DHCP or static IP** (IP/prefix + gateway), optional VLAN;
+  - the host's DNS or your own servers;
+  - start with the host;
+  - app address: the container's IP or your own domain;
+  - admin username and password (blank = `admin`);
+  - version: **the latest release** (newest `vX.Y.Z` tag, the default) or, for
+    testing, the `staging` or `develop` branch; a token only if the repo is private.
+    Updates always follow releases.
 
-O `APP_URL` tem de ser o endereço por onde abres a app: é a origem aceite pelo CORS e
-decide se o cookie de sessão é `secure` (só com `https`). Se o mudares depois,
-ajusta `FRONTEND_URL` com o `gametracker-config`.
+An invalid value is asked again instead of aborting. At the end the **Review** screen
+shows everything you chose: *Create the container*, *Edit settings* or *Cancel*.
 
-## 3. Configurar
+**Initial user: `admin` / `admin`.** Change the password before exposing the app to
+the internet.
 
-Dentro do CT (`pct enter <CTID>`):
+Without menus (automation): `NONINTERACTIVE=1` plus any variables you want to change —
+the list is in the header of `ct-create.sh`:
+
+```bash
+NONINTERACTIVE=1 STORAGE=zfs_pool NET_MODE=static IP=192.168.0.61/24 GATEWAY=192.168.0.1 APP_URL=https://gametracker.example.com bash -c "$(curl -fsSL https://raw.githubusercontent.com/TTiagoSousa/gametrackervault/main/deploy/proxmox/ct-create.sh)"
+```
+
+### Without Proxmox (Debian 13 VM or server)
+
+`install.sh` doesn't depend on Proxmox. On a clean Debian 13 machine (VM, mini-PC…),
+as root:
+
+```bash
+apt-get update && apt-get install -y git
+git clone https://github.com/TTiagoSousa/gametrackervault.git /opt/gametracker
+git -C /opt/gametracker checkout "$(git -C /opt/gametracker tag -l 'v*' --sort=-v:refname | head -1)"
+APP_URL=http://<machine IP> TZ_NAME=Europe/London bash /opt/gametracker/deploy/proxmox/install.sh
+```
+
+It installs the same as in the container (PostgreSQL, Node, nginx on port 80, systemd
+service, backups) and takes over port 80 — on a machine that already runs a web server,
+use a dedicated container or VM. Optional variables are listed in the header of
+`install.sh`. Tested in LXC; the procedure on a VM is the same.
+
+## 2. Domain and SSL
+
+In Nginx Proxy Manager (or any reverse proxy): `gametracker.example.com` (your domain) →
+`http://<CT IP>:80`, with SSL.
+
+`APP_URL` must be the address you open the app on: it's the origin accepted by CORS
+and decides whether the session cookie is `secure` (only with `https`). If you change it
+later, update `FRONTEND_URL` with `gametracker-config`.
+
+## 3. Configure
+
+Inside the CT (`pct enter <CTID>`):
 
 ```bash
 gametracker-config
 ```
 
-Abre um menu com as definições e o valor atual de cada uma (segredos mascarados):
-↑/↓ escolhe, Enter abre a caixa para alterar, **Save** grava e pergunta se reinicia o
-backend para aplicar. As alteradas ficam marcadas com `*`; **Quit** sai sem gravar.
-A base de dados e o `JWT_SECRET` não aparecem no menu.
-`gametracker-config --raw` abre o ficheiro inteiro no nano.
+It opens a menu with the settings and each one's current value (secrets masked):
+↑/↓ selects, Enter opens a box to change it, **Save** writes and asks whether to restart
+the backend to apply. Changed settings are marked with `*`; **Quit** leaves without
+saving. The database and `JWT_SECRET` don't appear in the menu.
+`gametracker-config --raw` opens the whole file in nano.
 
-### Pesquisa de jogos (IGDB)
+### Game search (IGDB)
 
-A chave do IGDB não vai no ficheiro de configuração: o admin põe-na na app, em
-**Admin → Catálogo de jogos (IGDB)**, com o Client ID e o Client Secret de uma
-aplicação Twitch (https://dev.twitch.tv/console/apps, tipo *Confidential*). A app
-valida-as com a Twitch antes de gravar e guarda o secret cifrado na base de dados.
+The IGDB key doesn't go in the configuration file: the admin enters it in the app, under
+**Admin → Game catalogue (IGDB)**, with the Client ID and Client Secret of a Twitch
+application (https://dev.twitch.tv/console/apps, type *Confidential*). The app checks
+them with Twitch before saving and stores the secret encrypted in the database.
 
-> ⚠ **`TOKEN_ENCRYPTION_KEY` não se muda.** É gerada pelo instalador (cópia em
-> `/root/gametracker-credentials.txt`) e cifra os segredos das integrações. Com
-> outra chave, o admin tem de voltar a introduzir o Client Secret. O
-> `gametracker-config` recusa gravar uma alteração a essa linha; instalações
-> antigas sem ela recebem-na na primeira atualização.
+> ⚠ **Never change `TOKEN_ENCRYPTION_KEY`.** The installer generates it (copy in
+> `/root/gametracker-credentials.txt`) and it encrypts the stored secrets (IGDB, the
+> users' assistant keys). With a different key, they all have to be entered again.
+> `gametracker-config` refuses to save a change to that line; older installs without it
+> get one on their first update.
 
-## 4. Atualizar
+## 4. Update
 
-**Pela app (admin):** página **Admin** → card **Versão** → *Atualizar para vX.Y.Z*, ou
-*Ver versões* para a lista com as notas de cada release e escolher qualquer versão mais
-recente. Saltar versões é seguro (as migrações aplicam-se todas); voltar para trás não é
-permitido. A janela mostra o progresso e recarrega a página no fim.
+**From the app (admin):** **Admin** page → **Version** card → *Update to vX.Y.Z*, or
+the **Versions** page for the list with each release's notes, to pick any newer version.
+Skipping versions is safe (all migrations are applied); going back is not allowed. The
+dialog shows progress and reloads the page at the end.
 
-**Pela consola (dentro do CT):**
+**From the console (inside the CT):**
 
 ```bash
-gametracker-update             # a última release (tag vX.Y.Z)
-gametracker-update v1.4.0      # uma release específica
-gametracker-update develop     # um branch (testes)
-FORCE=1 gametracker-update     # recompilar mesmo sem nada novo
+gametracker-update             # the latest release (vX.Y.Z tag)
+gametracker-update v1.4.1      # a specific release
+gametracker-update develop     # a branch (testing)
+FORCE=1 gametracker-update     # rebuild even with nothing new
 ```
 
-Faz fetch, checkout da versão, `npm ci`, build, migrações, publica o frontend, reescreve
-as units e o nginx e reinicia o backend. **Se um passo falhar, volta sozinho à versão
-anterior** (checkout, build, restart) e a app continua a funcionar.
+It fetches, checks out the version, runs `npm ci`, builds, migrates, publishes the
+frontend, rewrites the units and the nginx config and restarts the backend. **If a step
+fails, it rolls back to the previous version by itself** (checkout, build, restart) and
+the app keeps working.
 
-Como o botão funciona: o backend corre sem privilégios e só escreve
-`/var/lib/gametracker/updates/request` com a versão; a unit `gametracker-updater.path`
-(root) vê o ficheiro e corre `update.sh --from-request`, que escreve o progresso em
-`status.json` e o output em `update.log` na mesma pasta. Logs: `journalctl -u gametracker-updater`.
+How the button works: the backend runs unprivileged and only writes
+`/var/lib/gametracker/updates/request` with the version; the
+`gametracker-updater.path` unit (root) sees the file and runs
+`update.sh --from-request`, which writes progress to `status.json` and the output to
+`update.log` in the same folder. Logs: `journalctl -u gametracker-updater`.
 
 ## Releases
 
-Uma release é uma tag `vX.Y.Z` anotada no `main`. As notas ficam em
-`releases/<versão>/{en,pt-PT,es}.md` e a app mostra as da língua escolhida (inglês como
-recurso, depois a mensagem da tag). Para lançar, no `main` atualizado:
+A release is an annotated `vX.Y.Z` tag on `main`. Notes live in
+`releases/<version>/{en,pt-PT,es}.md` and the app shows the ones in the chosen language
+(English as fallback, then the tag message). To release, on an up-to-date `main`:
 
 ```bash
-npm run release -- --dry-run   # vê a versão e as notas
-npm run release -- --prepare   # escreve releases/<versão>/en.md a partir dos commits
-# escrever pt-PT.md e es.md ao lado, commit no main
-npm run release -- --push      # cria a tag (mensagem = en.md) e envia-a
+npm run release -- --dry-run   # preview the version and notes
+npm run release -- --prepare   # writes releases/<version>/en.md from the commits
+# write pt-PT.md and es.md next to it, commit on main
+npm run release -- --push      # creates the tag (message = en.md) and pushes it
 ```
 
-A versão sobe pelos commits desde a última release: `feat` → minor, `fix`/`perf`/
-`refactor` → patch, `!` ou `BREAKING CHANGE` → major. As notas agrupam-se em
-*Features*, *Fixes* e *Improvements* (os `chore`/`docs`/`ci` ficam de fora).
-`--title "…"` põe uma frase por cima das notas; `--notes ficheiro.md` usa notas escritas
-à mão.
+The version is bumped from the commits since the last release: `feat` → minor,
+`fix`/`perf`/`refactor` → patch, `!` or `BREAKING CHANGE` → major. Notes are grouped
+into *Features*, *Fixes* and *Improvements* (`chore`/`docs`/`ci` are left out).
+`--title "…"` adds a headline above the notes; `--notes file.md` uses hand-written
+notes; `--version vX.Y.Z` forces a version.
 
-## 5. Manutenção
+## 5. Maintenance
 
 ```bash
-journalctl -u gametracker -f          # logs do backend
+journalctl -u gametracker -f          # backend logs
 systemctl status gametracker nginx postgresql
-/opt/gametracker/deploy/proxmox/backup.sh            # backup agora
-gunzip -c /var/backups/gametracker/<ficheiro>.sql.gz | runuser -u postgres -- psql -d gametracker   # repor
+/opt/gametracker/deploy/proxmox/backup.sh            # back up now
+gunzip -c /var/backups/gametracker/<file>.sql.gz | runuser -u postgres -- psql -d gametracker   # restore
 ```
 
-O backup do Proxmox (vzdump) apanha o container inteiro, mas um snapshot com o Postgres
-a correr nem sempre é consistente — o dump diário é o que garante a base de dados.
+Proxmox backups (vzdump) capture the whole container, but a snapshot taken with
+Postgres running isn't always consistent — the daily dump is what guarantees the
+database.
 
-## Utilizadores
+## Users
 
-O instalador cria o primeiro utilizador (ADMIN, por omissão `admin`/`admin`). A partir daí o registo público está
-fechado: as contas novas criam-se no painel de Admin da app.
+The installer creates the first user (ADMIN, `admin`/`admin` by default). From then on
+public sign-up is closed: new accounts are created in the app's Admin panel.
 
-## Reinstalar por cima
+## Reinstalling over an existing install
 
-`bash /opt/gametracker/deploy/proxmox/install.sh` dentro do CT pode correr outra vez: a
-configuração, os segredos e a base de dados que já existem ficam como estão.
+`bash /opt/gametracker/deploy/proxmox/install.sh` inside the CT can run again: the
+existing configuration, secrets and database stay as they are.

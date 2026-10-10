@@ -12,9 +12,9 @@ import { getRandomGame } from './helpers/getRandomGame';
 export class GamesService implements OnApplicationBootstrap {
   constructor(private readonly igdb: IgdbClient) {}
 
-  // Carrega as listas de filtros logo ao arrancar, para a primeira pessoa a abrir
-  // a pesquisa não esperar pelo IGDB. Sem credenciais (ou sem rede) não faz mal:
-  // tenta-se outra vez no primeiro pedido.
+  // Loads the filter lists on startup, so the first person to open
+  // search doesn't wait for IGDB. Without credentials (or network) it's fine:
+  // it's retried on the first request.
   onApplicationBootstrap() {
     listFilters(this.igdb).catch(() => undefined);
   }
@@ -31,17 +31,17 @@ export class GamesService implements OnApplicationBootstrap {
     return getGameDetail(id, this.igdb);
   }
 
-  // Usado pela estante para guardar a cópia mínima do jogo
+  // Used by the shelf to store the minimal copy of the game
   summary(id: number) {
     return getGameSummary(id, this.igdb);
   }
 
-  // Géneros e tempos médios de vários jogos, para as estatísticas
+  // Genres and average times of several games, for the stats
   facts(ids: number[]) {
     return getGameFacts(ids, this.igdb);
   }
 
-  // Um jogo bem avaliado ao calhas, fora dos que o utilizador já tem
+  // A random well-rated game, excluding the ones the user already has
   random(exclude: number[]) {
     return getRandomGame(exclude, this.igdb);
   }

@@ -6,7 +6,7 @@ import {
   IntegrationProvider,
 } from 'src/generated/prisma/client/client';
 
-// O secret chega aqui já cifrado — o repositório não sabe nada de cifra
+// The secret arrives here already encrypted — the repository knows nothing about encryption
 @Injectable()
 export class PrismaIntegrationRepository implements IntegrationRepository {
   constructor(private readonly prisma: PrismaService) {}

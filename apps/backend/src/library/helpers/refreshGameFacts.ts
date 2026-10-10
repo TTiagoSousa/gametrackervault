@@ -4,14 +4,14 @@ import {
   LibraryRepository,
 } from '../repositories/library-repository';
 
-// Os tempos médios do IGDB mudam devagar: uma vez por semana chega
+// IGDB average times change slowly: once a week is enough
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 
 /**
- * Garante que os jogos destas entradas têm géneros e tempos médios do IGDB,
- * indo buscar (em lote) os que nunca foram lidos ou já têm mais de uma semana.
- * Atualiza as entradas em memória e a tabela Game. Se o IGDB falhar, as contas
- * fazem-se com o que já havia — devolve false para a página o poder dizer.
+ * Ensures these entries' games have IGDB genres and average times,
+ * fetching (in batch) those never fetched or older than a week.
+ * Updates the in-memory entries and the Game table. If IGDB fails, the numbers
+ * are computed with what was already there — returns false so the page can say so.
  */
 export async function refreshGameFacts(
   entries: EntryWithGame[],

@@ -1,8 +1,8 @@
 @use '../../../Styles/Fonts.scss' as Font;
 
-// Login: à esquerda o campo ultramarino com a estante (a marca), à direita o
-// formulário. Abaixo de 900px o campo encolhe para uma faixa no topo, só com a
-// marca e a prateleira.
+// Login: on the left the ultramarine field with the shelf (the brand), on the right the
+// form. Below 900px the field shrinks to a strip at the top, with just the
+// brand and the shelf.
 .Login{
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(380px, 1fr);
@@ -10,7 +10,7 @@
   background: var(--surface);
   font-family: Font.$font_family_sans;
 
-  // --- Campo com a estante -------------------------------------------------------
+  // --- Field with the shelf -------------------------------------------------------
   .Login_Stage{
     display: flex;
     flex-direction: column;
@@ -66,7 +66,7 @@
     }
   }
 
-  // A prateleira: lombadas alinhadas pela base em cima de uma tábua
+  // The shelf: spines aligned at the base on top of a board
   .Login_Shelf{
     .Login_Shelf_Row{
       height: 230px;
@@ -111,7 +111,7 @@
     }
   }
 
-  // --- Painel do formulário ------------------------------------------------------
+  // --- Form panel ----------------------------------------------------------------
   .Login_Panel{
     display: flex;
     flex-direction: column;
@@ -261,7 +261,7 @@
     color: var(--text-faint);
   }
 
-  // --- Ecrãs pequenos ----------------------------------------------------------------
+  // --- Small screens ----------------------------------------------------------------
   @media (max-width: 900px){
     grid-template-columns: 1fr;
 

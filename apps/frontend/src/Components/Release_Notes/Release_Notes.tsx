@@ -2,8 +2,8 @@ import './Release_Notes.scss';
 import { useTranslation } from 'react-i18next';
 import type { ReleaseNotes } from '../../Hooks/System/types';
 
-// As notas chegam do backend já na língua da interface (com o inglês como recurso);
-// os títulos das secções são da interface.
+// Notes arrive from the backend already in the interface language (with English as fallback);
+// the section titles come from the interface.
 const SECTIONS: (keyof ReleaseNotes)[] = ['features', 'fixes', 'improvements', 'other'];
 
 // "**auth**: add X" → <strong>auth</strong>: add X
@@ -14,7 +14,7 @@ const renderItem = (text: string) =>
 
 interface Release_Notes_Props {
   notes: ReleaseNotes;
-  /** Máximo de linhas por secção (o card mostra só um resumo). */
+  /** Max lines per section (the card shows only a summary). */
   limit?: number;
 }
 

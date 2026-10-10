@@ -9,9 +9,9 @@ export interface ClientCredentials {
 }
 
 /**
- * As credenciais em claro, para quem fala com o serviço externo (o cliente do
- * IGDB). Ficam em memória até alguém as mudar no Admin — a pesquisa não vai à
- * base de dados em cada pedido.
+ * The plaintext credentials, for whoever talks to the external service (the IGDB
+ * client). They stay in memory until someone changes them in Admin — search doesn't hit
+ * the database on every request.
  */
 @Injectable()
 export class IntegrationCredentialsService {
@@ -30,7 +30,7 @@ export class IntegrationCredentialsService {
     try {
       clientSecret = decryptToken(row.secret);
     } catch {
-      // Não fica em cache: assim que o admin gravar de novo, volta a funcionar
+      // Not cached: as soon as the admin saves again, it works again
       throw new ServiceUnavailableException(
         'Não foi possível ler as credenciais guardadas (a TOKEN_ENCRYPTION_KEY mudou ou falta). Um administrador tem de as introduzir outra vez em Admin → Integrações.',
       );

@@ -9,7 +9,7 @@ export interface LibraryList {
   total: number;
 }
 
-/** A estante inteira do utilizador (GET /library), para o Início. */
+/** The user's whole shelf (GET /library), for Home. */
 export const useLibrary = () => {
   const [library, setLibrary] = useState<LibraryList | null>(null);
   const [error, setError] = useState(false);

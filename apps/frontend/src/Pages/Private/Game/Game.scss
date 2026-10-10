@@ -1,10 +1,10 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Página de um jogo em duas colunas: à esquerda todo o conteúdo (a caixa e a
-// ficha, o resumo com os tempos e os detalhes ao lado, as imagens e as
-// prateleiras de jogos relacionados); à direita o painel "A minha estante",
-// preso de cima a baixo ao fazer scroll (estilos em Library_Panel.scss).
+// Game page in two columns: on the left all the content (the box and the
+// info sheet, the summary with the times and details beside it, the images and the
+// shelves of related games); on the right the "My shelf" panel,
+// pinned top to bottom while scrolling (styles in Library_Panel.scss).
 .Game {
   --panel-width: 360px;
   --panel-top: calc(var(--top-nav-height, 76px) + 20px);
@@ -14,8 +14,8 @@
   gap: 32px;
   align-items: start;
   font-family: Font.$font_family_sans;
-  // A página vai até ao fundo: anula a margem de baixo do contentor. Sem isto,
-  // no fim do scroll o painel preso era empurrado para cima por essa margem.
+  // The page goes to the bottom: cancels the container's bottom margin. Without this,
+  // at the end of the scroll the pinned panel was pushed up by that margin.
   margin-bottom: -64px;
 
   @media (max-width: 1080px){
@@ -24,8 +24,8 @@
 
   @media (max-width: 760px){ margin-bottom: -48px; }
 
-  // --- "A minha estante": coluna no computador, folha no telemóvel e no tablet ---------
-  // No computador o invólucro não conta para o layout: o painel é a coluna da grelha
+  // --- "My shelf": column on desktop, sheet on mobile and tablet ---------------------
+  // On desktop the wrapper doesn't count for layout: the panel is the grid column
   .Game_Dock,
   .Game_Dock_Sheet{ display: contents; }
 
@@ -33,7 +33,7 @@
   .Game_Dock_Trigger{ display: none; }
 
   @media (max-width: 1080px){
-    // Fechada, a folha não existe; aberta, cobre o ecrã com o painel em baixo
+    // Closed, the sheet doesn't exist; open, it covers the screen with the panel at the bottom
     .Game_Dock{
       position: fixed;
       inset: 0;
@@ -87,7 +87,7 @@
       cursor: pointer;
     }
 
-    // O painel enche a folha: rola por dentro e o rodapé fica no fundo
+    // The panel fills the sheet: scrolls inside and the footer stays at the bottom
     .Library_Panel{
       position: static;
       flex: 1;
@@ -97,7 +97,7 @@
       border-radius: 0;
     }
 
-    // A barra que abre a folha, fixa por cima da navegação do fundo
+    // The bar that opens the sheet, fixed above the bottom navigation
     .Game_Dock_Trigger{
       position: fixed;
       left: 16px;
@@ -151,7 +151,7 @@
       transform: rotate(180deg);
     }
 
-    // O fim da página não fica escondido atrás da barra
+    // The end of the page isn't hidden behind the bar
     --main-pad-bottom: 140px;
   }
 
@@ -160,8 +160,8 @@
     display: flex;
     flex-direction: column;
     gap: 36px;
-    // O espaço que a página tirou ao contentor volta aqui, por baixo do conteúdo
-    // (mais, no telemóvel, o lugar da barra "A minha estante")
+    // The space the page took from the container comes back here, below the content
+    // (plus, on mobile, the room for the "My shelf" bar)
     padding-bottom: var(--main-pad-bottom, 64px);
   }
 
@@ -221,15 +221,15 @@
     color: var(--text-main);
   }
 
-  // --- Topo -----------------------------------------------------------------------------
+  // --- Top ------------------------------------------------------------------------------
   .Game_Top{
     display: grid;
     grid-template-columns: 260px minmax(0, 1fr);
     gap: 32px;
     align-items: start;
 
-    // Telemóvel: capa pequena ao lado do título; as notas e os factos por baixo,
-    // a toda a largura (a ficha deixa de ser uma caixa: os filhos entram na grelha)
+    // Mobile: small cover beside the title; the ratings and facts below,
+    // full width (the info sheet stops being a box: its children join the grid)
     @media (max-width: 720px){
       grid-template-columns: 104px minmax(0, 1fr);
       gap: 10px 16px;
@@ -243,7 +243,7 @@
     }
   }
 
-  // A caixa: capa grande com a lombada à esquerda
+  // The box: large cover with the spine on the left
   .Game_Cover{
     position: relative;
     aspect-ratio: 3 / 4;
@@ -313,7 +313,7 @@
     .Game_Link{ margin-left: 0; }
   }
 
-  // Três notas lado a lado, cada uma com o número grande e quantas avaliações
+  // Three ratings side by side, each with the big number and how many reviews
   .Game_Ratings{
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -377,9 +377,9 @@
     .Game_Fact_Row{ display: contents; }
   }
 
-  // --- Corpo: tempos + resumo + detalhes -------------------------------------------------
-  // O resumo à esquerda (texto para ler) e, ao lado, uma coluna com os tempos
-  // de jogo e os detalhes (dados para consultar)
+  // --- Body: times + summary + details --------------------------------------------------
+  // The summary on the left (text to read) and, beside it, a column with the play
+  // times and the details (data to look up)
   .Game_Body{
     display: grid;
     grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
@@ -446,7 +446,7 @@
       background: var(--bar-color);
     }
 
-    // As horas do utilizador: um traço vertical por cima das três barras
+    // The user's hours: a vertical line over the three bars
     .Time_To_Beat_You{
       position: absolute;
       top: -4px;
@@ -477,7 +477,7 @@
 
   .Game_Details .Game_Link{ margin-left: 0; }
 
-  // --- Imagens e vídeos ------------------------------------------------------------------
+  // --- Images and videos -----------------------------------------------------------------
   .Game_Media_Row{
     display: grid;
     grid-auto-flow: column;
@@ -507,7 +507,7 @@
     &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
   }
 
-  // Botão de "play" desenhado por cima da miniatura do vídeo
+  // "Play" button drawn over the video thumbnail
   .Game_Video_Play{
     position: absolute;
     top: 50%;

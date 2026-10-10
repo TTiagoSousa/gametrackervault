@@ -1,5 +1,5 @@
 # @gametracker/backend
 
-API do GameTracker Vault — NestJS 11 + Prisma 7 + PostgreSQL.
+GameTracker Vault API — NestJS 11 + Prisma 7 + PostgreSQL.
 
-Corre a partir da raiz do monorepo (`npm run dev:backend`). Ver o `CLAUDE.md` da raiz e `.claude/docs`.
+Run it from the monorepo root (`npm run dev:backend`). See the root `CONTRIBUTING.md` and `docs/`.

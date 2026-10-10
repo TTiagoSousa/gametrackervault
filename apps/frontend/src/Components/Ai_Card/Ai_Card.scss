@@ -1,8 +1,8 @@
 @use '../../Styles/Fonts.scss' as Font;
 @use '../../Styles/Mixins.scss' as Mixin;
 
-// A chave e o modelo do assistente: nas Definições e, sem chave, na página do
-// assistente. Mesma forma do cartão do IGDB no Admin.
+// The assistant's key and model: in Settings and, with no key, on the
+// assistant page. Same shape as the IGDB card in Admin.
 .Ai_Card{
   @include Mixin.Panel_Surface;
   padding: 28px;

@@ -3,18 +3,18 @@ import { IgdbClient } from '../igdb/igdb.client';
 import { GAME_FIELDS } from './buildSearchQuery';
 import { IgdbGame, mapGame } from './mapGame';
 
-// Só jogos principais (game_type 0) já lançados, bem avaliados por bastante gente
-// e com capa: um "ao calhas" que vale a pena
+// Only released main games (game_type 0), well rated by plenty of people
+// and with a cover: a "random" pick worth playing
 const MIN_RATING = 75;
 const MIN_RATINGS = 40;
 
-// O IGDB não aceita offsets acima disto
+// IGDB doesn't accept offsets above this
 const MAX_OFFSET = 9_999;
 
 /**
- * Um jogo ao calhas do catálogo do IGDB, fora dos que o utilizador já tem na
- * estante (`exclude`). Conta quantos há com os critérios e salta para um ao
- * acaso.
+ * A random game from the IGDB catalogue, excluding the ones the user already has on
+ * their shelf (`exclude`). Counts how many match the criteria and jumps to one at
+ * random.
  */
 export async function getRandomGame(exclude: number[], igdb: IgdbClient) {
   const now = Math.floor(Date.now() / 1000);

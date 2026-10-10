@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { PublicUser, UserRepository } from '../user-repository';
 import { Role, User } from 'src/generated/prisma/client/client';
 
-// Tudo menos a hash da password
+// Everything except the password hash
 const PUBLIC_FIELDS = {
   id: true,
   username: true,

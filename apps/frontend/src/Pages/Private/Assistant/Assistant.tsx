@@ -9,15 +9,15 @@ import Markdown from '../../../Components/Markdown/Markdown';
 import * as Icon from '../../../Imports/icons';
 import './Assistant.scss';
 
-// Perguntas para começar (chaves em assistant:suggestions)
+// Starter questions (keys in assistant:suggestions)
 const SUGGESTIONS = ['next', 'similar', 'backlog', 'short', 'hidden'] as const;
 
 /**
- * O assistente (Claude), do tamanho exato do ecrã — a página nunca rola. À
- * esquerda a conversa (cabeçalho com o modelo e "Nova conversa", mensagens com
- * scroll próprio, caixa de escrever no fundo); à direita sugestões de perguntas
- * e o que o assistente lê. Sem chave guardada, o cartão para a pôr ocupa o lugar
- * da conversa.
+ * The assistant (Claude), sized exactly to the screen — the page never scrolls. On the
+ * left the conversation (header with the model and "New conversation", messages with
+ * their own scroll, input box at the bottom); on the right suggested questions
+ * and what the assistant reads. With no saved key, the card to add one takes the place
+ * of the conversation.
  */
 const Assistant = () => {
   const { t } = useTranslation('assistant');
@@ -27,7 +27,7 @@ const Assistant = () => {
   const [draft, setDraft] = useState('');
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  // Só segue a resposta para baixo se o utilizador já estava no fundo
+  // Only follows the reply down if the user was already at the bottom
   const stickRef = useRef(true);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Assistant = () => {
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Enter envia; Shift+Enter muda de linha
+    // Enter sends; Shift+Enter inserts a new line
     if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
       event.preventDefault();
       ask(draft);
@@ -75,7 +75,7 @@ const Assistant = () => {
 
         {ai.failed && <p className='Assistant_Error'>{t('errors.settings')}</p>}
 
-        {/* Sem chave: o cartão para a pôr, no lugar da conversa */}
+        {/* No key: the card to add one, in place of the conversation */}
         {ai.settings && !configured && (
           <div className='Assistant_Setup'>
             <Ai_Card {...ai} title={t('setup.title')} />
@@ -148,7 +148,7 @@ const Assistant = () => {
         )}
       </section>
 
-      {/* Coluna da direita: perguntas para começar e o que o assistente lê */}
+      {/* Right column: starter questions and what the assistant reads */}
       <aside className='Assistant_Side'>
         <div className='Assistant_Side_Block'>
           <h2>{t('side.suggestions')}</h2>

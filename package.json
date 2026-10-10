@@ -1,7 +1,8 @@
 {
   "name": "gametracker-vault",
   "private": true,
-  "description": "Registo pessoal de jogos — backend NestJS, frontend React, pacote partilhado.",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "description": "Personal game log — NestJS backend, React frontend, shared package.",
   "workspaces": [
     "packages/*",
     "apps/*"

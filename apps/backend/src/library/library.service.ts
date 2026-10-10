@@ -35,7 +35,7 @@ export class LibraryService {
     return getLibraryStats(userId, this.repository, this.games);
   }
 
-  // Um jogo bem avaliado do IGDB que o utilizador ainda não tem na estante
+  // A well-rated IGDB game the user doesn't have on their shelf yet
   async discover(userId: string) {
     const entries = await this.repository.listEntries(userId);
     return this.games.random(entries.map((e) => e.gameId));

@@ -1,4 +1,4 @@
-// O que o IGDB devolve para um jogo, com os campos pedidos em GAME_FIELDS
+// What IGDB returns for a game, with the fields requested in GAME_FIELDS
 export interface IgdbGame {
   id: number;
   name: string;
@@ -25,11 +25,11 @@ export interface GameSummary {
   type: string | null;
 }
 
-// As capas vêm da CDN do IGDB; t_cover_big tem 264×374, chega para a grelha
+// Covers come from IGDB's CDN; t_cover_big is 264×374, enough for the grid
 const coverUrl = (imageId: string) =>
   `https://images.igdb.com/igdb/image/upload/t_cover_big/${imageId}.jpg`;
 
-/** Formato do IGDB → formato da app, sem campos aninhados nem Unix time. */
+/** IGDB format → app format, without nested fields or Unix time. */
 export function mapGame(game: IgdbGame): GameSummary {
   return {
     id: game.id,

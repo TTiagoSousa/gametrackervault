@@ -20,8 +20,8 @@ interface Global_Dropdown_Props {
   searchable?: boolean;
 }
 
-// Altura aproximada de cada <li> (padding + linha de texto) e do padding do painel,
-// usadas para limitar a altura a N opções visíveis em vez de um pixel fixo.
+// Approximate height of each <li> (padding + text line) and of the panel padding,
+// used to cap the height at N visible options instead of a fixed pixel value.
 const OPTION_HEIGHT = 34;
 const PANEL_PADDING = 6;
 const SEARCH_HEIGHT = 38;
@@ -53,8 +53,8 @@ const Global_Dropdown = ({
     if (open) updatePosition();
   }, [open]);
 
-  // Fechar limpa sempre a pesquisa — feito aqui e não num efeito, para o estado
-  // mudar por acção do utilizador em vez de por reacção a si próprio.
+  // Closing always clears the search — done here and not in an effect, so the state
+  // changes from a user action rather than in reaction to itself.
   const close = () => {
     setOpen(false);
     setQuery('');

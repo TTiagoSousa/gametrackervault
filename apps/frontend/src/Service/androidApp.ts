@@ -1,8 +1,8 @@
 /**
- * A app Android abre este mesmo site numa WebView: junta "GameTrackerVaultApp" ao
- * user agent e expõe window.GameTrackerApp (mudar de servidor, versão e, a partir
- * da 1.1.0, procurar atualizações). As funções novas são opcionais: uma app
- * antiga não as tem.
+ * The Android app opens this same site in a WebView: it appends "GameTrackerVaultApp" to the
+ * user agent and exposes window.GameTrackerApp (change server, version and, since
+ * 1.1.0, check for updates). The newer functions are optional: an older app
+ * doesn't have them.
  */
 interface AndroidBridge {
   changeServer(): void;
@@ -21,12 +21,12 @@ export const isAndroidApp = (): boolean => /GameTrackerVaultApp/.test(navigator.
 
 export const androidBridge = (): AndroidBridge | null => (isAndroidApp() ? window.GameTrackerApp ?? null : null);
 
-/** O APK publicado com o site (public/downloads) e a ficha dele. */
+/** The APK published with the site (public/downloads) and its metadata. */
 export const ANDROID_APK_URL = '/downloads/gametracker-vault.apk';
 export const ANDROID_INFO_URL = '/downloads/android.json';
-// O mesmo APK no repositório (outro endereço: dentro da app abre no browser)
+// The same APK in the repository (a different address: inside the app it opens in the browser)
 export const ANDROID_APK_REPO_URL =
-  'https://forgejo.home-sousa.me/Tiago/gameTrackerVault/raw/branch/main/apps/frontend/public/downloads/gametracker-vault.apk';
+  'https://github.com/TTiagoSousa/gametrackervault/raw/main/apps/frontend/public/downloads/gametracker-vault.apk';
 
 export interface AndroidApkInfo {
   version: string;

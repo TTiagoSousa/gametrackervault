@@ -10,13 +10,13 @@ const THEMES = ['light', 'dark', 'auto'] as const;
 const SECTIONS = ['appearance', 'account', 'assistant'] as const;
 
 /**
- * Definições: um índice à esquerda (fixo) e, à direita, um cartão por secção com
- * a mesma forma — título e descrição em cima, o conteúdo por baixo. Aparência
- * (tema e língua, guardados no browser), conta (nome e password) e assistente
- * (chave e modelo do Claude).
+ * Settings: an index on the left (fixed) and, on the right, one card per section with
+ * the same shape — title and description on top, the content below. Appearance
+ * (theme and language, saved in the browser), account (name and password) and assistant
+ * (Claude key and model).
  */
 const Settings = () => {
-  // O useTranslation volta a desenhar o componente quando a língua muda.
+  // useTranslation re-renders the component when the language changes.
   const { t } = useTranslation('settings');
   const { mode, handleDarkMode, handleLightMode, handleAutoMode } = useTheme();
   const language = currentLanguage();
@@ -42,7 +42,7 @@ const Settings = () => {
         </nav>
 
         <div className='Settings_Content'>
-          {/* --- Aparência --- */}
+          {/* --- Appearance --- */}
           <section className='Settings_Card' id='appearance'>
             <header className='Settings_Card_Head'>
               <h2>{t('sections.appearance')}</h2>
@@ -99,7 +99,7 @@ const Settings = () => {
 
           <Account_Section />
 
-          {/* --- Assistente: o cartão já traz o título e a descrição --- */}
+          {/* --- Assistant: the card already brings its title and description --- */}
           <div id='assistant' className='Settings_Anchor'>
             <Ai_Card {...ai} />
           </div>

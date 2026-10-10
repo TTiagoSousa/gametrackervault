@@ -6,10 +6,10 @@ import i18n from '../../i18n';
 
 export interface IgdbStatus {
   configured: boolean;
-  // Guardado mas impossível de decifrar (a TOKEN_ENCRYPTION_KEY mudou ou falta)
+  // Stored but impossible to decrypt (TOKEN_ENCRYPTION_KEY changed or is missing)
   unreadable: boolean;
   clientId: string | null;
-  // Só os últimos 4 caracteres — o secret inteiro nunca vem do backend
+  // Only the last 4 characters — the full secret never comes from the backend
   secretHint: string | null;
   updatedAt: string | null;
 }
@@ -24,7 +24,7 @@ const messageOf = (err: unknown) => {
   return (Array.isArray(message) ? message[0] : message) ?? e.message ?? i18n.t('common:errors.generic');
 };
 
-/** Credenciais do IGDB da instalação (Admin → Integrações). */
+/** The installation's IGDB credentials (Admin → Integrations). */
 export const useIgdbIntegration = () => {
   const [status, setStatus] = useState<IgdbStatus | null>(null);
   const [busy, setBusy] = useState<'save' | 'test' | 'remove' | null>(null);

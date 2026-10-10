@@ -13,9 +13,9 @@ import {
 } from './updateFiles';
 
 /**
- * Pede a atualização para uma release. Só para a frente: voltar a uma versão
- * anterior não desfaz as migrações da base de dados e podia deixar a app partida.
- * Saltar versões é seguro — as migrações aplicam-se todas de seguida.
+ * Requests the update to a release. Forward only: going back to an earlier
+ * version doesn't undo database migrations and could leave the app broken.
+ * Skipping versions is safe — migrations are all applied in sequence.
  */
 export async function requestUpdate(version: string) {
   if (!updatesDir()) {

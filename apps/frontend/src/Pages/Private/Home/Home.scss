@@ -1,10 +1,10 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Início: saudação e quatro prateleiras a toda a largura, uma por grupo de
-// estados. Cada prateleira tem o nome, a contagem e as capas de frente (com o
-// nome por baixo) em cima de uma tábua da cor do grupo. A fila tem altura fixa
-// e rola na horizontal; uma prateleira vazia é só uma faixa baixa com uma frase.
+// Home: greeting and four full-width shelves, one per status
+// group. Each shelf has the name, the count and the covers facing out (with the
+// name below) on top of a board in the group's color. The row has a fixed height
+// and scrolls horizontally; an empty shelf is just a low strip with a sentence.
 .Home {
   @include Mixin.Pages_Configs;
 
@@ -79,7 +79,7 @@
       }
     }
 
-    // Capa (3:4) + duas linhas de nome + uma linha de etiqueta/horas
+    // Cover (3:4) + two lines of name + one line of label/hours
     .Home_Shelf_Row{
       --row-height: calc(var(--case-width) * 4 / 3 + 13.5px * 1.3 * 2 + 20px + 16px);
 
@@ -95,7 +95,7 @@
       box-sizing: content-box;
     }
 
-    // Prateleira vazia: uma faixa baixa só com a frase
+    // Empty shelf: a low strip with just the sentence
     &.empty .Home_Shelf_Row{
       height: auto;
       display: block;
@@ -108,7 +108,7 @@
       color: var(--text-faint);
     }
 
-    // A tábua da prateleira, na cor do grupo
+    // The shelf board, in the group's color
     .Home_Shelf_Board{
       height: 8px;
       margin: 0 -20px;
@@ -116,7 +116,7 @@
     }
   }
 
-  // --- Um jogo na prateleira --------------------------------------------------------------
+  // --- A game on the shelf --------------------------------------------------------------
   .Home_Game{
     --status-color: var(--shelf-color);
 
@@ -145,7 +145,7 @@
     overflow: hidden;
     background: var(--surface-2);
 
-    // A lombada da caixa, na cor do estado
+    // The box spine, in the status color
     &::before{
       content: '';
       position: absolute;
@@ -221,8 +221,8 @@
     font-weight: 600;
   }
 
-  // --- Jogo ao calhas ---------------------------------------------------------------------
-  // Texto e botões à esquerda; à direita o jogo escolhido, num espaço de altura fixa
+  // --- Random game ------------------------------------------------------------------------
+  // Text and buttons on the left; on the right the picked game, in a fixed-height space
   .Random_Pick{
     @include Mixin.Panel_Surface;
     padding: 20px;
@@ -372,7 +372,7 @@
     color: var(--accent);
   }
 
-  // --- Telemóvel ------------------------------------------------------------------------------
+  // --- Mobile ---------------------------------------------------------------------------------
   @media (max-width: 760px){
     gap: 18px;
 
@@ -393,7 +393,7 @@
 
     .Home_Game_Name{ font-size: 12.5px; min-height: calc(12.5px * 1.3 * 2); }
 
-    // Jogo ao calhas: texto curto, dois botões lado a lado e um resultado baixo
+    // Random game: short text, two buttons side by side and a low result
     .Random_Pick{
       padding: 14px;
       gap: 12px;

@@ -4,7 +4,7 @@ import { End_Points } from '../../Service/endPoints';
 import { apiMessage } from '../apiMessage';
 import type { GameSummary } from './types';
 
-/** Um jogo bem avaliado do IGDB, ao calhas, que ainda não está na estante. */
+/** A random well-rated IGDB game that is not on the shelf yet. */
 export const useDiscover = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

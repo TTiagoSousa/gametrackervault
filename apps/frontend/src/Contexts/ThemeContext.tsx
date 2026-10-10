@@ -4,7 +4,7 @@ type ThemeMode = 'dark' | 'light' | 'auto';
 
 interface ThemeContextType {
   mode: ThemeMode;
-  /** O tema que está mesmo à vista (resolve o 'auto'). */
+  /** The theme actually on screen (resolves 'auto'). */
   isDark: boolean;
   handleDarkMode: () => void;
   handleLightMode: () => void;
@@ -18,10 +18,10 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  // O claro é o tema de origem do Vault
+  // Light is the Vault's original theme
   const [mode, setMode] = useState<ThemeMode>('light');
 
-  // Carrega o modo do localStorage uma vez, no carregamento inicial
+  // Loads the mode from localStorage once, on initial load
   useEffect(() => {
     const storedMode = localStorage.getItem('mode') as ThemeMode | null;
     if (storedMode) {
@@ -29,14 +29,14 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
   }, []);
 
-  // Atualiza a classe do body sempre que "mode" mudar
+  // Updates the body class whenever "mode" changes
   useEffect(() => {
     if (mode === 'light') {
       document.body.className = 'Light_Mode';
     } else if (mode === 'dark') {
       document.body.className = 'Dark_Mode';
     } else {
-      // modo auto — muda baseado no horário
+      // auto mode — switches based on the time of day
       const currentTime = new Date().getHours();
       if (currentTime >= 20 || currentTime < 7) {
         document.body.className = 'Dark_Mode';
@@ -46,7 +46,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
   }, [mode]);
 
-  // Funções para trocar de tema
+  // Functions to switch theme
   const handleDarkMode = () => {
     localStorage.setItem('mode', 'dark');
     setMode('dark');

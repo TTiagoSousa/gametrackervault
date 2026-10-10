@@ -1,14 +1,14 @@
 @use 'Global';
 
-// Formas reativas ao tema: (noite, dia).
-// As cores vivem em Colors/Tokens.scss — aqui só bordas, sombras e raios.
+// Theme-reactive shapes: (night, day).
+// Colours live in Colors/Tokens.scss — only borders, shadows and radii here.
 $theme: (
   'card-border': (
     1px solid rgba(200, 208, 255, .12),
     1px solid rgba(15, 26, 60, .12)
   ),
 
-  // Blocos assentes não têm sombra. Só o que flutua (menus, modais, toasts).
+  // Resting blocks have no shadow. Only floating things do (menus, modals, toasts).
   'card-box-shadow': (
     'none',
     'none'

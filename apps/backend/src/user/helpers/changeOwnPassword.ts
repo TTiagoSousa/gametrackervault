@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../repositories/user-repository';
 import { comparePasswords } from 'src/utils/password/compare.passwords';
 
-/** Muda a password do próprio utilizador, confirmando primeiro a atual. */
+/** Changes the user's own password, confirming the current one first. */
 export async function changeOwnPassword(
   userId: string,
   currentPassword: string,

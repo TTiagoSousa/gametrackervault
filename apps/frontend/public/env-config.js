@@ -1,5 +1,5 @@
-// Sobreposição opcional do URL da API, lida em runtime antes do bundle.
-// Fica vazio: no container LXC o build já leva VITE_API_URL=/api (o nginx faz proxy
-// de /api para o backend) e em desenvolvimento vale o .env.local. Só serve para
-// apontar um build já feito para outra API sem o recompilar.
+// Optional API URL override, read at runtime before the bundle.
+// Left empty: in the LXC container the build already has VITE_API_URL=/api (nginx proxies
+// /api to the backend) and in development .env.local applies. Only useful for
+// pointing an existing build at another API without rebuilding it.
 window.__ENV__ = {};

@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // 5190: o 5173 e o 5180 estão ocupados por outros projetos nesta máquina.
-  // strictPort para nunca saltar para outra porta — o backend só aceita esta origem.
+  // 5190: 5173 and 5180 are taken by other projects on this machine.
+  // strictPort so it never jumps to another port — the backend only accepts this origin.
   server: { port: 5190, strictPort: true },
 })

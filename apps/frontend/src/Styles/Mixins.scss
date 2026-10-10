@@ -1,10 +1,10 @@
 @use 'Fonts.scss' as Font;
 
 // ---------------------------------------------------------------------------
-// Vocabulário do Vault — as peças de que todas as páginas são feitas.
+// The Vault's vocabulary — the pieces every page is made of.
 // ---------------------------------------------------------------------------
 
-/// Contentor de página: coluna com espaço entre blocos.
+/// Page container: a column with spacing between blocks.
 @mixin Pages_Configs {
   width: 100%;
   display: flex;
@@ -14,8 +14,8 @@
   font-family: Font.$font_family_sans;
 }
 
-/// Cabeçalho de página: título em Unbounded à esquerda (.Right_Side, nome
-/// herdado), ações à direita (.Left_Side).
+/// Page header: Unbounded title on the left (.Right_Side, inherited
+/// name), actions on the right (.Left_Side).
 @mixin Page_Header {
   width: 100%;
   flex-shrink: 0;
@@ -38,7 +38,7 @@
   }
 }
 
-/// Legenda pequena: cabeçalhos de coluna, chaves de leitura, metadados.
+/// Small caption: column headers, reading keys, metadata.
 @mixin Caption($size: 12px) {
   font-family: Font.$font_family_sans;
   font-size: $size;
@@ -46,7 +46,7 @@
   letter-spacing: .01em;
 }
 
-/// Título de secção dentro de um cartão.
+/// Section title inside a card.
 @mixin Section_Title($size: 16px) {
   font-family: Font.$font_family_display;
   font-size: $size;
@@ -54,14 +54,14 @@
   letter-spacing: -.015em;
 }
 
-/// Superfície base de bloco: plana, só linha fina — sem sombra nem brilho.
+/// Base block surface: flat, thin line only — no shadow or glow.
 @mixin Panel_Surface {
   background: var(--surface);
   border: var(--card-border);
   border-radius: var(--border-radius);
 }
 
-/// Base de qualquer controlo escrevível (input, textarea, select).
+/// Base for any typeable control (input, textarea, select).
 @mixin Control_Surface {
   background: var(--surface-2);
   border: 1px solid var(--line-strong);
@@ -85,7 +85,7 @@
   }
 }
 
-/// Botão secundário — contorno discreto, ganha cor no hover.
+/// Secondary button — subtle outline, gains colour on hover.
 @mixin Ghost_Button {
   display: inline-flex;
   align-items: center;
@@ -119,7 +119,7 @@
   }
 }
 
-/// Botão principal — ultramarino cheio.
+/// Primary button — solid ultramarine.
 @mixin Solid_Button {
   @include Ghost_Button;
   background: var(--accent);

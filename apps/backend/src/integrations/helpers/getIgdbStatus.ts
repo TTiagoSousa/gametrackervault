@@ -3,12 +3,12 @@ import { decryptToken } from 'src/utils/crypto/token-cipher';
 import { PrismaIntegrationRepository } from '../repositories/prisma/prisma-integration-repository';
 
 /**
- * O estado para o Admin: se está configurado, o Client ID e só os últimos 4
- * caracteres do secret — o secret inteiro nunca volta ao browser.
+ * The status for Admin: whether it is configured, the Client ID and only the last 4
+ * characters of the secret — the full secret never goes back to the browser.
  *
- * Se o secret guardado não se conseguir decifrar (a TOKEN_ENCRYPTION_KEY mudou
- * ou falta), o estado diz-o em "unreadable" em vez de falhar: o admin tem de
- * conseguir abrir o cartão para o introduzir outra vez.
+ * If the stored secret can't be decrypted (TOKEN_ENCRYPTION_KEY changed
+ * or is missing), the status says so in "unreadable" instead of failing: the admin must
+ * be able to open the card to enter it again.
  */
 export async function getIgdbStatus(repository: PrismaIntegrationRepository) {
   const row = await repository.find(IntegrationProvider.IGDB);

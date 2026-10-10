@@ -1,5 +1,5 @@
-// App Android do GameTracker Vault: uma WebView nativa ligada ao servidor que o
-// utilizador escolhe no primeiro arranque. Sem dependências além do Android.
+// GameTracker Vault Android app: a native WebView connected to the server the
+// user picks on first launch. No dependencies beyond Android.
 pluginManagement {
     repositories {
         google()

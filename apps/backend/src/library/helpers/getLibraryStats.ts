@@ -33,9 +33,9 @@ const gameRef = (entry: EntryWithGame) => {
 };
 
 /**
- * As estatísticas da estante de um utilizador: jogos por estado, horas (as
- * escritas e as estimadas pela média do IGDB), notas, jogos acabados por ano,
- * géneros mais jogados, o que falta jogar e os destaques.
+ * A user's shelf stats: games per status, hours (entered
+ * and estimated from the IGDB average), ratings, games finished per year,
+ * most played genres, the backlog and the highlights.
  */
 export async function getLibraryStats(
   userId: string,
@@ -69,7 +69,7 @@ export async function getLibraryStats(
     counts[entry.status] += 1;
 
     if (entry.status === LibraryStatus.PLAN_TO_PLAY) {
-      // O que falta jogar: a média da história principal de cada jogo
+      // The backlog: each game's main story average
       if (entry.game.ttbMain != null) backlogHours += entry.game.ttbMain;
       else backlogMissing += 1;
       continue;
@@ -111,7 +111,7 @@ export async function getLibraryStats(
     total: entries.length,
     counts,
     finished,
-    // Dos jogos que acabaram (bem ou mal): quantos foram até ao fim
+    // Of the games that ended (finished or dropped): how many were played to the end
     completionRate:
       finished + counts.DROPPED > 0
         ? Math.round((finished / (finished + counts.DROPPED)) * 100)
@@ -155,7 +155,7 @@ export async function getLibraryStats(
         hours: round(h.hours),
         estimated: h.estimated,
       })),
-    // false quando o IGDB não respondeu e algumas médias podem faltar
+    // false when IGDB didn't respond and some averages may be missing
     factsComplete,
   };
 }

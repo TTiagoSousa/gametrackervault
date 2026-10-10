@@ -1,4 +1,4 @@
-// Ficha completa de um jogo: o formato do IGDB e o da app
+// A game's full details: the IGDB format and the app's
 
 interface IgdbRef {
   id: number;
@@ -65,7 +65,7 @@ const yearOf = (unix?: number) =>
 const round = (value?: number) =>
   value !== undefined ? Math.round(value) : null;
 
-// Segundos → horas com uma casa decimal (os tempos do IGDB vêm em segundos)
+// Seconds → hours with one decimal place (IGDB times come in seconds)
 const hours = (seconds?: number) =>
   seconds ? Math.round((seconds / 3600) * 10) / 10 : null;
 
@@ -83,7 +83,7 @@ const byYear = (a: GameRef, b: GameRef) =>
 
 const names = (list?: { name: string }[]) => (list ?? []).map((x) => x.name);
 
-/** Formato do IGDB → formato da app, com os relacionados já separados. */
+/** IGDB format → app format, with related games already split out. */
 export function mapGameDetail(
   game: IgdbGameDetail,
   timeToBeat: IgdbTimeToBeat | null,
@@ -130,8 +130,8 @@ export function mapGameDetail(
       users: round(game.rating),
       usersCount: game.rating_count ?? 0,
     },
-    // Tempos médios dos jogadores do IGDB, em horas: só a história principal,
-    // principal + extras, e 100%
+    // Average times from IGDB players, in hours: main story only,
+    // main + extras, and 100%
     timeToBeat: timeToBeat
       ? {
           main: hours(timeToBeat.hastily),

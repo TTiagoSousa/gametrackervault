@@ -1,15 +1,15 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Assistente do tamanho exato do ecrã: a página nunca rola. A altura é o ecrã
-// menos a barra de topo e o espaço de cima do contentor; a margem de baixo do
-// contentor é anulada. Duas colunas: a conversa (mensagens com scroll próprio,
-// caixa de escrever no fundo) e, à direita, sugestões e o que o assistente lê.
+// Assistant sized exactly to the screen: the page never scrolls. The height is the screen
+// minus the top bar and the container's top spacing; the container's bottom margin
+// is cancelled. Two columns: the conversation (messages with their own scroll,
+// input box at the bottom) and, on the right, suggestions and what the assistant reads.
 .Assistant {
   --pad-top: 32px;
   --pad-bottom: 24px;
 
-  // No telemóvel desconta também a barra de navegação do fundo
+  // On mobile also subtracts the bottom navigation bar
   height: calc(100svh - var(--top-nav-height, 76px) - var(--bottom-nav-height, 0px) - var(--pad-top) - var(--pad-bottom));
   min-height: 460px;
   margin-bottom: calc(var(--pad-bottom) - 64px);
@@ -27,7 +27,7 @@
     margin-bottom: calc(var(--pad-bottom) - 48px);
   }
 
-  // --- Conversa ---------------------------------------------------------------------------
+  // --- Conversation -----------------------------------------------------------------------
   .Assistant_Chat{
     @include Mixin.Panel_Surface;
     min-height: 0;
@@ -100,7 +100,7 @@
     font-weight: 600;
   }
 
-  // Sem chave: o cartão ocupa o corpo, com scroll próprio se não couber
+  // No key: the card fills the body, with its own scroll if it doesn't fit
   .Assistant_Setup{
     flex: 1;
     min-height: 0;
@@ -141,7 +141,7 @@
     gap: 14px;
     max-width: 860px;
 
-    // As perguntas do utilizador ficam num bloco sombreado
+    // The user's questions sit in a shaded block
     &.user .Assistant_Bubble{
       padding: 10px 14px;
       border-radius: var(--ctrl-radius);
@@ -193,7 +193,7 @@
     color: var(--text-faint);
   }
 
-  // Pesquisas que o assistente fez no IGDB
+  // Searches the assistant made on IGDB
   .Assistant_Tools{
     display: flex;
     flex-wrap: wrap;
@@ -224,7 +224,7 @@
     line-height: 1.45;
   }
 
-  // --- Escrever ---------------------------------------------------------------------------
+  // --- Input ------------------------------------------------------------------------------
   .Assistant_Composer{
     flex-shrink: 0;
     display: flex;
@@ -263,7 +263,7 @@
     padding: 0 18px;
   }
 
-  // --- Coluna da direita ------------------------------------------------------------------
+  // --- Right column -----------------------------------------------------------------------
   .Assistant_Side{
     @include Mixin.Panel_Surface;
     min-height: 0;
@@ -327,7 +327,7 @@
     }
   }
 
-  // Sugestões dentro da conversa vazia: só quando a coluna da direita não aparece
+  // Suggestions inside the empty conversation: only when the right column isn't shown
   .Assistant_Intro_Suggestions{
     display: none;
     flex-wrap: wrap;
@@ -344,7 +344,7 @@
     }
   }
 
-  // --- Ecrãs estreitos (no fim, para ganhar às regras acima) -----------------------------
+  // --- Narrow screens (at the end, to win over the rules above) ---------------------------
   @media (max-width: 980px){
     .Assistant_Side{ display: none; }
     .Assistant_Intro_Suggestions{ display: flex; }

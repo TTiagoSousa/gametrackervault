@@ -12,8 +12,8 @@ const formatDate = (iso: string | null | undefined) =>
   iso ? new Date(iso).toLocaleDateString(dateLocale(), { day: '2-digit', month: '2-digit', year: 'numeric' }) : '—';
 
 /**
- * Versão instalada, a última release e o botão para atualizar. Vive na página Admin
- * (as rotas /system/* também só respondem a administradores).
+ * Installed version, the latest release and the update button. Lives on the Admin page
+ * (the /system/* routes also only answer to administrators).
  */
 const Version_Card = () => {
   const { t } = useTranslation('system');
@@ -22,7 +22,7 @@ const Version_Card = () => {
   const [chosen, setChosen] = useState<string | null>(null);
   const [dismissed, setDismissed] = useState(false);
 
-  // Uma atualização já a correr (pedida noutro separador, por exemplo) abre o progresso.
+  // An update already running (requested in another tab, for example) opens the progress.
   const inProgress =
     (overview?.update.state === 'running' || overview?.update.state === 'queued') && overview.update.target
       ? overview.update.target

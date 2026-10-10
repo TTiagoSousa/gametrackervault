@@ -2,19 +2,19 @@ import { git } from './git';
 import { isVersion } from './semver';
 
 export interface InstalledVersion {
-  /** vX.Y.Z quando o código instalado é exatamente uma release; null se não. */
+  /** vX.Y.Z when the installed code is exactly a release; null otherwise. */
   version: string | null;
-  /** A release mais recente em que o código assenta (para comparar com as novas). */
+  /** The latest release the code is based on (to compare with newer ones). */
   baseVersion: string | null;
   commit: string;
   date: string | null;
-  /** Branch, quando não é uma release (desenvolvimento ou instalação por branch). */
+  /** Branch, when not a release (development or branch install). */
   branch: string | null;
 }
 
 /**
- * O que está instalado, lido do git. Uma instalação por release está numa tag
- * (vX.Y.Z); em desenvolvimento ou num branch fica a release em que assenta.
+ * What is installed, read from git. A release install sits on a tag
+ * (vX.Y.Z); in development or on a branch it is the release it is based on.
  */
 export async function getInstalledVersion(): Promise<InstalledVersion> {
   const commit = await git(['rev-parse', '--short', 'HEAD']).catch(() => '');

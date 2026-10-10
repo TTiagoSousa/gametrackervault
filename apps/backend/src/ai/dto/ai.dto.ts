@@ -13,7 +13,7 @@ import {
 
 const MODEL_ID = /^[a-z0-9][a-z0-9.\-_@]*$/i;
 
-/** Guardar a chave e/ou o modelo. Sem chave, muda só o modelo da que já lá está. */
+/** Save the key and/or the model. Without a key, only changes the model of the stored one. */
 export class SaveAiSettingsDto {
   @IsOptional()
   @IsString()
@@ -27,7 +27,7 @@ export class SaveAiSettingsDto {
   model: string;
 }
 
-/** Listar os modelos com uma chave ainda não guardada (ou com a guardada). */
+/** List the models with a not-yet-saved key (or with the stored one). */
 export class ListModelsDto {
   @IsOptional()
   @IsString()

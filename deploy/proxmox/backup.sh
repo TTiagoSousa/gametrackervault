@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Dump da base de dados para /var/backups/gametracker, comprimido, mantendo 14 dias.
-# Corre pelo cron (/etc/cron.d/gametracker-backup); pode correr-se à mão.
+# Compressed database dump to /var/backups/gametracker, keeping 14 days.
+# Run by cron (/etc/cron.d/gametracker-backup); can also be run by hand.
 #
-# Repor:  gunzip -c <ficheiro> | runuser -u postgres -- psql -d gametracker
+# Restore:  gunzip -c <file> | runuser -u postgres -- psql -d gametracker
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"

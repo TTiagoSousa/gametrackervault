@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
-// A assinatura vem de um ficheiro fora do repositório (ver scripts/build-android.mjs):
-// a keystore nunca entra no git. Sem ele, o APK de release sai sem assinatura.
+// Signing comes from a file outside the repository (see scripts/build-android.mjs):
+// the keystore never goes into git. Without it, the release APK comes out unsigned.
 def keystoreProps = new Properties()
 def keystorePath = System.getenv('GAMETRACKER_KEYSTORE_PROPERTIES')
 if (keystorePath && file(keystorePath).exists()) {
@@ -35,7 +35,7 @@ android {
 
     buildTypes {
         release {
-            // Uma Activity e nada mais: encolher não ganha quase nada
+            // One Activity and nothing else: shrinking gains almost nothing
             minifyEnabled false
             if (keystoreProps['storeFile']) signingConfig signingConfigs.release
         }

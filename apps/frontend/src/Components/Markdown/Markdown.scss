@@ -1,6 +1,6 @@
 @use '../../Styles/Fonts.scss' as Font;
 
-// Texto das respostas do assistente
+// Text of the assistant's replies
 .Markdown{
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@
     text-underline-offset: 2px;
   }
 
-  // Jogo com página na app: sublinhado em tracejado, como uma etiqueta
+  // Game with a page in the app: dashed underline, like a label
   .Markdown_Game{
     text-decoration-style: dashed;
 

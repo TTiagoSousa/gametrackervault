@@ -7,22 +7,22 @@ import './Igdb_Card.scss';
 const TWITCH_CONSOLE = 'https://dev.twitch.tv/console/apps';
 
 /**
- * Credenciais do IGDB da instalação, na página Admin. Uma chave serve todos os
- * utilizadores; o secret guardado nunca volta ao browser (só os 4 últimos
- * caracteres, para se saber qual está lá).
+ * The install's IGDB credentials, on the Admin page. One key serves all
+ * users; the saved secret never returns to the browser (only the last 4
+ * characters, to tell which one is there).
  */
 const Igdb_Card = () => {
   const { t } = useTranslation('admin');
   const { status, busy, save, test, remove } = useIgdbIntegration();
-  // O Client ID começa com o que está guardado; enquanto não se escreve nada,
-  // vale o guardado
+  // The Client ID starts with the saved one; until something is typed,
+  // the saved one stands
   const [clientIdDraft, setClientIdDraft] = useState<string | null>(null);
   const [clientSecret, setClientSecret] = useState('');
   const [confirmRemove, setConfirmRemove] = useState(false);
 
   const clientId = clientIdDraft ?? status?.clientId ?? '';
   const configured = Boolean(status?.configured);
-  // Com o secret ilegível é preciso escrever um novo; senão, em branco mantém o guardado
+  // With an unreadable secret a new one must be typed; otherwise, blank keeps the saved one
   const secretRequired = !configured || Boolean(status?.unreadable);
   const canSave = clientId.trim().length > 0 && (!secretRequired || clientSecret.trim().length > 0) && !busy;
 

@@ -1,6 +1,6 @@
 import i18n from '../../i18n';
 
-// Formas devolvidas por /system/* (só administradores).
+// Shapes returned by /system/* (admins only).
 
 export interface ReleaseNotes {
   features: string[];
@@ -59,7 +59,7 @@ export interface ReleaseList {
   releases: ListedRelease[];
 }
 
-/** O que se mostra como versão instalada: a release, ou o branch e o commit. */
+/** What is shown as the installed version: the release, or the branch and commit. */
 export const installedLabel = (installed: InstalledVersion | undefined) => {
   if (!installed) return '—';
   if (installed.version) return installed.version;
@@ -67,7 +67,7 @@ export const installedLabel = (installed: InstalledVersion | undefined) => {
   return `${base}${installed.branch ?? 'dev'} (${installed.commit})`;
 };
 
-/** A mensagem de erro de um pedido axios (ou de outro erro qualquer). */
+/** The error message of an axios request (or of any other error). */
 export const errorMessage = (error: unknown): string => {
   const e = error as { response?: { data?: { message?: string | string[] } }; message?: string };
   const message = e?.response?.data?.message ?? e?.message;

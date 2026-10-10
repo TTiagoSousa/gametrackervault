@@ -22,8 +22,8 @@ export type Sort = (typeof SORTS)[number];
 
 export const MAX_PAGE_SIZE = 50;
 
-// "6,48,130" no URL → [6, 48, 130]. Valores que não são inteiros caem fora e o
-// @IsInt dá o erro.
+// "6,48,130" in the URL → [6, 48, 130]. Non-integer values are dropped and
+// @IsInt raises the error.
 const toIntArray = ({ value }: { value: unknown }): unknown => {
   if (value === undefined || value === '') return undefined;
   const raw = Array.isArray(value)
@@ -94,7 +94,7 @@ export class SearchGamesDto {
   @Max(2100)
   yearTo?: number;
 
-  // Nota mínima de 0 a 100 (total_rating do IGDB: críticos + utilizadores)
+  // Minimum rating from 0 to 100 (IGDB total_rating: critics + users)
   @IsOptional()
   @Type(() => Number)
   @IsInt()

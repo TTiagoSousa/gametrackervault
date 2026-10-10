@@ -7,8 +7,8 @@ interface Time_To_Beat_Props {
 }
 
 /**
- * Tempo médio para acabar o jogo, em barras proporcionais (a maior é o 100%),
- * com as horas do utilizador marcadas por cima quando as tem.
+ * Average time to beat the game, as proportional bars (the largest is 100%),
+ * with the user's hours marked on top when they have them.
  */
 const Time_To_Beat = ({ timeToBeat, yourHours }: Time_To_Beat_Props) => {
   const { t } = useTranslation('game');

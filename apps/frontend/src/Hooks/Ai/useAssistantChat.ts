@@ -12,7 +12,7 @@ export interface ChatTool {
 export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
-  // Pesquisas que o assistente fez no IGDB para esta resposta
+  // IGDB searches the assistant made for this answer
   tools?: ChatTool[];
   error?: string;
 }
@@ -23,7 +23,7 @@ type ChatEvent =
   | { type: 'error'; message: string }
   | { type: 'done' };
 
-// Quantas mensagens anteriores vão com cada pergunta (o backend aceita até 60)
+// How many previous messages go with each question (the backend accepts up to 60)
 const HISTORY = 40;
 
 const storageKey = (username: string | null) => `assistant-chat:${username ?? 'anon'}`;
@@ -38,9 +38,9 @@ const load = (username: string | null): ChatMessage[] => {
 };
 
 /**
- * A conversa com o assistente. As respostas chegam em streaming (uma linha JSON
- * por evento) e vão aparecendo à medida que chegam. A conversa fica guardada
- * neste separador (sessionStorage) até se começar outra.
+ * The conversation with the assistant. Answers are streamed (one JSON line
+ * per event) and appear as they arrive. The conversation is kept
+ * in this tab (sessionStorage) until another one is started.
  */
 export const useAssistantChat = (username: string | null) => {
   const [messages, setMessages] = useState<ChatMessage[]>(() => load(username));
@@ -52,14 +52,14 @@ export const useAssistantChat = (username: string | null) => {
     try {
       sessionStorage.setItem(storageKey(username), JSON.stringify(messages));
     } catch {
-      // sem sessionStorage a conversa só dura até recarregar
+      // without sessionStorage the conversation only lasts until reload
     }
   }, [messages, streaming, username]);
 
-  // Ao sair da página, a resposta em curso é cancelada
+  // On leaving the page, the answer in progress is cancelled
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  // Atualiza a última mensagem (a resposta em curso)
+  // Updates the last message (the answer in progress)
   const patchLast = (patch: (message: ChatMessage) => ChatMessage) =>
     setMessages((previous) => {
       const next = [...previous];
@@ -71,7 +71,7 @@ export const useAssistantChat = (username: string | null) => {
     const question = text.trim();
     if (!question || streaming) return;
 
-    // O histórico que vai: só mensagens com texto e sem erro
+    // The history sent: only messages with text and no error
     const history = [...messages, { role: 'user' as const, content: question }]
       .filter((m) => m.content.trim() && !m.error)
       .slice(-HISTORY)
@@ -97,7 +97,7 @@ export const useAssistantChat = (username: string | null) => {
           const body = (await response.json()) as { message?: string | string[] };
           if (body.message) message = Array.isArray(body.message) ? body.message[0] : body.message;
         } catch {
-          // sem corpo JSON
+          // no JSON body
         }
         patchLast((m) => ({ ...m, error: message }));
         return;

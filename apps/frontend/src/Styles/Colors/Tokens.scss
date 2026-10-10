@@ -1,47 +1,47 @@
 @use 'Global';
 
 // ---------------------------------------------------------------------------
-// Tokens reativos ao tema: nome-da-css-var => (valor de noite, valor de dia).
+// Theme-reactive tokens: css-var-name => (night value, day value).
 //
-// Os nomes dizem o PAPEL da cor, não onde é usada. Um componente novo usa
-// estes — se nenhum servir, acrescenta-se aqui um token, nunca um hex solto.
+// Names describe the colour's ROLE, not where it is used. A new component uses
+// these — if none fits, add a token here, never a loose hex.
 // ---------------------------------------------------------------------------
 $theme: (
-  // --- Superfícies, da mais funda para a mais saliente ---
+  // --- Surfaces, from deepest to most raised ---
   'bg':        (Global.$night-bg,        Global.$day-bg),
   'surface':   (Global.$night-surface,   Global.$day-surface),
   'surface-2': (Global.$night-surface-2, Global.$day-surface-2),
   'surface-3': (Global.$night-surface-3, Global.$day-surface-3),
 
-  // --- Linhas ---
+  // --- Lines ---
   'line':        (Global.$night-line,   Global.$day-line),
   'line-strong': (Global.$night-line-2, Global.$day-line-2),
 
-  // --- Texto, do mais forte para o mais apagado ---
+  // --- Text, from strongest to faintest ---
   'text-main':  (Global.$night-text,  Global.$day-text),
   'text-soft':  (Global.$night-soft,  Global.$day-soft),
   'text-faint': (Global.$night-faint, Global.$day-faint),
 
-  // --- Acento (ultramarino) ---
+  // --- Accent (ultramarine) ---
   'accent':        (Global.$night-accent,        Global.$day-accent),
   'accent-bright': (Global.$night-accent-bright, Global.$day-accent-bright),
   'accent-deep':   (Global.$night-accent-deep,   Global.$day-accent-deep),
   'accent-soft':   (rgba(124, 134, 255, .18),    rgba(47, 59, 227, .10)),
   'on-accent':     (#0D1230,                     #FFFFFF),
 
-  // --- Login: o campo ultramarino onde está a estante ---
+  // --- Login: the ultramarine field holding the shelf ---
   'stage-bg':   (#151B42, #2F3BE3),
   'stage-text': (#EEF0FF, #FFFFFF),
   'stage-soft': (#A7AED6, rgba(255, 255, 255, .78)),
   'stage-line': (rgba(200, 208, 255, .14), rgba(255, 255, 255, .22)),
 
-  // --- Estados de jogo ---
-  // As mesmas cores em todo o lado: lombadas, legendas, prateleiras do Início.
+  // --- Game statuses ---
+  // The same colours everywhere: spines, legends, Home shelves.
   'game-status-playing':  (Global.$playing-night,  Global.$playing-day),
   'game-status-finished': (Global.$finished-night, Global.$finished-day),
   'game-status-beaten':   (Global.$beaten-night,   Global.$beaten-day),
 
-  // --- Semântico ---
+  // --- Semantic ---
   'success':           (Global.$success-night, Global.$success-day),
   'danger-color':      (Global.$danger-night,  Global.$danger-day),
   'danger-color-soft': (rgba(255, 122, 122, .14), rgba(211, 58, 58, .10)),
@@ -52,11 +52,11 @@ $theme: (
   'alert-info-background':    (Global.$info-night,    Global.$info-day),
 );
 
-// Só fica aqui o que é mesmo igual nos dois temas.
+// Only what is truly identical in both themes goes here.
 $fixed: (
   'overlay-scrim': rgba(9, 13, 36, .55),
 
-  // Cores das lombadas decorativas — iguais nos dois temas, como caixas reais.
+  // Decorative spine colours — the same in both themes, like real cases.
   'spine-1': #E4572E,
   'spine-2': #F3A712,
   'spine-3': #29BF8E,
@@ -66,6 +66,6 @@ $fixed: (
   'spine-ink': #FFFFFF,
   'spine-ink-dark': #0F1A3C,
 
-  // Texto por cima das cores de estado (amarelo, verde, magenta)
+  // Text on top of the status colours (yellow, green, magenta)
   'status-ink': #0F1A3C,
 );

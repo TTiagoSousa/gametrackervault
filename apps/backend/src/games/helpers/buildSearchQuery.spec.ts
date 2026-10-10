@@ -1,7 +1,7 @@
 import { buildSearchQuery } from './buildSearchQuery';
 
 describe('buildSearchQuery', () => {
-  it('pesquisa por texto sem ordem própria', () => {
+  it('searches by text without its own order', () => {
     const { query, countQuery } = buildSearchQuery({ q: 'zelda' });
     expect(query).toContain('search "zelda";');
     expect(query).not.toContain('sort ');
@@ -9,12 +9,12 @@ describe('buildSearchQuery', () => {
     expect(countQuery).toBe('search "zelda";');
   });
 
-  it('escapa aspas e barras do texto', () => {
+  it('escapes quotes and backslashes in the text', () => {
     const { query } = buildSearchQuery({ q: 'say "hi" \\o/' });
     expect(query).toContain('search "say \\"hi\\" \\\\o/";');
   });
 
-  it('junta os filtros com & e usa "qualquer de" nas listas', () => {
+  it('joins filters with & and uses "any of" for lists', () => {
     const { query } = buildSearchQuery({
       platforms: [6, 48],
       genres: [12],
@@ -27,7 +27,7 @@ describe('buildSearchQuery', () => {
     expect(query).toContain('sort total_rating desc;');
   });
 
-  it('converte o intervalo de anos para Unix time', () => {
+  it('converts the year range to Unix time', () => {
     const { query } = buildSearchQuery({ yearFrom: 2020, yearTo: 2020 });
     expect(query).toContain(
       `first_release_date >= ${Date.UTC(2020, 0, 1) / 1000}`,
@@ -37,31 +37,31 @@ describe('buildSearchQuery', () => {
     );
   });
 
-  it('sem texto ordena por popularidade sobre o catálogo inteiro', () => {
+  it('without text sorts by popularity over the whole catalogue', () => {
     const { query, countQuery } = buildSearchQuery({});
     expect(query).not.toContain('where ');
     expect(query).toContain('sort total_rating_count desc;');
     expect(countQuery).toBe('');
   });
 
-  it('sem texto, "relevance" vale como popularidade', () => {
+  it('without text, "relevance" counts as popularity', () => {
     const { query } = buildSearchQuery({ sort: 'relevance' });
     expect(query).toContain('sort total_rating_count desc;');
   });
 
-  it('na melhor nota exige um mínimo de avaliações', () => {
+  it('top rated requires a minimum number of ratings', () => {
     const { query } = buildSearchQuery({ sort: 'rating' });
     expect(query).toContain('where total_rating_count >= 25;');
     expect(query).toContain('sort total_rating desc;');
   });
 
-  it('nos mais recentes deixa de fora os ainda não lançados', () => {
+  it('newest leaves out unreleased games', () => {
     const { query } = buildSearchQuery({ sort: 'newest' });
     expect(query).toMatch(/where first_release_date <= \d+;/);
     expect(query).toContain('sort first_release_date desc;');
   });
 
-  it('calcula o offset a partir da página', () => {
+  it('computes the offset from the page', () => {
     const { query } = buildSearchQuery({ q: 'mario', page: 3, pageSize: 10 });
     expect(query).toContain('limit 10; offset 20;');
   });

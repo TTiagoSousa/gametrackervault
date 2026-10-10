@@ -9,15 +9,15 @@ import type { UserRole } from '../../../Contexts/Auth_Context';
 import { ROLES } from '@gametracker/shared';
 
 interface Admin_Create_User_Modal_Props {
-  // Com utilizador, edita-o; sem ele, cria um novo
+  // With a user, edits it; without one, creates a new one
   user?: AdminUser;
   onClose: () => void;
   onSaved: () => void;
 }
 
 /**
- * Criar ou editar uma conta (Admin). Ao editar, a password fica em branco e só
- * muda se se escrever uma nova.
+ * Create or edit an account (Admin). When editing, the password is blank and only
+ * changes if a new one is typed.
  */
 const Admin_Create_User_Modal = ({ user, onClose, onSaved }: Admin_Create_User_Modal_Props) => {
   const editing = Boolean(user);

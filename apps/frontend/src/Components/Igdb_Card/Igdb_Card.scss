@@ -1,7 +1,7 @@
 @use '../../Styles/Fonts.scss' as Font;
 @use '../../Styles/Mixins.scss' as Mixin;
 
-// Cartão das credenciais do IGDB, ao lado do cartão da versão na página Admin
+// IGDB credentials card, next to the version card on the Admin page
 .Igdb_Card{
   @include Mixin.Panel_Surface;
   padding: 28px;

@@ -5,16 +5,16 @@ export const SESSION_COOKIE = 'access_token';
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 /**
- * Opções do cookie de sessão. O `secure` segue o protocolo de cada pedido: a mesma
- * instalação é aberta pelo domínio com SSL (Nginx Proxy Manager → https) e pelo IP do
- * container (http). Um cookie `secure` em http nunca chega a ser guardado — o login
- * parecia funcionar e o pedido seguinte dava 401.
+ * Session cookie options. `secure` follows the protocol of each request: the same
+ * installation is opened via the SSL domain (Nginx Proxy Manager → https) and via the
+ * container IP (http). A `secure` cookie over http is never stored — login
+ * seemed to work and the next request returned 401.
  *
- * `req.secure` só reflete o https do proxy porque o main.ts confia no nginx local
- * (`trust proxy`) e esse nginx passa adiante o X-Forwarded-Proto que o NPM enviou.
+ * `req.secure` only reflects the proxy's https because main.ts trusts the local nginx
+ * (`trust proxy`) and that nginx forwards the X-Forwarded-Proto sent by NPM.
  *
- * O logout tem de usar as mesmas opções, senão o browser não reconhece o cookie a
- * apagar.
+ * Logout must use the same options, otherwise the browser doesn't recognise the cookie
+ * to delete.
  */
 export function sessionCookieOptions(req: Request): CookieOptions {
   return {

@@ -4,10 +4,10 @@ import { listModels } from '../anthropic/anthropic.client';
 import { AiSettingsRepository } from '../repositories/ai-settings-repository';
 import { SaveAiSettingsDto } from '../dto/ai.dto';
 
-// O modelo sugerido quando o utilizador ainda não escolheu nenhum
+// The suggested model when the user hasn't picked one yet
 export const DEFAULT_MODEL = 'claude-sonnet-5-5';
 
-/** O que o browser pode saber: se há chave, os últimos caracteres e o modelo. */
+/** What the browser may know: whether there is a key, its last characters and the model. */
 export async function getAiSettings(
   userId: string,
   repository: AiSettingsRepository,
@@ -22,7 +22,7 @@ export async function getAiSettings(
   };
 }
 
-/** A chave guardada, decifrada — só para falar com a Anthropic, nunca sai daqui. */
+/** The stored key, decrypted — only for talking to Anthropic, never leaves here. */
 export async function savedApiKey(
   userId: string,
   repository: AiSettingsRepository,
@@ -37,8 +37,8 @@ export async function savedApiKey(
 }
 
 /**
- * Guarda a chave (testada primeiro na Anthropic) e o modelo. Sem chave nova,
- * muda só o modelo.
+ * Saves the key (tested against Anthropic first) and the model. Without a new key,
+ * only changes the model.
  */
 export async function saveAiSettings(
   userId: string,
@@ -54,7 +54,7 @@ export async function saveAiSettings(
     return getAiSettings(userId, repository);
   }
 
-  // Uma chave que a Anthropic rejeita nunca chega a ser guardada
+  // A key that Anthropic rejects is never saved
   await listModels(apiKey);
   await repository.save(userId, {
     apiKey: encryptToken(apiKey),
@@ -64,7 +64,7 @@ export async function saveAiSettings(
   return getAiSettings(userId, repository);
 }
 
-/** Os modelos disponíveis com a chave dada ou, sem ela, com a guardada. */
+/** The models available with the given key or, without one, with the stored one. */
 export async function listAiModels(
   userId: string,
   apiKey: string | undefined,

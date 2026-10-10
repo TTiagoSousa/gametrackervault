@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- O comando do Logo da app (viewBox 24) ampliado para a zona segura do ícone
-     adaptativo (108dp, com os 66dp centrais sempre visíveis). -->
+<!-- The gamepad from the app's Logo (viewBox 24) scaled up to the adaptive icon's
+     safe zone (108dp, with the central 66dp always visible). -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"

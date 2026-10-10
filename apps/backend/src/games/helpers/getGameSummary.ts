@@ -14,8 +14,8 @@ export interface GameSnapshot {
 }
 
 /**
- * O mínimo de um jogo para o guardar na estante (tabela Game): nome, capa, ano,
- * plataformas e géneros. Vem sempre do IGDB, nunca do browser.
+ * The minimum of a game needed to store it on the shelf (Game table): name, cover, year,
+ * platforms and genres. Always comes from IGDB, never from the browser.
  */
 export async function getGameSummary(
   id: number,

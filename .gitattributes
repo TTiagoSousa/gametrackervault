@@ -1,12 +1,12 @@
-# Normaliza fins de linha no repositório.
+# Normalise line endings in the repository.
 * text=auto
 
-# Os scripts correm no Linux do container: com CRLF o bash parte ("$'\r': command not found").
+# The scripts run on the container's Linux: with CRLF bash breaks ("$'\r': command not found").
 *.sh text eol=lf
-# O gradlew é um script de shell (Linux/macOS): sempre com fins de linha LF
+# gradlew is a shell script (Linux/macOS): always LF line endings
 apps/android/gradlew text eol=lf
 apps/android/gradlew.bat text eol=crlf
-# Binários: nunca converter
+# Binaries: never convert
 *.apk binary
 *.jar binary
 *.jks binary

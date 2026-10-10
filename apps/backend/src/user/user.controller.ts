@@ -38,7 +38,7 @@ export class UserController {
     return this.userService.findCurrent(req.user.id);
   }
 
-  // --- A própria conta ---------------------------------------------------------------
+  // --- Own account -------------------------------------------------------------------
 
   @Patch('me')
   updateUsername(@Req() req: AuthRequest, @Body() dto: UpdateUsernameDto) {
@@ -51,7 +51,7 @@ export class UserController {
     return this.userService.changePassword(req.user.id, dto);
   }
 
-  // --- Administração -----------------------------------------------------------------
+  // --- Administration ----------------------------------------------------------------
 
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN)

@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { PrismaLibraryRepository } from '../repositories/prisma/prisma-library-repository';
 
-/** Tira um jogo da estante do utilizador. */
+/** Removes a game from the user's shelf. */
 export async function removeLibraryEntry(
   userId: string,
   gameId: number,

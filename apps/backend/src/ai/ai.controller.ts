@@ -20,7 +20,7 @@ import { ChatEvent } from './helpers/streamChat';
 
 type AuthRequest = Request & { user: JwtPayload };
 
-// O assistente de cada utilizador: a sua chave, o seu modelo, a sua conversa.
+// Each user's assistant: their key, their model, their conversation.
 @Controller('ai')
 @UseGuards(JwtAuthGuard)
 export class AiController {
@@ -41,7 +41,7 @@ export class AiController {
     return this.ai.removeSettings(req.user.id);
   }
 
-  // POST para a chave (ainda por guardar) não ir parar a um URL
+  // POST so the (not yet saved) key doesn't end up in a URL
   @Post('models')
   @HttpCode(200)
   models(@Req() req: AuthRequest, @Body() dto: ListModelsDto) {
@@ -49,9 +49,9 @@ export class AiController {
   }
 
   /**
-   * A resposta do assistente em streaming: uma linha JSON por evento
-   * (application/x-ndjson) — pedaços de texto, pesquisas no IGDB, erro e fim.
-   * Se o browser fechar a ligação, o pedido à Anthropic é cancelado.
+   * The assistant's streamed response: one JSON line per event
+   * (application/x-ndjson) — text chunks, IGDB searches, error and end.
+   * If the browser closes the connection, the Anthropic request is cancelled.
    */
   @Post('chat')
   async chat(
@@ -69,7 +69,7 @@ export class AiController {
         res.status(200);
         res.setHeader('Content-Type', 'application/x-ndjson; charset=utf-8');
         res.setHeader('Cache-Control', 'no-cache, no-transform');
-        // O nginx não deve guardar a resposta antes de a mandar
+        // nginx must not buffer the response before sending it
         res.setHeader('X-Accel-Buffering', 'no');
         res.flushHeaders();
       }
@@ -87,7 +87,7 @@ export class AiController {
                 error.message,
             )
           : 'O assistente falhou a responder. Tenta outra vez.';
-      // Antes de começar a resposta, um erro HTTP normal; a meio, uma linha de erro
+      // Before the response starts, a regular HTTP error; midway, an error line
       if (!res.headersSent) {
         const status = error instanceof HttpException ? error.getStatus() : 500;
         res.status(status).json({ statusCode: status, message });

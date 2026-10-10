@@ -7,15 +7,15 @@ import * as Icon from '../../../Imports/icons';
 const MIN_PASSWORD = 8;
 
 /**
- * A própria conta, num cartão com dois blocos: o nome (campo e botão na mesma
- * linha) e a password (a atual em cima, a nova e a repetida lado a lado, as
- * regras com visto à medida que se escreve e o botão no fim).
+ * The user's own account, in a card with two blocks: the name (field and button on the same
+ * row) and the password (the current one on top, the new and repeated side by side, the
+ * rules ticked off as you type and the button at the end).
  */
 const Account_Section = () => {
   const { t } = useTranslation('settings');
   const { username } = useAuth();
   const { busy, changeUsername, changePassword } = useAccount();
-  // O nome começa no atual; enquanto não se escreve, vale ele
+  // The name starts as the current one; until something is typed, it stands
   const [nameDraft, setNameDraft] = useState<string | null>(null);
   const [current, setCurrent] = useState('');
   const [next, setNext] = useState('');
@@ -55,7 +55,7 @@ const Account_Section = () => {
         <p>{t('account.description')}</p>
       </header>
 
-      {/* --- Nome --- */}
+      {/* --- Name --- */}
       <form className='Settings_Block' onSubmit={(e) => void onName(e)}>
         <div className='Settings_Block_Text'>
           <h3>{t('account.usernameTitle')}</h3>
@@ -85,7 +85,7 @@ const Account_Section = () => {
           </button>
         </div>
 
-        {/* O nome escondido ajuda o gestor de passwords a saber de que conta é */}
+        {/* The hidden username helps the password manager know which account it is */}
         <input type='text' autoComplete='username' value={username ?? ''} readOnly hidden />
 
         <div className='Settings_Grid'>

@@ -9,7 +9,7 @@ export type IgdbTestResult =
       reason: 'not-configured' | 'unreadable' | 'rejected' | 'unreachable';
     };
 
-/** Confirma com a Twitch que as credenciais guardadas continuam válidas. */
+/** Confirms with Twitch that the stored credentials are still valid. */
 export async function testIgdbCredentials(
   credentials: IntegrationCredentialsService,
 ): Promise<IgdbTestResult> {

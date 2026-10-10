@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import * as Icon from '../../../Imports/icons';
 import './Bottom_Nav.scss';
 
-// As cinco secções principais, com ícone. O Admin fica no menu do avatar.
+// The five main sections, with icons. Admin lives in the avatar menu.
 const ITEMS = [
   { id: 'home', path: '/Vault', icon: Icon.Home, label: 'menu.home' },
   { id: 'search', path: '/Vault/Search', icon: Icon.Search, label: 'sidebar.search' },
@@ -13,9 +13,9 @@ const ITEMS = [
 ] as const;
 
 /**
- * Navegação do telemóvel: uma barra fixa no fundo do ecrã, como nas apps
- * nativas (só aparece abaixo de 760px; no computador ficam os separadores da
- * barra de topo). A página de um jogo conta como "Pesquisa".
+ * Mobile navigation: a bar fixed at the bottom of the screen, as in native
+ * apps (only shown below 760px; on desktop the top bar tabs are used
+ * instead). A game page counts as "Search".
  */
 const Bottom_Nav = () => {
   const { t } = useTranslation('nav');

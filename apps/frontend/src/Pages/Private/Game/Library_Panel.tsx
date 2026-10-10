@@ -7,7 +7,7 @@ import './Library_Panel.scss';
 
 const RATINGS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-// Os estados em dois grupos: o que ainda está em curso e o que já acabou
+// The statuses in two groups: what's still in progress and what's already done
 const GROUPS: { key: 'groupActive' | 'groupDone'; statuses: LibraryStatus[] }[] = [
   { key: 'groupActive', statuses: ['PLAYING', 'PAUSED', 'PLAN_TO_PLAY', 'DROPPED'] },
   { key: 'groupDone', statuses: ['FINISHED_MAIN', 'FINISHED_EXTRAS', 'COMPLETED_100'] },
@@ -41,21 +41,21 @@ const sameDraft = (a: Draft, b: Draft) =>
   a.rating === b.rating &&
   a.notes === b.notes;
 
-// A página do jogo lê a entrada (precisa das horas para os tempos de jogo) e
-// entrega-a aqui, para não a pedir duas vezes
+// The game page reads the entry (it needs the hours for the play times) and
+// hands it over here, so it isn't fetched twice
 type Library_Panel_Props = { gameId: number } & ReturnType<typeof useLibraryEntry>;
 
 /**
- * "A minha estante" na página de um jogo, em três grupos — Estado, Progresso e
- * Avaliação — com as ações num rodapé sempre à vista.
+ * "My shelf" on a game page, in three groups — Status, Progress and
+ * Rating — with the actions in an always-visible footer.
  *
- * Tudo se desfaz: clicar outra vez no estado (ou na nota) escolhido desmarca-o,
- * cada grupo tem "Limpar", "Desfazer" volta ao que está gravado e "Limpar tudo"
- * esvazia o painel. O que vem e vai guarda o lugar — nada salta.
+ * Everything can be undone: clicking the chosen status (or rating) again unselects it,
+ * each group has "Clear", "Undo" goes back to what's saved and "Clear all"
+ * empties the panel. Whatever comes and goes keeps its space — nothing jumps.
  */
 const Library_Panel = ({ entry, loading, failed, retry, busy, save, remove }: Library_Panel_Props) => {
   const { t } = useTranslation('library');
-  // O rascunho começa com a entrada guardada; enquanto não se mexe, vale ela
+  // The draft starts as the saved entry; until it's touched, it stands
   const [draft, setDraft] = useState<Draft | null>(null);
   const [confirmRemove, setConfirmRemove] = useState(false);
   const saved = draftFrom(entry);
@@ -65,8 +65,8 @@ const Library_Panel = ({ entry, loading, failed, retry, busy, save, remove }: Li
   const hasProgress = Boolean(values.hoursPlayed || values.startedAt || values.finishedAt);
   const hasReview = values.rating !== null || Boolean(values.notes);
 
-  // Parte sempre do rascunho mais recente: várias alterações seguidas (antes de o
-  // componente voltar a desenhar) não se apagam umas às outras
+  // Always starts from the latest draft: several changes in a row (before the
+  // component re-renders) don't overwrite each other
   const update = (patch: Partial<Draft>) =>
     setDraft((previous) => ({ ...(previous ?? draftFrom(entry)), ...patch }));
 
@@ -89,7 +89,7 @@ const Library_Panel = ({ entry, loading, failed, retry, busy, save, remove }: Li
     if (await remove()) setDraft(null);
   };
 
-  // "Limpar" de um grupo: sempre no sítio, só invisível quando não há nada a limpar
+  // A group's "Clear": always in place, only invisible when there's nothing to clear
   const clearLink = (visible: boolean, onClear: () => void) => (
     <button
       type='button'
@@ -131,7 +131,7 @@ const Library_Panel = ({ entry, loading, failed, retry, busy, save, remove }: Li
             : t('notInLibrary')}
         </p>
 
-        {/* --- Estado --- */}
+        {/* --- Status --- */}
         <section className='Library_Group'>
           {GROUPS.map((group) => (
             <div key={group.key} className='Library_Status_Group' role='radiogroup' aria-label={t(group.key)}>
@@ -159,7 +159,7 @@ const Library_Panel = ({ entry, loading, failed, retry, busy, save, remove }: Li
           ))}
         </section>
 
-        {/* --- Progresso --- */}
+        {/* --- Progress --- */}
         <section className='Library_Group'>
           <div className='Library_Group_Head'>
             <span className='Library_Label'>{t('progress')}</span>
@@ -192,7 +192,7 @@ const Library_Panel = ({ entry, loading, failed, retry, busy, save, remove }: Li
           </div>
         </section>
 
-        {/* --- Avaliação --- */}
+        {/* --- Rating --- */}
         <section className='Library_Group'>
           <div className='Library_Group_Head'>
             <span className='Library_Label'>{t('review')}</span>
@@ -225,14 +225,14 @@ const Library_Panel = ({ entry, loading, failed, retry, busy, save, remove }: Li
         </section>
       </div>
 
-      {/* --- Rodapé: sempre à vista no fundo do painel --- */}
+      {/* --- Footer: always visible at the bottom of the panel --- */}
       <div className='Library_Footer'>
         <button type='button' className='Library_Save' disabled={loading || !values.status || busy !== null} onClick={() => void onSave()}>
-          {/* Sem estado o botão diz porquê, em vez de um aviso que ocupa lugar */}
+          {/* With no status the button says why, instead of a warning that takes up space */}
           {busy === 'save' ? t('saving') : !values.status ? t('pickStatus') : entry ? t('save') : t('add')}
         </button>
 
-        {/* Uma linha de altura fixa: as ações ou, ao remover, a confirmação no mesmo sítio */}
+        {/* One fixed-height row: the actions or, when removing, the confirmation in the same place */}
         <div className='Library_Footer_Links'>
           {confirmRemove ? (
             <>

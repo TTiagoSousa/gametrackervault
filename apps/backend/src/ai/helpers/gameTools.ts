@@ -1,7 +1,7 @@
 import { GamesService } from 'src/games/games.service';
 import { ToolDefinition } from '../anthropic/anthropic.client';
 
-/** As ferramentas que o Claude pode usar: pesquisar e abrir fichas no IGDB. */
+/** The tools Claude can use: search IGDB and open game details. */
 export const GAME_TOOLS: ToolDefinition[] = [
   {
     name: 'search_games',
@@ -29,7 +29,7 @@ export const GAME_TOOLS: ToolDefinition[] = [
   },
 ];
 
-/** Corre uma ferramenta e devolve o resultado em JSON (texto) para o modelo. */
+/** Runs a tool and returns the result as JSON (text) for the model. */
 export async function runGameTool(
   name: string,
   input: Record<string, unknown>,

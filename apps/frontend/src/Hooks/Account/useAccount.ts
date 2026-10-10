@@ -6,7 +6,7 @@ import { useAuth } from '../../Contexts/Auth_Context';
 import i18n from '../../i18n';
 import { apiMessage } from '../apiMessage';
 
-/** A própria conta: mudar o nome e a password. */
+/** The user's own account: change name and password. */
 export const useAccount = () => {
   const [busy, setBusy] = useState<'username' | 'password' | null>(null);
   const { setAlert } = useAlert();

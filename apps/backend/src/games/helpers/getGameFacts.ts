@@ -7,15 +7,15 @@ export interface GameFacts {
   ttbCompletionist: number | null;
 }
 
-// O IGDB devolve no máximo 500 linhas por pedido
+// IGDB returns at most 500 rows per request
 const BATCH = 500;
 
 const hours = (seconds?: number) =>
   seconds ? Math.round((seconds / 3600) * 10) / 10 : null;
 
 /**
- * Géneros e tempos médios para acabar de vários jogos de uma vez (dois pedidos
- * por cada 500 jogos). Os jogos sem tempos no IGDB ficam com null.
+ * Genres and average times to beat for several games at once (two requests
+ * per 500 games). Games without times on IGDB get null.
  */
 export async function getGameFacts(
   ids: number[],

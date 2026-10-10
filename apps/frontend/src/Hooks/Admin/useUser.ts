@@ -12,14 +12,14 @@ export interface CreateUserPayload {
   role?: UserRole;
 }
 
-// Na edição tudo é opcional: a password só muda se vier preenchida
+// When editing everything is optional: the password only changes if filled in
 export interface UpdateUserPayload {
   username?: string;
   password?: string;
   role?: UserRole;
 }
 
-/** Ações do admin sobre as contas: criar, editar e apagar. */
+/** Admin actions on accounts: create, edit and delete. */
 export const useUser = () => {
   const [loading, setLoading] = useState(false);
   const { setAlert } = useAlert();

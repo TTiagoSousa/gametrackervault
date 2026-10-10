@@ -7,7 +7,7 @@ import { SHELF_OF, SHELVES, type LibraryEntry, type LibraryStatus, type Shelf } 
 import Random_Pick from './Random_Pick';
 import './Home.scss';
 
-// Etiqueta por baixo do nome: só quando a prateleira junta estados diferentes
+// Label under the name: only when the shelf combines different statuses
 const TAGGED: Partial<Record<LibraryStatus, true>> = {
   PAUSED: true,
   FINISHED_MAIN: true,
@@ -15,14 +15,14 @@ const TAGGED: Partial<Record<LibraryStatus, true>> = {
   COMPLETED_100: true,
 };
 
-// Início: uma prateleira por grupo de estados, com as capas dos jogos de frente.
+// Home: one shelf per status group, with the game covers facing out.
 const Home = () => {
   const { t } = useTranslation('home');
   const { t: tl } = useTranslation('library');
   const { username } = useAuth();
   const { library, error } = useLibrary();
 
-  // Os mais recentes primeiro
+  // Most recent first
   const byShelf = useMemo(() => {
     const groups: Record<Shelf, LibraryEntry[]> = { playing: [], done: [], later: [], dropped: [] };
     const items = [...(library?.items ?? [])].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
@@ -39,7 +39,7 @@ const Home = () => {
 
       {error && <p className='Home_Error'>{t('loadFailed')}</p>}
 
-      {/* Desenha-se tudo de uma vez quando a estante chega: nada cresce nem encolhe depois */}
+      {/* Everything renders at once when the shelf arrives: nothing grows or shrinks afterwards */}
       {library && <Random_Pick entries={library.items} />}
 
       {library && (

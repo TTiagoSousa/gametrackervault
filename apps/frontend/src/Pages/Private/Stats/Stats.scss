@@ -1,11 +1,11 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// Estatísticas numa grelha regular: uma faixa de resumo com quatro células
-// iguais e, por baixo, linhas de dois painéis com a mesma altura (ou um a toda
-// a largura). Todos os painéis têm o mesmo cabeçalho e o mesmo espaçamento.
-// As horas estimadas (médias do IGDB) vão às riscas, para nunca se confundirem
-// com as escritas pelo utilizador.
+// Stats in a regular grid: a summary strip with four equal
+// cells and, below, rows of two panels with the same height (or one full
+// width). All panels have the same header and the same spacing.
+// Estimated hours (IGDB averages) are striped, so they're never confused
+// with the ones entered by the user.
 .Stats {
   @include Mixin.Pages_Configs;
   gap: 20px;
@@ -13,7 +13,7 @@
   --panel-pad: 22px;
   --estimated-fill: repeating-linear-gradient(135deg, var(--accent) 0 4px, transparent 4px 8px);
 
-  // Cor de cada estado, para lombadas, chaves da legenda e capas
+  // Color of each status, for spines, legend keys and covers
   .status-PLAYING{ --status-color: var(--game-status-playing); }
   .status-PAUSED{ --status-color: var(--text-soft); }
   .status-PLAN_TO_PLAY{ --status-color: var(--accent); }
@@ -90,7 +90,7 @@
     padding: 0 20px;
   }
 
-  // --- Resumo: quatro células iguais, separadas por filetes ---------------------------------
+  // --- Summary: four equal cells, separated by rules ---------------------------------------
   .Stats_Summary{
     @include Mixin.Panel_Surface;
     display: grid;
@@ -135,8 +135,8 @@
     color: var(--text-faint);
   }
 
-  // --- Linhas e painéis ---------------------------------------------------------------------
-  // Dois painéis lado a lado, sempre com a mesma altura
+  // --- Rows and panels -----------------------------------------------------------------------
+  // Two panels side by side, always the same height
   .Stats_Row{
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -188,7 +188,7 @@
     color: var(--text-soft);
   }
 
-  // --- Legenda --------------------------------------------------------------------------------
+  // --- Legend ---------------------------------------------------------------------------------
   .Stats_Legend{
     display: flex;
     flex-direction: column;
@@ -231,8 +231,8 @@
     &.missing{ background: var(--surface-3); }
   }
 
-  // Horas: barra partida entre escritas (cheio) e estimadas (riscas). Mesma
-  // altura que a fila de lombadas ao lado, para os dois painéis alinharem.
+  // Hours: bar split between entered (solid) and estimated (striped). Same
+  // height as the row of spines beside it, so both panels line up.
   .Stats_Split{
     display: flex;
     height: 48px;
@@ -244,7 +244,7 @@
     .estimated{ background: var(--estimated-fill); }
   }
 
-  // A estante: lombadas lado a lado, largura proporcional ao número de jogos
+  // The shelf: spines side by side, width proportional to the number of games
   .Stats_Spines{
     display: flex;
     gap: 3px;
@@ -258,7 +258,7 @@
     }
   }
 
-  // --- Concluídos por ano -------------------------------------------------------------------
+  // --- Completed per year --------------------------------------------------------------------
   .Stats_Years{
     display: flex;
     align-items: flex-end;
@@ -286,7 +286,7 @@
     color: var(--text-main);
   }
 
-  // Uma lombada por jogo, empilhadas como caixas deitadas
+  // One spine per game, stacked like boxes lying flat
   .Stats_Year_Stack{
     width: 40px;
     min-height: 8px;
@@ -308,7 +308,7 @@
     color: var(--text-faint);
   }
 
-  // --- Notas: dez colunas que enchem o painel ----------------------------------------------
+  // --- Ratings: ten columns that fill the panel ---------------------------------------------
   .Stats_Ratings{
     flex: 1;
     min-height: 180px;
@@ -345,7 +345,7 @@
     color: var(--text-faint);
   }
 
-  // --- Géneros ------------------------------------------------------------------------------
+  // --- Genres -------------------------------------------------------------------------------
   .Stats_Bars{
     display: flex;
     flex-direction: column;
@@ -387,7 +387,7 @@
     }
   }
 
-  // --- Destaques: cinco linhas de altura fixa ---------------------------------------------------
+  // --- Highlights: five fixed-height rows -----------------------------------------------------
   .Stats_Games{
     margin: 0;
     padding: 0;
@@ -411,7 +411,7 @@
     &:hover .Stats_Game_Name{ color: var(--accent); }
     &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
 
-    // Lugar vazio, para as duas listas terem sempre a mesma altura
+    // Empty slot, so both lists always have the same height
     &.empty{ border: 1px dashed var(--line); }
   }
 
@@ -484,7 +484,7 @@
     a{ color: var(--accent); font-weight: 600; }
   }
 
-  // --- Telemóvel ------------------------------------------------------------------------------
+  // --- Mobile ---------------------------------------------------------------------------------
   @media (max-width: 760px){
     gap: 14px;
     --panel-pad: 16px;

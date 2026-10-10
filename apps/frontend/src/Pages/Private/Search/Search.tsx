@@ -21,8 +21,8 @@ const parseIds = (value: string | null) =>
   (value ?? '').split(',').filter(Boolean).map(Number).filter((n) => Number.isInteger(n) && n >= 0);
 
 /**
- * Pesquisa de jogos. Todo o estado vive no URL (/Vault/Search?q=…&genres=…):
- * recarregar, voltar atrás ou partilhar o link repõe a mesma pesquisa.
+ * Game search. All state lives in the URL (/Vault/Search?q=…&genres=…):
+ * reloading, going back or sharing the link restores the same search.
  */
 const Search = () => {
   const { t } = useTranslation('search');
@@ -32,8 +32,8 @@ const Search = () => {
   const pageRef = useRef<HTMLDivElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
 
-  // A altura da barra fixa (muda no telemóvel, onde parte em duas linhas) vai para
-  // --search-toolbar-height; o painel de filtros cola logo abaixo dela
+  // The fixed bar's height (changes on mobile, where it splits into two rows) goes to
+  // --search-toolbar-height; the filter panel sticks right below it
   useEffect(() => {
     const page = pageRef.current;
     const toolbar = toolbarRef.current;
@@ -45,7 +45,7 @@ const Search = () => {
     return () => observer.disconnect();
   }, []);
 
-  // O texto escreve-se num estado local e só passa para o URL depois de uma pausa
+  // Text is typed into local state and only goes to the URL after a pause
   const urlText = params.get('q') ?? '';
   const [text, setText] = useState(urlText);
 
@@ -72,7 +72,7 @@ const Search = () => {
   const sortParam = params.get('sort');
   const sort: Sort = SORTS.includes(sortParam as Sort) ? (sortParam as Sort) : 'popular';
 
-  // A query que vai para a API: o URL sem o que não é válido
+  // The query sent to the API: the URL minus whatever isn't valid
   const apiQuery = useMemo(() => {
     const query = new URLSearchParams();
     if (urlText) query.set('q', urlText);
@@ -128,9 +128,9 @@ const Search = () => {
       for (const key of [...LIST_FILTERS, 'yearFrom', 'yearTo', 'minRating']) next.delete(key);
     });
 
-  // Fichas dos filtros ativos, com o nome de cada opção
-  // Uma ficha por filtro ativo — as listas, os anos e a nota mínima — cada uma
-  // com a ação que a remove
+  // Active filter chips, with each option's name
+  // One chip per active filter — the lists, the years and the minimum rating — each
+  // with the action that removes it
   const activeChips = useMemo(() => {
     const chips: { key: string; name: string; remove: () => void }[] = [];
     for (const filter of LIST_FILTERS) {
@@ -146,7 +146,7 @@ const Search = () => {
     if (values.yearTo) chips.push({ key: 'yearTo', name: t('chipYearTo', { year: values.yearTo }), remove: () => setYear('yearTo', '') });
     if (values.minRating > 0) chips.push({ key: 'minRating', name: t('chipRating', { value: values.minRating }), remove: () => setRating(0) });
     return chips;
-    // toggle/setYear/setRating só dependem do setParams, que é estável
+    // toggle/setYear/setRating only depend on setParams, which is stable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, values, t]);
 
@@ -165,7 +165,7 @@ const Search = () => {
           aria-label={t('placeholder')}
           autoFocus
         />
-        {/* Sempre no sítio (só fica invisível sem texto), para o campo não mexer */}
+        {/* Always in place (only invisible without text), so the field doesn't move */}
         <button
           type='button'
           className={`Search_Field_Clear${text ? '' : ' hidden'}`}
@@ -234,7 +234,7 @@ const Search = () => {
               ))}
             </div>
 
-            {/* Sempre no sítio, só invisível sem filtros — a linha não mexe */}
+            {/* Always in place, only invisible without filters — the row doesn't move */}
             <button
               type='button'
               className={`Search_Remove_All${activeCount > 0 ? '' : ' hidden'}`}

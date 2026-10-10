@@ -8,7 +8,7 @@ import { apiMessage } from '../apiMessage';
 export interface AiSettings {
   provider: 'ANTHROPIC';
   configured: boolean;
-  // Só os últimos 4 caracteres — a chave inteira nunca volta ao browser
+  // Only the last 4 characters — the full key never returns to the browser
   keyHint: string | null;
   model: string;
   updatedAt: string | null;
@@ -20,7 +20,7 @@ export interface AiModel {
   createdAt: string | null;
 }
 
-/** A chave e o modelo do assistente deste utilizador. */
+/** This user's assistant key and model. */
 export const useAiSettings = () => {
   const [settings, setSettings] = useState<AiSettings | null>(null);
   const [failed, setFailed] = useState(false);
@@ -43,7 +43,7 @@ export const useAiSettings = () => {
     };
   }, []);
 
-  // Os modelos a que a chave tem acesso (a escrita ou, sem ela, a guardada)
+  // The models the key has access to (the typed one or, failing that, the stored one)
   const loadModels = async (apiKey?: string) => {
     setBusy('models');
     try {

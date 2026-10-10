@@ -3,7 +3,7 @@
 #
 # Run on the Proxmox HOST shell, as root:
 #
-#   bash -c "$(curl -fsSL https://forgejo.home-sousa.me/Tiago/gameTrackerVault/raw/branch/main/deploy/proxmox/ct-create.sh)"
+#   bash -c "$(curl -fsSL https://raw.githubusercontent.com/TTiagoSousa/gametrackervault/main/deploy/proxmox/ct-create.sh)"
 #
 # Creates a Debian 13 container and installs GameTracker Vault inside it (Node, PostgreSQL,
 # nginx, the backend as a systemd service). The database lives in the container.
@@ -96,7 +96,7 @@ ONBOOT="${ONBOOT:-1}"
 # as the newest release, since every release is tagged on main.
 VERSION="${VERSION:-${BRANCH:-latest}}"
 [ "$VERSION" = main ] && VERSION=latest
-REPO_URL="${REPO_URL:-https://forgejo.home-sousa.me/Tiago/gameTrackerVault.git}"
+REPO_URL="${REPO_URL:-https://github.com/TTiagoSousa/gametrackervault.git}"
 REPO_TOKEN="${REPO_TOKEN:-}"
 APP_URL="${APP_URL:-}"
 ADMIN_USERNAME="${ADMIN_USERNAME:-admin}"
@@ -225,7 +225,7 @@ advanced_settings() {
     ip "Container IP over http" \
     domain "Own domain (e.g. behind Nginx Proxy Manager)"
   if [ "$url_mode" = domain ]; then
-    [ -n "$APP_URL" ] || APP_URL="https://gametracker.home-sousa.me"
+    [ -n "$APP_URL" ] || APP_URL="https://gametracker.example.com"
     ask APP_URL "App address" "Full address with scheme, no trailing slash. Decides whether the session cookie is secure (https)." check_url
   else
     APP_URL=""
@@ -421,11 +421,14 @@ if [[ "$INSTALLED" == v* ]]; then
 fi
 ok "Code in /opt/gametracker ($INSTALLED)"
 
+# The container uses the host's time zone
+HOST_TZ="$(timedatectl show -p Timezone --value 2>/dev/null || cat /etc/timezone 2>/dev/null || true)"
 msg "Installing inside the container (a few minutes)…"
 pct exec "$CTID" -- "${CT_ENV[@]}" \
   APP_URL="$APP_URL" \
   ADMIN_USERNAME="$ADMIN_USERNAME" \
   ADMIN_PASSWORD="$ADMIN_PASSWORD" \
+  TZ_NAME="${HOST_TZ:-Europe/Lisbon}" \
   bash /opt/gametracker/deploy/proxmox/install.sh
 
 cat <<EOF

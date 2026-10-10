@@ -3,22 +3,22 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSystemUpdate } from '../../../Hooks/System/useSystemUpdate';
 
-// Os passos do deploy/proxmox/update.sh, pela ordem em que acontecem.
+// The steps of deploy/proxmox/update.sh, in the order they happen.
 const STEPS = ['fetch', 'build', 'migrate', 'publish', 'configure', 'restart'] as const;
 
 interface Update_Modal_Props {
-  /** Versão para onde atualizar. */
+  /** Version to update to. */
   version: string;
-  /** Versão de onde se parte, só para o texto. */
+  /** Version being updated from, only for the text. */
   from: string;
-  /** true quando a atualização já estava a correr (só acompanha, não pede outra). */
+  /** true when the update was already running (only follows it, doesn't request another). */
   resume?: boolean;
   onClose: () => void;
 }
 
 /**
- * Pede a atualização e mostra o progresso. Não fecha a meio: o backend vai
- * reiniciar e a página só deve recarregar quando ele voltar já na versão nova.
+ * Requests the update and shows progress. Doesn't close midway: the backend will
+ * restart and the page should only reload once it's back on the new version.
  */
 const Update_Modal = ({ version, from, resume = false, onClose }: Update_Modal_Props) => {
   const { t } = useTranslation('system');
@@ -33,7 +33,7 @@ const Update_Modal = ({ version, from, resume = false, onClose }: Update_Modal_P
     else void start(version);
   }, [resume, version, follow, start]);
 
-  // Atualização concluída: recarrega com o frontend novo.
+  // Update finished: reload with the new frontend.
   useEffect(() => {
     if (!done) return;
     const t = window.setTimeout(() => window.location.reload(), 2500);

@@ -13,9 +13,9 @@ import * as Icon from '../../Imports/icons';
 import './Android_Download.scss';
 
 /**
- * O cartão de download da app Android (na Ajuda). Lê a ficha do APK publicado
- * com o site (versão, tamanho); sem APK nesta instalação, diz isso. Dentro da
- * própria app mostra a versão e "Mudar de servidor" em vez do download.
+ * The Android app download card (in Help). Reads the info of the APK published
+ * with the site (version, size); with no APK in this install, says so. Inside the
+ * app itself it shows the version and "Change server" instead of the download.
  */
 const Android_Download = () => {
   const { t } = useTranslation('help');
@@ -56,7 +56,7 @@ const Android_Download = () => {
             </span>
           )}
         </div>
-        {/* A partir da 1.1.0 a app atualiza-se sozinha; uma mais antiga só pelo download */}
+        {/* From 1.1.0 the app updates itself; an older one only via the download */}
         {bridge && canSelfUpdate && (
           <button
             type='button'
@@ -66,8 +66,8 @@ const Android_Download = () => {
             {updateAvailable ? t('androidDownload.update') : t('androidDownload.checkUpdate')}
           </button>
         )}
-        {/* Uma app antiga não descarrega ficheiros dentro dela: a ligação do
-            repositório é de outro endereço, por isso abre no browser do telemóvel */}
+        {/* An old app can't download files inside itself: the repository
+            link is on another host, so it opens in the phone's browser */}
         {bridge && !canSelfUpdate && updateAvailable && (
           <a className='Android_Download_Button' href={ANDROID_APK_REPO_URL} target='_blank' rel='noreferrer'>
             {t('androidDownload.button')}

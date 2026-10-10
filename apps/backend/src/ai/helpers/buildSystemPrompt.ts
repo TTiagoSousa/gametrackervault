@@ -2,7 +2,7 @@ import { LibraryStatus } from 'src/generated/prisma/client/client';
 import { EntryWithGame } from 'src/library/repositories/library-repository';
 import { estimateHours } from 'src/library/helpers/estimateHours';
 
-// Até onde vai a estante enviada ao modelo: os mais recentes primeiro
+// How much of the shelf is sent to the model: newest first
 const MAX_ENTRIES = 400;
 const MAX_NOTE = 300;
 
@@ -25,7 +25,7 @@ const LANGUAGE: Record<string, string> = {
 const day = (date: Date | null) =>
   date ? date.toISOString().slice(0, 10) : null;
 
-/** Uma linha por jogo: o que o utilizador fez com ele e o que achou. */
+/** One line per game: what the user did with it and what they thought. */
 function describeEntry(entry: EntryWithGame): string {
   const { game } = entry;
   const hours = estimateHours(entry, game);
@@ -47,9 +47,9 @@ function describeEntry(entry: EntryWithGame): string {
 }
 
 /**
- * As instruções do assistente: quem é, como responder, como ligar jogos às
- * páginas da app e a estante inteira do utilizador (o modelo usa-a para
- * recomendar).
+ * The assistant's instructions: who it is, how to answer, how to link games to
+ * the app's pages, and the user's whole shelf (the model uses it to
+ * recommend).
  */
 export function buildSystemPrompt(args: {
   username: string;

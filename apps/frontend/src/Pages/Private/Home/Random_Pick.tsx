@@ -5,22 +5,22 @@ import { useDiscover } from '../../../Hooks/Games/useDiscover';
 import type { LibraryEntry } from '../../../Hooks/Games/detailTypes';
 import * as Icon from '../../../Imports/icons';
 
-// Um elemento ao calhas (fora do componente: o sorteio é de quem carrega no botão)
+// A random element (outside the component: the draw belongs to whoever presses the button)
 const pickOne = <T,>(list: T[]): T => list[Math.floor(Math.random() * list.length)];
 
 interface Picked {
   id: number;
   name: string;
   coverUrl: string | null;
-  // De onde veio: da lista do utilizador ou do catálogo do IGDB
+  // Where it came from: the user's list or the IGDB catalog
   source: 'list' | 'discover';
   detail: string | null;
 }
 
 /**
- * "Não sabes o que jogar?": tira um jogo ao calhas da lista (para jogar e em
- * pausa) ou descobre um novo no IGDB (bem avaliado e fora da estante). O
- * resultado aparece num espaço de altura fixa.
+ * "Don't know what to play?": picks a random game from the list (to play and
+ * paused) or discovers a new one on IGDB (well rated and not on the shelf). The
+ * result shows in a fixed-height space.
  */
 const Random_Pick = ({ entries }: { entries: LibraryEntry[] }) => {
   const { t } = useTranslation('home');
@@ -37,7 +37,7 @@ const Random_Pick = ({ entries }: { entries: LibraryEntry[] }) => {
       setPicked(null);
       return;
     }
-    // Evita repetir o mesmo jogo duas vezes seguidas, se houver por onde escolher
+    // Avoids repeating the same game twice in a row, if there's anything else to pick
     const pool = candidates.length > 1 && picked ? candidates.filter((e) => e.gameId !== picked.id) : candidates;
     const entry = pickOne(pool);
     setPicked({
@@ -82,7 +82,7 @@ const Random_Pick = ({ entries }: { entries: LibraryEntry[] }) => {
         </div>
       </div>
 
-      {/* O resultado: sempre o mesmo espaço, com ou sem jogo */}
+      {/* The result: always the same space, with or without a game */}
       <div className='Random_Pick_Result' aria-live='polite'>
         {picked ? (
           <Link to={`/Vault/Game/${picked.id}`} className='Random_Pick_Game'>

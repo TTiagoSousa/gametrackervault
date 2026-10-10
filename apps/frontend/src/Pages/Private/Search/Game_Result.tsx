@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { GameSummary } from '../../../Hooks/Games/types';
 
-// Um resultado é a frente de uma caixa: a capa, com uma faixa de lombada à
-// esquerda, e por baixo o nome, o ano e as plataformas. Abre a página do jogo.
+// A result is the front of a box: the cover, with a spine strip on the
+// left, and below it the name, year and platforms. Opens the game page.
 const Game_Result = ({ game }: { game: GameSummary }) => {
   const { t } = useTranslation('search');
 

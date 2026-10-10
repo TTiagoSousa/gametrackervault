@@ -14,7 +14,7 @@ import { Role } from 'src/generated/prisma/client/client';
 import { SystemService } from './system.service';
 import { RequestUpdateDto } from './dto/request-update.dto';
 
-// Versão instalada, releases e atualizações — só para administradores.
+// Installed version, releases and updates — admins only.
 @Controller('system')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(Role.ADMIN)
@@ -22,7 +22,7 @@ export class SystemController {
   constructor(private readonly systemService: SystemService) {}
 
   @Get('version')
-  // lang: pt-PT, en ou es — a língua das notas (qualquer outro valor dá inglês).
+  // lang: pt-PT, en or es — the language of the notes (any other value gives English).
   version(@Query('lang') lang?: string) {
     return this.systemService.version(lang);
   }

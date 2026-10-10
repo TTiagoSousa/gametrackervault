@@ -5,30 +5,30 @@ import type { useAiSettings } from '../../Hooks/Ai/useAiSettings';
 import { dateLocale } from '../../i18n';
 import './Ai_Card.scss';
 
-// Os modelos atuais do Claude, para escolher antes de carregar a lista da conta
+// Current Claude models, to pick from before loading the account's list
 const SUGGESTED_MODELS = ['claude-opus-5-5', 'claude-sonnet-5-5', 'claude-haiku-5-5'];
 
 type Ai_Card_Props = ReturnType<typeof useAiSettings> & {
-  // Na página do assistente o título é outro (é o primeiro passo)
+  // On the assistant page the title is different (it's the first step)
   title?: string;
 };
 
 /**
- * A chave da Anthropic e o modelo do assistente deste utilizador. A chave é
- * testada antes de ser guardada, fica cifrada no servidor e nunca volta ao
- * browser (só os 4 últimos caracteres).
+ * This user's Anthropic key and assistant model. The key is
+ * tested before being saved, is stored encrypted on the server and never returns to the
+ * browser (only the last 4 characters).
  */
 const Ai_Card = ({ settings, models, busy, loadModels, save, remove, title }: Ai_Card_Props) => {
   const { t } = useTranslation('assistant');
   const [apiKey, setApiKey] = useState('');
-  // O modelo começa no guardado; enquanto não se escolhe outro, vale ele
+  // The model starts as the saved one; until another is picked, it stands
   const [modelDraft, setModelDraft] = useState<string | null>(null);
   const [confirmRemove, setConfirmRemove] = useState(false);
 
   const configured = Boolean(settings?.configured);
   const model = modelDraft ?? settings?.model ?? SUGGESTED_MODELS[1];
   const options = models ? models.map((m) => ({ id: m.id, label: `${m.name} (${m.id})` })) : SUGGESTED_MODELS.map((id) => ({ id, label: id }));
-  // O modelo escolhido aparece sempre, mesmo que não esteja na lista
+  // The chosen model always shows, even if it's not in the list
   if (!options.some((o) => o.id === model)) options.unshift({ id: model, label: model });
 
   const canSave = Boolean(settings) && model.trim().length > 0 && (configured || apiKey.trim().length > 0) && !busy;
@@ -99,7 +99,7 @@ const Ai_Card = ({ settings, models, busy, loadModels, save, remove, title }: Ai
             {busy === 'save' ? t('settings.saving') : t('settings.save')}
           </button>
 
-          {/* Sempre no sítio: invisível sem chave guardada */}
+          {/* Always in place: invisible with no saved key */}
           <span className={`Ai_Card_Remove${configured ? '' : ' hidden'}`} aria-hidden={!configured}>
             {confirmRemove ? (
               <>

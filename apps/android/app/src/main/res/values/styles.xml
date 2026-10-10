@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Sem barra de título; fundo da cor da app enquanto a página carrega -->
+    <!-- No title bar; app-coloured background while the page loads -->
     <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
         <item name="android:windowBackground">@color/background</item>
         <item name="android:colorPrimary">@color/accent</item>

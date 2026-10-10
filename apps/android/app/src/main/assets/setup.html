@@ -17,7 +17,7 @@
     <form id="form" novalidate>
       <label for="server" data-t="label"></label>
       <input id="server" type="url" inputmode="url" autocomplete="url" autocapitalize="off" spellcheck="false"
-             placeholder="https://gametracker.exemplo.pt">
+             placeholder="https://gametracker.example.com">
       <span class="hint" data-t="hint"></span>
       <p class="error" id="error" role="alert"></p>
       <button class="primary" id="connect" type="submit" data-t="connect"></button>
@@ -25,16 +25,16 @@
   </main>
 
   <script>
-    // Textos na língua do telemóvel (português, espanhol ou inglês)
+    // Texts in the phone's language (Portuguese, Spanish or English)
     var TEXT = {
       pt: {
         title: 'Liga ao teu servidor',
         text: 'Escreve o endereço onde tens o GameTracker Vault instalado. A app lembra-se dele.',
         label: 'Endereço do servidor',
-        hint: 'O mesmo que usas no browser, por exemplo https://gametracker.exemplo.pt',
+        hint: 'O mesmo que usas no browser, por exemplo https://gametracker.example.com',
         connect: 'Ligar',
         checking: 'A verificar…',
-        invalid: 'Escreve um endereço, por exemplo https://gametracker.exemplo.pt',
+        invalid: 'Escreve um endereço, por exemplo https://gametracker.example.com',
         unreachable: 'Não foi possível chegar a esse endereço. Confirma que está certo e que o telemóvel tem rede (ou está na rede de casa).',
         'not-gametracker': 'Esse endereço respondeu, mas não é um GameTracker Vault.'
       },
@@ -72,7 +72,7 @@
     var app = window.GameTrackerApp;
     if (app && app.currentServer()) input.value = app.currentServer();
 
-    // A resposta da app nativa: só chega aqui quando a ligação falhou
+    // The native app's answer: only arrives here when the connection failed
     window.onConnectResult = function (code) {
       button.disabled = false;
       button.textContent = t.connect;

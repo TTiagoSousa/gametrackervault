@@ -32,7 +32,7 @@ export interface LibraryStats {
   factsComplete: boolean;
 }
 
-/** As estatísticas da estante (GET /library/stats). */
+/** Shelf statistics (GET /library/stats). */
 export const useLibraryStats = () => {
   const [stats, setStats] = useState<LibraryStats | null>(null);
   const [failed, setFailed] = useState(false);

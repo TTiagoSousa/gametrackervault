@@ -3,8 +3,8 @@ import { PrismaLibraryRepository } from '../repositories/prisma/prisma-library-r
 import { mapEntry } from './mapEntry';
 
 /**
- * A estante inteira de um utilizador (mais recentes primeiro) e quantos jogos
- * há em cada estado — o Início usa as duas coisas.
+ * A user's whole shelf (newest first) and how many games
+ * there are in each status — Home uses both.
  */
 export async function listLibrary(
   userId: string,

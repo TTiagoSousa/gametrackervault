@@ -6,7 +6,7 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 
-// ANTHROPIC_API_URL só serve para testes (um servidor falso); em produção fica o oficial
+// ANTHROPIC_API_URL is only for tests (a fake server); in production the official one is used
 const API_URL = process.env.ANTHROPIC_API_URL || 'https://api.anthropic.com/v1';
 const API_VERSION = '2023-06-01';
 
@@ -16,7 +16,7 @@ export interface AnthropicModel {
   createdAt: string | null;
 }
 
-// Blocos de conteúdo de uma mensagem (só os que a app usa)
+// Content blocks of a message (only the ones the app uses)
 export type ContentBlock =
   | { type: 'text'; text: string }
   | {
@@ -54,14 +54,14 @@ const headers = (apiKey: string) => ({
   'content-type': 'application/json',
 });
 
-/** Traduz um erro da API da Anthropic para uma resposta clara em português. */
+/** Translates an Anthropic API error into a clear response in Portuguese. */
 async function toHttpError(response: Response): Promise<HttpException> {
   let message = '';
   try {
     const body = (await response.json()) as { error?: { message?: string } };
     message = body.error?.message ?? '';
   } catch {
-    // corpo vazio ou não JSON
+    // empty or non-JSON body
   }
   if (response.status === 401) {
     return new BadRequestException(
@@ -99,7 +99,7 @@ async function toHttpError(response: Response): Promise<HttpException> {
   );
 }
 
-/** Os modelos a que a chave tem acesso, os mais recentes primeiro. */
+/** The models the key has access to, newest first. */
 export async function listModels(apiKey: string): Promise<AnthropicModel[]> {
   const response = await fetch(`${API_URL}/models?limit=100`, {
     headers: headers(apiKey),
@@ -120,9 +120,9 @@ export async function listModels(apiKey: string): Promise<AnthropicModel[]> {
 }
 
 /**
- * Uma resposta do Claude em streaming. Chama `onText` com cada pedaço de texto à
- * medida que chega e devolve, no fim, os blocos completos (texto e pedidos de
- * ferramentas) e porque parou.
+ * A streamed Claude response. Calls `onText` with each text chunk as
+ * it arrives and returns, at the end, the complete blocks (text and tool
+ * requests) and why it stopped.
  */
 export async function streamMessage(args: {
   apiKey: string;
@@ -154,7 +154,7 @@ export async function streamMessage(args: {
   });
   if (!response.ok || !response.body) throw await toHttpError(response);
 
-  // Blocos em construção, pela ordem (index) em que a API os anuncia
+  // Blocks being built, in the order (index) the API announces them
   const blocks: (ContentBlock & { json?: string })[] = [];
   let stopReason: string | null = null;
 
@@ -240,7 +240,7 @@ export async function streamMessage(args: {
     const { done, value } = await reader.read();
     if (done) break;
     buffer += decoder.decode(value, { stream: true });
-    // Eventos SSE separados por uma linha em branco; só interessam as linhas "data:"
+    // SSE events separated by a blank line; only the "data:" lines matter
     let split: number;
     while ((split = buffer.indexOf('\n\n')) >= 0) {
       const raw = buffer.slice(0, split);

@@ -1,13 +1,13 @@
-// Contentor das páginas: largo (até 1600px) e com margens laterais curtas, para
-// aproveitar o ecrã. A barra de topo usa a mesma largura e as mesmas margens,
-// para tudo alinhar pela mesma linha.
+// Page container: wide (up to 1600px) with short side margins, to
+// make use of the screen. The top bar uses the same width and the same margins,
+// so everything lines up on the same line.
 .Vault {
-  // Altura da barra de navegação do fundo (só no telemóvel): as páginas que ocupam
-  // o ecrã inteiro (assistente) descontam-na
+  // Height of the bottom navigation bar (mobile only): pages that fill
+  // the whole screen (assistant) subtract it
   --bottom-nav-height: 0px;
 
   min-height: 100svh;
-  // O espaço da barra do fundo conta dentro da altura do ecrã
+  // The bottom bar's space counts within the screen height
   box-sizing: border-box;
 
   .Vault_Content {
@@ -19,8 +19,8 @@
 
   @media (max-width: 760px) {
     --bottom-nav-height: calc(62px + env(safe-area-inset-bottom));
-    // O espaço da barra do fundo fica por baixo do contentor: as páginas que anulam
-    // a margem de baixo (pesquisa, jogo) continuam a acabar por cima da barra
+    // The bottom bar's space sits below the container: pages that cancel
+    // the bottom margin (search, game) still end above the bar
     padding-bottom: var(--bottom-nav-height);
 
     .Vault_Content {

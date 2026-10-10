@@ -33,9 +33,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     try {
 
-      // Só um 401 quer dizer "sem sessão". Uma falha de rede ou um servidor a
-      // reiniciar (telemóvel a acordar, atualização) tenta mais duas vezes antes de
-      // mostrar o login a quem tem a sessão válida.
+      // Only a 401 means "no session". A network failure or a server
+      // restarting (phone waking up, update) retries twice more before
+      // showing the login to someone with a valid session.
       const fetchUser = async (attempt: number): Promise<{ data: { username?: string; role?: UserRole } }> => {
         try {
           return await http.get(End_Points.User_Endpoint(), { withCredentials: true });
@@ -57,9 +57,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     } catch (error: any) {
       if (error.response?.status === 401) {
-        // console.log('ℹ️ [AuthProvider] Utilizador não autenticado (401 Unauthorized).');
+        // console.log('ℹ️ [AuthProvider] User not authenticated (401 Unauthorized).');
       } else {
-        // console.error('❌ [AuthProvider] Erro na verificação de autenticação:', error);
+        // console.error('❌ [AuthProvider] Authentication check error:', error);
       }
 
       setAuthenticated(false);

@@ -2,14 +2,14 @@ import { execFile } from 'child_process';
 import { resolve } from 'path';
 
 /**
- * Raiz do repositório. No container vem do APP_DIR (unit systemd); em
- * desenvolvimento o backend corre em apps/backend, por isso sobe dois níveis.
+ * Repository root. In the container it comes from APP_DIR (systemd unit); in
+ * development the backend runs in apps/backend, so it goes up two levels.
  */
 export function repoDir(): string {
   return process.env.APP_DIR ?? resolve(process.cwd(), '..', '..');
 }
 
-/** Corre um comando git na raiz do repositório e devolve o stdout aparado. */
+/** Runs a git command at the repository root and returns the trimmed stdout. */
 export function git(args: string[], timeoutMs = 20_000): Promise<string> {
   return new Promise((resolvePromise, reject) => {
     execFile(

@@ -25,9 +25,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  // O token só diz quem é; o nome e o papel vêm sempre da base. Assim, mudar o
-  // nome, mudar o papel ou apagar a conta conta logo, sem esperar que o token
-  // expire.
+  // The token only says who it is; name and role always come from the database. So changing
+  // the name, changing the role or deleting the account takes effect immediately, without waiting
+  // for the token to expire.
   async validate(payload: { sub: string }): Promise<JwtPayload> {
     const user = await this.users.findById(payload.sub);
     if (!user) throw new UnauthorizedException('Sessão inválida');

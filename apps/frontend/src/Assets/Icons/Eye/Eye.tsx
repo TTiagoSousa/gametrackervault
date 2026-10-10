@@ -1,6 +1,6 @@
 interface EyeProps {
   color?: string;
-  /** Risca o olho — para "esconder". */
+  /** Strikes through the eye — for "hide". */
   off?: boolean;
 }
 

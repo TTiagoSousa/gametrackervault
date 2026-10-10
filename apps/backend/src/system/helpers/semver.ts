@@ -1,12 +1,12 @@
-// Versões no formato vX.Y.Z (as tags de release). Sem pré-releases de propósito:
-// cada release é uma tag no main.
+// Versions in vX.Y.Z format (the release tags). No pre-releases on purpose:
+// each release is a tag on main.
 const VERSION = /^v(\d+)\.(\d+)\.(\d+)$/;
 
 export function isVersion(value: string): boolean {
   return VERSION.test(value);
 }
 
-/** Negativo se a < b, zero se iguais, positivo se a > b. */
+/** Negative if a < b, zero if equal, positive if a > b. */
 export function compareVersions(a: string, b: string): number {
   const pa = VERSION.exec(a);
   const pb = VERSION.exec(b);

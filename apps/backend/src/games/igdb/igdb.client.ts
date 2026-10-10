@@ -12,17 +12,17 @@ import { requestTwitchToken, TwitchToken } from './requestTwitchToken';
 
 const API_URL = 'https://api.igdb.com/v4';
 
-// O IGDB aceita 4 pedidos por segundo; com 260 ms entre pedidos fica-se abaixo
+// IGDB accepts 4 requests per second; 260 ms between requests keeps us below
 const MIN_INTERVAL_MS = 260;
 
 /**
- * Cliente da API do IGDB (v4). As credenciais são as que o admin guardou em
- * Admin → Integrações; a autenticação é um token de aplicação da Twitch que é
- * pedido outra vez quando expira, quando a API responde 401 ou quando o admin
- * muda as credenciais.
+ * IGDB API (v4) client. The credentials are the ones the admin saved in
+ * Admin → Integrations; authentication is a Twitch app token that is
+ * requested again when it expires, when the API responds 401 or when the admin
+ * changes the credentials.
  *
- * Os pedidos passam por uma fila que os espaça, para nunca bater no limite de
- * 4/s mesmo com várias pesquisas ao mesmo tempo.
+ * Requests go through a queue that spaces them out, so they never hit the limit of
+ * 4/s even with several concurrent searches.
  */
 @Injectable()
 export class IgdbClient {
@@ -76,7 +76,7 @@ export class IgdbClient {
     return token.value;
   }
 
-  /** Espera a vez na fila, garantindo o intervalo mínimo entre pedidos. */
+  /** Waits its turn in the queue, ensuring the minimum interval between requests. */
   private schedule<T>(task: () => Promise<T>): Promise<T> {
     const run = async () => {
       const wait = this.lastRequestAt + MIN_INTERVAL_MS - Date.now();
@@ -90,8 +90,8 @@ export class IgdbClient {
   }
 
   /**
-   * Corre uma consulta Apicalypse num endpoint (ex. "games", "platforms").
-   * Ex.: query('games', 'search "zelda"; fields name; limit 10;')
+   * Runs an Apicalypse query on an endpoint (e.g. "games", "platforms").
+   * E.g.: query('games', 'search "zelda"; fields name; limit 10;')
    */
   query<T>(endpoint: string, body: string): Promise<T> {
     return this.schedule(() => this.send<T>(endpoint, body, false));
@@ -115,7 +115,7 @@ export class IgdbClient {
       body,
     });
 
-    // Token revogado ou expirado antes do previsto: um novo e mais uma tentativa
+    // Token revoked or expired early: get a new one and try once more
     if (response.status === 401 && !retried) {
       return this.send<T>(endpoint, body, true);
     }

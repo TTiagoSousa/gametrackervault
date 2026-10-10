@@ -4,8 +4,8 @@ import { End_Points } from '../../Service/endPoints';
 import type { GameSearchPage, GameSummary } from './types';
 
 interface SearchState {
-  // A pesquisa a que este resultado responde — quando a pesquisa muda, o
-  // resultado antigo deixa de contar e isso é o "a carregar"
+  // The search this result answers — when the search changes, the
+  // old result stops counting and that is the "loading" state
   key: string;
   items: GameSummary[];
   total: number;
@@ -21,9 +21,9 @@ const messageOf = (err: ApiError) => {
 };
 
 /**
- * Pesquisa de jogos. Recebe os parâmetros já em forma de query string (os mesmos
- * do URL da página) e volta a pesquisar sempre que mudam; "loadMore" acrescenta
- * a página seguinte aos resultados que já lá estão.
+ * Game search. Takes the parameters already as a query string (the same as
+ * the page URL) and searches again whenever they change; "loadMore" appends
+ * the next page to the results already there.
  */
 export const useGameSearch = (query: string) => {
   const [state, setState] = useState<SearchState | null>(null);

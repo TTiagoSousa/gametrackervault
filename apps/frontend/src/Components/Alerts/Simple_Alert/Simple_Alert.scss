@@ -1,8 +1,8 @@
 @use '../../../Styles/Fonts.scss' as Font;
 
-// Toast: cartão da superfície com o ícone num círculo da cor do tipo e uma
-// barra de progresso fina da mesma cor. A cor marca o tipo sem pintar o cartão
-// inteiro — o texto fica sempre legível nos dois temas.
+// Toast: surface card with the icon in a circle of the type's color and a
+// thin progress bar in the same color. The color marks the type without painting the whole
+// card — the text stays readable in both themes.
 .Simple_Alert {
   --alert-color: var(--alert-info-background);
 

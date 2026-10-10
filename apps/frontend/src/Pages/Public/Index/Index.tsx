@@ -6,9 +6,9 @@ import Theme_Toggle from '../../../Components/Toggles/Theme_Toggle/Theme_Toggle'
 import Spine, { type GameStatus } from '../../../Components/Spine/Spine';
 import * as Icons from '../../../Imports/icons';
 
-// A estante do login: lombadas de jogos inventados, de alturas diferentes como
-// numa prateleira real. Só decoração — os títulos não são traduzidos porque
-// são nomes próprios.
+// The login shelf: spines of made-up games, of different heights as
+// on a real shelf. Decoration only — the titles aren't translated because
+// they're proper names.
 const SHELF: { title: string; tone: number; status: GameStatus; height: number }[] = [
   { title: 'Ecos de Vidro', tone: 4, status: 'beaten', height: .94 },
   { title: 'Neon Harbor', tone: 1, status: 'playing', height: .82 },

@@ -12,11 +12,11 @@ import { savedApiKey } from './aiSettings';
 import { buildSystemPrompt } from './buildSystemPrompt';
 import { GAME_TOOLS, runGameTool } from './gameTools';
 
-// Quantas vezes seguidas o modelo pode pedir ferramentas numa só resposta
+// How many times in a row the model may request tools in a single response
 const MAX_TOOL_ROUNDS = 6;
 const MAX_TOKENS = 4096;
 
-/** O que vai para o browser, uma linha JSON de cada vez. */
+/** What goes to the browser, one JSON line at a time. */
 export type ChatEvent =
   | { type: 'text'; text: string }
   | { type: 'tool'; name: string; query: string }
@@ -24,12 +24,12 @@ export type ChatEvent =
   | { type: 'done' };
 
 /**
- * Uma resposta do assistente: lê a chave e o modelo do utilizador, junta a
- * estante às instruções e fala com o Claude em streaming, correndo as
- * ferramentas do IGDB que ele pedir. Cada pedaço sai por `emit`.
+ * One assistant response: reads the user's key and model, adds the
+ * shelf to the instructions and talks to Claude via streaming, running the
+ * IGDB tools it requests. Each chunk goes out through `emit`.
  *
- * Os erros antes de começar (sem chave, chave rejeitada) propagam-se como
- * exceção; os do meio da resposta também — quem chama decide como os mostrar.
+ * Errors before starting (no key, rejected key) propagate as
+ * exceptions; mid-response ones too — the caller decides how to show them.
  */
 export async function streamChat(args: {
   userId: string;
@@ -62,7 +62,7 @@ export async function streamChat(args: {
       model,
       system,
       messages,
-      // Na última volta já não há ferramentas: o modelo tem de responder
+      // On the last round there are no tools: the model has to answer
       tools: round < MAX_TOOL_ROUNDS ? GAME_TOOLS : undefined,
       maxTokens: MAX_TOKENS,
       signal: args.signal,

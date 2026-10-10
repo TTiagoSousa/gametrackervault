@@ -1,8 +1,8 @@
 /**
- * Papéis dos utilizadores.
+ * User roles.
  *
- * Os valores têm de bater com o enum Role do schema Prisma — é ele que manda na base
- * de dados; isto é a cópia que o frontend consegue importar.
+ * The values must match the Role enum in the Prisma schema — it rules the
+ * database; this is the copy the frontend can import.
  */
 export const ROLES = ['USER', 'ADMIN'] as const;
 

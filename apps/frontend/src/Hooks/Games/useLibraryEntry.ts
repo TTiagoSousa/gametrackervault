@@ -13,11 +13,11 @@ const messageOf = (err: unknown) => {
   return (Array.isArray(message) ? message[0] : message) ?? e.message ?? i18n.t('common:errors.generic');
 };
 
-/** A entrada de um jogo na estante do utilizador: ler, guardar e remover. */
+/** A game's entry on the user's shelf: read, save and remove. */
 export const useLibraryEntry = (gameId: number) => {
-  // "failed": não se conseguiu saber se o jogo está na estante. O painel fica
-  // bloqueado — gravar por cima apagaria a entrada que lá estiver (o PUT
-  // substitui tudo).
+  // "failed": could not tell whether the game is on the shelf. The panel stays
+  // locked — saving over it would wipe any existing entry (the PUT
+  // replaces everything).
   const [state, setState] = useState<{ gameId: number; entry: LibraryEntry | null; failed: boolean } | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [busy, setBusy] = useState<'save' | 'remove' | null>(null);

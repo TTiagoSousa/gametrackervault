@@ -4,8 +4,8 @@ import { compareVersions } from './semver';
 import { readUpdateStatus, updatesDir } from './updateFiles';
 
 /**
- * Para o card da página Admin: o que está instalado, a última release (com as notas
- * na língua pedida), se há atualização e o estado de uma atualização em curso.
+ * For the Admin page card: what is installed, the latest release (with notes
+ * in the requested language), whether an update exists and the status of an ongoing update.
  */
 export async function getVersionOverview(language: NoteLanguage) {
   const [installed, { releases, offline }, update] = await Promise.all([
@@ -31,7 +31,7 @@ export async function getVersionOverview(language: NoteLanguage) {
   };
 }
 
-/** A lista completa, com cada release marcada como instalada ou mais recente. */
+/** The full list, with each release marked as installed or newer. */
 export async function listReleases(force: boolean, language: NoteLanguage) {
   const [installed, { releases, offline }] = await Promise.all([
     getInstalledVersion(),

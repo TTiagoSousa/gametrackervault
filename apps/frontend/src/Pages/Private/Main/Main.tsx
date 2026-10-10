@@ -5,8 +5,8 @@ import Error_Boundary from '../../../Components/Error_Boundary/Error_Boundary';
 import { useLocation } from 'react-router-dom';
 import './Main.scss';
 
-// A moldura da app autenticada: barra de topo, a página por baixo (centrada) e,
-// no telemóvel, a barra de navegação fixa no fundo.
+// The authenticated app's frame: top bar, the page below (centered) and,
+// on mobile, the navigation bar fixed at the bottom.
 const Main = () => {
   const { pathname } = useLocation();
 
@@ -15,7 +15,7 @@ const Main = () => {
       <Top_Nav />
 
       <div className="Vault_Content">
-        {/* Um erro numa página fica nela: a barra continua e mudar de página limpa-o. */}
+        {/* An error in a page stays in it: the bar keeps working and changing page clears it. */}
         <Error_Boundary key={pathname}>
           <Private_Routes />
         </Error_Boundary>

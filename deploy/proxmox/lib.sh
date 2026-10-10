@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Funções partilhadas pelo install.sh, update.sh e config.sh. Corre dentro do CT,
-# como root. Não se executa sozinho: faz-se `source`.
+# Functions shared by install.sh, update.sh and config.sh. Runs inside the CT,
+# as root. Not executed on its own: it is `source`d.
 
-# Usadas pelos scripts que fazem source deste ficheiro.
+# Used by the scripts that source this file.
 # shellcheck disable=SC2034
 APP_USER="${APP_USER:-gametracker}"
 APP_DIR="${APP_DIR:-/opt/gametracker}"
@@ -21,14 +21,14 @@ die()  { printf '\033[1;31mxx\033[0m %s\n' "$*" >&2; exit 1; }
 
 require_root() { [ "$(id -u)" -eq 0 ] || die "Run this as root."; }
 
-# Corre um comando como o utilizador da app, na pasta do repo, com o HOME dele (é
-# lá que fica a cache do npm — fora do repo).
+# Runs a command as the app user, in the repo folder, with that user's HOME (where
+# the npm cache lives — outside the repo).
 as_app() {
   runuser -u "$APP_USER" -- env HOME="$APP_HOME" PATH="/usr/local/bin:/usr/bin:/bin" "$@"
 }
 
-# Carrega o ficheiro de ambiente para os comandos seguintes (o Prisma precisa do
-# DATABASE_URL nas migrações).
+# Loads the env file for the following commands (Prisma needs
+# DATABASE_URL for migrations).
 load_env() {
   [ -f "$ENV_FILE" ] || die "Missing $ENV_FILE — run install.sh first."
   set -a
@@ -37,17 +37,17 @@ load_env() {
   set +a
 }
 
-# Dependências, shared, backend e frontend. O frontend é compilado para a API em
-# /api, que o nginx encaminha para o backend.
+# Dependencies, shared, backend and frontend. The frontend is built for the API at
+# /api, which nginx proxies to the backend.
 build_app() {
   msg "Installing dependencies (npm ci)…"
-  # --include=dev: o build precisa do Nest CLI, do Vite e do TypeScript, e o
-  # NODE_ENV=production do ficheiro de ambiente faria o npm saltá-los.
+  # --include=dev: the build needs the Nest CLI, Vite and TypeScript, and the
+  # env file's NODE_ENV=production would make npm skip them.
   ( cd "$APP_DIR" && as_app npm ci --include=dev --no-audit --no-fund )
   msg "Building the shared package, backend and frontend…"
   load_env
   ( cd "$APP_DIR" && as_app npm run build:shared )
-  # O prisma.config.ts lê o DATABASE_URL mesmo só para gerar o cliente.
+  # prisma.config.ts reads DATABASE_URL even just to generate the client.
   ( cd "$APP_DIR" && as_app env DATABASE_URL="$DATABASE_URL" npm run build -w @gametracker/backend )
   ( cd "$APP_DIR" && as_app env VITE_API_URL=/api npm run build -w @gametracker/frontend )
 }
@@ -73,7 +73,7 @@ restart_backend() {
   wait_backend
 }
 
-# Espera até o backend responder (o Nest demora uns segundos a arrancar).
+# Waits until the backend responds (Nest takes a few seconds to start).
 wait_backend() {
   for _ in $(seq 1 60); do
     if curl -fsS "http://127.0.0.1:${BACKEND_PORT}/" >/dev/null 2>&1; then
@@ -85,16 +85,16 @@ wait_backend() {
   return 1
 }
 
-# TOKEN_ENCRYPTION_KEY cifra os segredos das integrações na base de dados. Uma
-# instalação anterior a esta chave não a tem no ficheiro: gera-a uma vez, sem
-# nunca mexer numa que já exista.
+# TOKEN_ENCRYPTION_KEY encrypts the integration secrets in the database. An
+# install older than this key does not have it in the file: generate it once,
+# never touching an existing one.
 ensure_encryption_key() {
   [ -f "$ENV_FILE" ] || return 0
   grep -q '^TOKEN_ENCRYPTION_KEY=' "$ENV_FILE" && return 0
   msg "Adding TOKEN_ENCRYPTION_KEY to $ENV_FILE…"
   {
     echo
-    echo "# ⚠ NÃO ALTERAR: cifra os segredos das integrações guardados na base de dados."
+    echo "# ⚠ DO NOT CHANGE: encrypts the integration secrets stored in the database."
     echo "TOKEN_ENCRYPTION_KEY=\"$(openssl rand -base64 32 | tr -d '\n')\""
   } >> "$ENV_FILE"
 }
@@ -152,7 +152,7 @@ server {
     root ${WEB_ROOT};
     index index.html;
 
-    # Uploads grandes (imagens, importações) passam pelo backend.
+    # Large uploads (images, imports) go through the backend.
     client_max_body_size 300m;
 
     location /api/ {
@@ -164,22 +164,22 @@ server {
         proxy_set_header X-Forwarded-Proto \$gametracker_proto;
         proxy_set_header Connection "";
 
-        # Sem buffering e com ligação longa: respostas em streaming (SSE) chegam ao
-        # browser à medida que saem do backend.
+        # No buffering and a long timeout: streaming responses (SSE) reach the
+        # browser as the backend sends them.
         proxy_buffering off;
         proxy_cache off;
         proxy_read_timeout 1h;
     }
 
-    # Ficheiros com hash no nome: podem ficar em cache para sempre.
+    # Files with a hash in the name: can be cached forever.
     location /assets/ {
         expires 1y;
         add_header Cache-Control "public, immutable";
         try_files \$uri =404;
     }
 
-    # App Android (APK) e a ficha dela: o tipo certo para o Android a instalar e
-    # sem cache, para um APK novo chegar logo.
+    # Android app (APK) and its manifest: the right type for Android to install it and
+    # no cache, so a new APK arrives straight away.
     location /downloads/ {
         types {
             application/vnd.android.package-archive apk;
@@ -192,7 +192,7 @@ server {
     location = /env-config.js { add_header Cache-Control "no-store"; }
     location = /index.html   { add_header Cache-Control "no-cache"; }
 
-    # SPA: qualquer rota volta ao index.html.
+    # SPA: any route falls back to index.html.
     location / {
         try_files \$uri \$uri/ /index.html;
     }

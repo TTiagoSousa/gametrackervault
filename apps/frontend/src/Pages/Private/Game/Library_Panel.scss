@@ -1,8 +1,8 @@
 @use '../../../Styles/Fonts.scss' as Font;
 @use '../../../Styles/Mixins.scss' as Mixin;
 
-// "A minha estante": painel preso à direita da página do jogo. O conteúdo rola
-// por dentro (Library_Scroll) e o rodapé com as ações fica sempre no fundo.
+// "My shelf": panel pinned to the right of the game page. The content scrolls
+// inside (Library_Scroll) and the footer with the actions always stays at the bottom.
 .Library_Panel{
   @include Mixin.Panel_Surface;
   position: sticky;
@@ -13,7 +13,7 @@
   overflow: hidden;
   font-family: Font.$font_family_sans;
 
-  // Esconde sem tirar o lugar
+  // Hides without giving up the space
   .hidden{ visibility: hidden; }
 
   .Library_Scroll{
@@ -27,7 +27,7 @@
     gap: 18px;
   }
 
-  // --- Cabeçalho --------------------------------------------------------------------
+  // --- Header -----------------------------------------------------------------------
   .Library_Header{
     display: flex;
     align-items: center;
@@ -42,7 +42,7 @@
     color: var(--text-main);
   }
 
-  // Etiqueta com o estado gravado (ou "Fora da estante")
+  // Label with the saved status (or "Not on the shelf")
   .Library_Badge{
     --status-color: var(--line-strong);
 
@@ -77,7 +77,7 @@
     line-height: 1.45;
   }
 
-  // --- Grupos ---------------------------------------------------------------------------
+  // --- Groups ---------------------------------------------------------------------------
   .Library_Group{
     display: flex;
     flex-direction: column;
@@ -111,7 +111,7 @@
     &:hover{ text-decoration: underline; }
   }
 
-  // Estados: botões compactos em duas colunas, com um marcador na cor do estado
+  // Statuses: compact buttons in two columns, with a marker in the status color
   .Library_Status_Group{
     display: flex;
     flex-direction: column;
@@ -168,7 +168,7 @@
     &:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
   }
 
-  // A mesma cor de estado no botão e na etiqueta do cabeçalho
+  // The same status color on the button and on the header label
   .status-PLAYING{ --status-color: var(--game-status-playing); }
   .status-FINISHED_MAIN,
   .status-FINISHED_EXTRAS{ --status-color: var(--game-status-finished); }
@@ -181,7 +181,7 @@
   .Library_Badge.status-PLAN_TO_PLAY,
   .Library_Badge.status-DROPPED{ color: var(--on-accent); }
 
-  // --- Campos -----------------------------------------------------------------------------
+  // --- Fields -----------------------------------------------------------------------------
   .Library_Field{
     display: flex;
     flex-direction: column;
@@ -205,7 +205,7 @@
     }
   }
 
-  // Horas com o "h" por dentro, à direita
+  // Hours with the "h" inside, on the right
   .Library_Hours{ max-width: 150px; }
 
   .Library_Suffix{
@@ -271,7 +271,7 @@
     resize: vertical;
   }
 
-  // --- Rodapé ---------------------------------------------------------------------------
+  // --- Footer ---------------------------------------------------------------------------
   .Library_Footer{
     flex-shrink: 0;
     display: flex;
@@ -288,7 +288,7 @@
     height: 44px;
   }
 
-  // Altura fixa: trocar as ações pela confirmação não mexe em nada
+  // Fixed height: swapping the actions for the confirmation doesn't move anything
   .Library_Footer_Links{
     display: flex;
     align-items: center;

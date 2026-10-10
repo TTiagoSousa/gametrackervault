@@ -11,7 +11,7 @@ export interface FilterValues {
 
 interface Filter_Panel_Props {
   filters: GameFilters | null;
-  // Se as opções não carregarem, o painel diz porquê em vez de ficar a carregar
+  // If the options fail to load, the panel says why instead of loading forever
   error: string | null;
   values: FilterValues;
   onToggle: (filter: ListFilter, id: number) => void;
@@ -19,8 +19,8 @@ interface Filter_Panel_Props {
   onRating: (value: number) => void;
 }
 
-// Os grupos com poucas opções aparecem como fichas; as plataformas (são ~200)
-// têm lista com pesquisa
+// Groups with few options show as chips; platforms (there are ~200)
+// get a searchable list
 const CHIP_GROUPS: ListFilter[] = ['genres', 'themes', 'modes', 'perspectives', 'types'];
 
 const Chip_Group = ({ options, selected, onToggle }: { options: FilterOption[]; selected: number[]; onToggle: (id: number) => void }) => (
@@ -46,7 +46,7 @@ const Platform_List = ({ options, selected, onToggle }: { options: FilterOption[
   const { t } = useTranslation('search');
   const [term, setTerm] = useState('');
 
-  // As escolhidas vêm sempre primeiro, para não se perderem na lista
+  // Selected ones always come first, so they don't get lost in the list
   const visible = useMemo(() => {
     const needle = term.trim().toLowerCase();
     const matches = needle ? options.filter((o) => o.name.toLowerCase().includes(needle)) : options;
@@ -74,8 +74,8 @@ const Platform_List = ({ options, selected, onToggle }: { options: FilterOption[
   );
 };
 
-// Painel de filtros: cada grupo abre e fecha (details/summary), e mostra quantos
-// estão escolhidos mesmo fechado.
+// Filter panel: each group opens and closes (details/summary), and shows how many
+// are selected even when closed.
 const Filter_Panel = ({ filters, error, values, onToggle, onYear, onRating }: Filter_Panel_Props) => {
   const { t } = useTranslation('search');
 

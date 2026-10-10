@@ -6,9 +6,9 @@ import { LIBRARY_STATUSES } from '../../../Hooks/Games/detailTypes';
 import { dateLocale } from '../../../i18n';
 import './Stats.scss';
 
-// Numa pilha de um ano cabem estas lombadas; o resto fica no número por cima
+// A year's stack fits this many spines; the rest goes in the number on top
 const MAX_STACK = 14;
-// As listas de destaques têm sempre estas linhas (as que faltam ficam vazias)
+// The highlight lists always have this many rows (missing ones stay empty)
 const TOP_ROWS = 5;
 
 const formatHours = (hours: number) =>
@@ -17,9 +17,9 @@ const formatHours = (hours: number) =>
 type T = ReturnType<typeof useTranslation>['t'];
 
 /**
- * Estatísticas da estante, numa grelha regular: uma faixa de resumo com quatro
- * números e, por baixo, linhas de painéis com a mesma altura — horas e estante,
- * concluídos por ano, notas e géneros, e os destaques.
+ * Shelf stats, in a regular grid: a summary strip with four
+ * numbers and, below, rows of panels with the same height — hours and shelf,
+ * completed per year, ratings and genres, and the highlights.
  */
 const Stats = () => {
   const { t } = useTranslation('stats');
@@ -48,7 +48,7 @@ const Stats = () => {
   );
 };
 
-/** Um painel: título à esquerda, nota curta à direita, conteúdo por baixo. */
+/** A panel: title on the left, short note on the right, content below. */
 const Panel = ({ title, aside, children, className = '' }: { title: string; aside?: ReactNode; children: ReactNode; className?: string }) => (
   <section className={`Stats_Panel ${className}`}>
     <header className='Stats_Panel_Head'>
@@ -59,7 +59,7 @@ const Panel = ({ title, aside, children, className = '' }: { title: string; asid
   </section>
 );
 
-/** Lista de destaques com linhas de altura fixa: as duas listas ficam iguais. */
+/** Highlight list with fixed-height rows: both lists end up equal. */
 const Top_List = ({ games, value, empty }: { games: StatsGame[]; value: (index: number) => ReactNode; empty: string }) => {
   if (!games.length) return <p className='Stats_Text'>{empty}</p>;
   return (
@@ -92,7 +92,7 @@ const Stats_Body = ({ stats, t, tl }: { stats: LibraryStats; t: T; tl: T }) => {
   const maxRating = Math.max(1, ...rating.distribution);
   const maxGenre = Math.max(1, ...stats.genres.map((g) => g.count));
 
-  // A faixa de resumo: quatro números com a mesma forma
+  // The summary strip: four numbers with the same shape
   const summary = [
     { key: 'hours', value: `${formatHours(hours.total)} h`, label: t('summary.hours'), note: hours.estimated > 0 ? t('summary.hoursNote', { hours: formatHours(hours.estimated) }) : t('summary.hoursAllLogged') },
     { key: 'games', value: String(stats.total), label: t('summary.games'), note: t('summary.gamesNote', { count: stats.counts.PLAYING + stats.counts.PAUSED }) },

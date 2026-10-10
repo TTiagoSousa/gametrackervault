@@ -1,6 +1,6 @@
 interface MenuItem {
   id: string;
-  // Chave de tradução (namespace 'nav'), traduzida onde é mostrada
+  // Translation key ('nav' namespace), translated where it is displayed
   labelKey: string;
   path: string;
   adminOnly?: boolean;

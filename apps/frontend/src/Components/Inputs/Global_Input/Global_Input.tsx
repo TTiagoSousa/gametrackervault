@@ -12,7 +12,7 @@ interface Global_Input_Props {
   autoComplete?: string;
 }
 
-// O tamanho vem sempre da div pai — este componente ocupa 100% do que lhe derem.
+// The size always comes from the parent div — this component fills 100% of what it's given.
 const Global_Input = ({
   id,
   type = 'text',

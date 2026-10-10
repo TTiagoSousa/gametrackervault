@@ -4,10 +4,10 @@ import { End_Points } from '../../Service/endPoints';
 import type { GameFilters } from './types';
 
 const STORAGE_KEY = 'game-filters:v1';
-// Dentro desta janela nem se pergunta ao servidor (voltar à pesquisa é instantâneo)
+// Within this window the server isn't even asked (returning to search is instant)
 const FRESH_MS = 60 * 60 * 1000;
 
-// A última lista: em memória (a sessão) e no browser (entre visitas)
+// The last list: in memory (the session) and in the browser (between visits)
 let memory: { value: GameFilters; at: number } | null = null;
 
 const stored = (): { value: GameFilters; at: number } | null => {
@@ -24,14 +24,14 @@ const remember = (value: GameFilters) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(memory));
   } catch {
-    // sem localStorage fica só a memória desta sessão
+    // without localStorage only this session's memory remains
   }
 };
 
 /**
- * As opções de cada filtro (plataformas, géneros, …). Mudam raramente, por isso
- * a pesquisa abre logo com a última lista guardada (memória ou browser) e
- * renova-a em segundo plano; só a primeira visita de sempre espera pelo servidor.
+ * The options for each filter (platforms, genres, …). They rarely change, so
+ * search opens straight away with the last stored list (memory or browser) and
+ * refreshes it in the background; only the very first visit waits for the server.
  */
 export const useGameFilters = () => {
   const [filters, setFilters] = useState<GameFilters | null>(() => {
@@ -50,7 +50,7 @@ export const useGameFilters = () => {
         if (!cancelled) setFilters(response.data);
       })
       .catch((err: { response?: { data?: { message?: string } }; message?: string }) => {
-        // Com uma lista guardada, um erro na renovação não estraga nada
+        // With a stored list, a refresh error breaks nothing
         if (!cancelled && !memory) setError(err.response?.data?.message ?? err.message ?? 'error');
       });
     return () => {
