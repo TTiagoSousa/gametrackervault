@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- O comando do Logo da app (viewBox 24) ampliado para a zona segura do ícone
+     adaptativo (108dp, com os 66dp centrais sempre visíveis). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="2.6"
+        android:scaleY="2.6"
+        android:translateX="22.8"
+        android:translateY="22.8">
+        <path
+            android:pathData="M6.5,7h11a4.5,4.5 0,0 1,4.4 5.4l-0.9,4.4a2.6,2.6 0,0 1,-4.5 1.2L14.6,16H9.4l-1.9,2a2.6,2.6 0,0 1,-4.5 -1.2l-0.9,-4.4A4.5,4.5 0,0 1,6.5 7z"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="1.8"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
+        <path
+            android:pathData="M7,10.5v3M5.5,12h3"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="1.8"
+            android:strokeLineCap="round" />
+        <path
+            android:pathData="M15.15,11a0.85,0.85 0,1 0,1.7 0a0.85,0.85 0,1 0,-1.7 0z"
+            android:fillColor="#FFFFFF" />
+        <path
+            android:pathData="M17.15,13a0.85,0.85 0,1 0,1.7 0a0.85,0.85 0,1 0,-1.7 0z"
+            android:fillColor="#FFFFFF" />
+    </group>
+</vector>

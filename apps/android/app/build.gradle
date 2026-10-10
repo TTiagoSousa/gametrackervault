@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.application'
+}
+
+// A assinatura vem de um ficheiro fora do repositório (ver scripts/build-android.mjs):
+// a keystore nunca entra no git. Sem ele, o APK de release sai sem assinatura.
+def keystoreProps = new Properties()
+def keystorePath = System.getenv('GAMETRACKER_KEYSTORE_PROPERTIES')
+if (keystorePath && file(keystorePath).exists()) {
+    file(keystorePath).withInputStream { keystoreProps.load(it) }
+}
+
+android {
+    namespace 'me.homesousa.gametracker'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'me.homesousa.gametracker'
+        minSdk 26
+        targetSdk 35
+        versionCode Integer.parseInt(project.property('APP_VERSION_CODE'))
+        versionName project.property('APP_VERSION_NAME')
+    }
+
+    signingConfigs {
+        release {
+            if (keystoreProps['storeFile']) {
+                storeFile file(keystoreProps['storeFile'])
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            // Uma Activity e nada mais: encolher não ganha quase nada
+            minifyEnabled false
+            if (keystoreProps['storeFile']) signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}

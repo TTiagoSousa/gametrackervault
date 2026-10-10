@@ -14,6 +14,8 @@
     "search": "Pesquisar",
     "account": "A minha conta",
     "assistantKey": "Assistente (Claude)",
-    "help": "Ajuda"
+    "help": "Ajuda",
+    "androidApp": "App Android",
+    "changeServer": "Mudar de servidor"
   }
 }

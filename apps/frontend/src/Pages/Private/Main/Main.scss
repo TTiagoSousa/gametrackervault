@@ -2,7 +2,13 @@
 // aproveitar o ecrã. A barra de topo usa a mesma largura e as mesmas margens,
 // para tudo alinhar pela mesma linha.
 .Vault {
+  // Altura da barra de navegação do fundo (só no telemóvel): as páginas que ocupam
+  // o ecrã inteiro (assistente) descontam-na
+  --bottom-nav-height: 0px;
+
   min-height: 100svh;
+  // O espaço da barra do fundo conta dentro da altura do ecrã
+  box-sizing: border-box;
 
   .Vault_Content {
     max-width: 1600px;
@@ -12,8 +18,13 @@
   }
 
   @media (max-width: 760px) {
+    --bottom-nav-height: calc(62px + env(safe-area-inset-bottom));
+    // O espaço da barra do fundo fica por baixo do contentor: as páginas que anulam
+    // a margem de baixo (pesquisa, jogo) continuam a acabar por cima da barra
+    padding-bottom: var(--bottom-nav-height);
+
     .Vault_Content {
-      padding: 20px 16px 48px;
+      padding: 16px 16px 48px;
     }
   }
 }

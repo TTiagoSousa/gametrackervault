@@ -33,9 +33,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     try {
 
-      const response = await http.get(End_Points.User_Endpoint(), {
-        withCredentials: true,
-      });
+      // Só um 401 quer dizer "sem sessão". Uma falha de rede ou um servidor a
+      // reiniciar (telemóvel a acordar, atualização) tenta mais duas vezes antes de
+      // mostrar o login a quem tem a sessão válida.
+      const fetchUser = async (attempt: number): Promise<{ data: { username?: string; role?: UserRole } }> => {
+        try {
+          return await http.get(End_Points.User_Endpoint(), { withCredentials: true });
+        } catch (error) {
+          const status = (error as { response?: { status?: number } }).response?.status;
+          if (status === 401 || attempt >= 2) throw error;
+          await new Promise((resolve) => setTimeout(resolve, 1500 * (attempt + 1)));
+          return fetchUser(attempt + 1);
+        }
+      };
+      const response = await fetchUser(0);
 
       const user = response.data;
 

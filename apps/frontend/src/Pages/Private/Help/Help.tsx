@@ -3,11 +3,13 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../Contexts/Auth_Context';
 import Markdown from '../../../Components/Markdown/Markdown';
+import Android_Download from '../../../Components/Android_Download/Android_Download';
 import * as Icon from '../../../Imports/icons';
 import './Help.scss';
 
 // As secções, por esta ordem. As de admin só aparecem a administradores.
 const SECTIONS: { id: string; adminOnly?: boolean }[] = [
+  { id: 'android' },
   { id: 'claude' },
   { id: 'models' },
   { id: 'stats' },
@@ -61,6 +63,7 @@ const Help = () => {
               <span className='Help_Section_Chevron' aria-hidden='true'><Icon.Chevron /></span>
             </summary>
             <div className='Help_Section_Body'>
+              {id === 'android' && <Android_Download />}
               <Markdown text={t(`${id}.body`)} />
             </div>
           </details>

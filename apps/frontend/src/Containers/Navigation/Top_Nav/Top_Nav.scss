@@ -205,26 +205,49 @@
     }
   }
 
-  // --- Telemóvel: separadores numa linha própria ---------------------------------------
+  .mobile-only{ display: none !important; }
+
+  // --- Telemóvel: barra baixa só com a marca, o tema e o avatar; as secções vão
+  // para a barra do fundo (Bottom_Nav) -----------------------------------------------------
   @media (max-width: 760px){
+    border-bottom-width: 3px;
+
     .Top_Nav_Inner{
-      height: auto;
-      padding: 12px 16px;
+      height: 56px;
+      padding: 0 16px;
       grid-template-columns: 1fr auto;
-      grid-template-areas:
-        'brand actions'
-        'tabs tabs';
-      row-gap: 12px;
     }
 
-    .Top_Nav_Brand{ grid-area: brand; }
-    .Top_Nav_Actions{ grid-area: actions; }
+    .Top_Nav_Tabs,
+    .Top_Nav_Search{ display: none; }
 
-    .Top_Nav_Tabs{
-      grid-area: tabs;
-      overflow-x: auto;
+    .Top_Nav_Brand{
+      min-width: 0;
+      gap: 8px;
 
-      .Top_Nav_Tab{ flex: 1; text-align: center; }
+      .Top_Nav_Logo{
+        width: 32px;
+        height: 32px;
+
+        svg{ width: 19px; height: 19px; }
+      }
+
+      .Top_Nav_Name{
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
+
+    .Top_Nav_Icon_Button,
+    .Top_Nav_Avatar{
+      width: 36px;
+      height: 36px;
+    }
+
+    .Top_Nav_Menu{ min-width: 240px; }
+
+    .mobile-only{ display: flex !important; }
   }
 }

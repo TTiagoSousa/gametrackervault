@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GameTracker Vault</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <main>
+    <div class="spines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <div>
+      <h1 data-t="title"></h1>
+      <p data-t="text" style="margin-top: 10px"></p>
+    </div>
+
+    <form id="form" novalidate>
+      <label for="server" data-t="label"></label>
+      <input id="server" type="url" inputmode="url" autocomplete="url" autocapitalize="off" spellcheck="false"
+             placeholder="https://gametracker.exemplo.pt">
+      <span class="hint" data-t="hint"></span>
+      <p class="error" id="error" role="alert"></p>
+      <button class="primary" id="connect" type="submit" data-t="connect"></button>
+    </form>
+  </main>
+
+  <script>
+    // Textos na língua do telemóvel (português, espanhol ou inglês)
+    var TEXT = {
+      pt: {
+        title: 'Liga ao teu servidor',
+        text: 'Escreve o endereço onde tens o GameTracker Vault instalado. A app lembra-se dele.',
+        label: 'Endereço do servidor',
+        hint: 'O mesmo que usas no browser, por exemplo https://gametracker.exemplo.pt',
+        connect: 'Ligar',
+        checking: 'A verificar…',
+        invalid: 'Escreve um endereço, por exemplo https://gametracker.exemplo.pt',
+        unreachable: 'Não foi possível chegar a esse endereço. Confirma que está certo e que o telemóvel tem rede (ou está na rede de casa).',
+        'not-gametracker': 'Esse endereço respondeu, mas não é um GameTracker Vault.'
+      },
+      es: {
+        title: 'Conéctate a tu servidor',
+        text: 'Escribe la dirección donde tienes instalado GameTracker Vault. La app la recordará.',
+        label: 'Dirección del servidor',
+        hint: 'La misma que usas en el navegador, por ejemplo https://gametracker.ejemplo.es',
+        connect: 'Conectar',
+        checking: 'Comprobando…',
+        invalid: 'Escribe una dirección, por ejemplo https://gametracker.ejemplo.es',
+        unreachable: 'No se pudo llegar a esa dirección. Comprueba que es correcta y que el móvil tiene red (o está en la red de casa).',
+        'not-gametracker': 'Esa dirección respondió, pero no es un GameTracker Vault.'
+      },
+      en: {
+        title: 'Connect to your server',
+        text: 'Type the address where GameTracker Vault is installed. The app will remember it.',
+        label: 'Server address',
+        hint: 'The same one you use in the browser, for example https://gametracker.example.com',
+        connect: 'Connect',
+        checking: 'Checking…',
+        invalid: 'Type an address, for example https://gametracker.example.com',
+        unreachable: 'Could not reach that address. Check that it is right and that the phone has a connection (or is on your home network).',
+        'not-gametracker': 'That address answered, but it is not a GameTracker Vault.'
+      }
+    };
+    var lang = (navigator.language || 'en').slice(0, 2);
+    var t = TEXT[lang] || TEXT.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = t[el.getAttribute('data-t')]; });
+
+    var input = document.getElementById('server');
+    var button = document.getElementById('connect');
+    var error = document.getElementById('error');
+    var app = window.GameTrackerApp;
+    if (app && app.currentServer()) input.value = app.currentServer();
+
+    // A resposta da app nativa: só chega aqui quando a ligação falhou
+    window.onConnectResult = function (code) {
+      button.disabled = false;
+      button.textContent = t.connect;
+      error.textContent = t[code] || t.unreachable;
+    };
+
+    document.getElementById('form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      var value = input.value.trim();
+      if (!value) { error.textContent = t.invalid; return; }
+      error.textContent = '';
+      button.disabled = true;
+      button.textContent = t.checking;
+      if (app) app.connect(value);
+    });
+  </script>
+</body>
+</html>

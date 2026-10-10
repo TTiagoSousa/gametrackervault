@@ -3,3 +3,10 @@
 
 # Os scripts correm no Linux do container: com CRLF o bash parte ("$'\r': command not found").
 *.sh text eol=lf
+# O gradlew é um script de shell (Linux/macOS): sempre com fins de linha LF
+apps/android/gradlew text eol=lf
+apps/android/gradlew.bat text eol=crlf
+# Binários: nunca converter
+*.apk binary
+*.jar binary
+*.jks binary

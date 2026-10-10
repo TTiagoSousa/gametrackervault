@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { menuItems } from './Menu_Items';
 import { useTheme } from '../../../Contexts/ThemeContext';
 import { useAuth } from '../../../Contexts/Auth_Context';
+import { androidBridge } from '../../../Service/androidApp';
 import * as Icon from '../../../Imports/icons';
 import './Top_Nav.scss';
 
@@ -68,6 +69,8 @@ const Top_Nav = () => {
   };
 
   const initial = (username ?? '?').charAt(0).toUpperCase();
+  // Dentro da app Android: "Mudar de servidor"; no browser: onde a descarregar
+  const bridge = androidBridge();
 
   return (
     <header className="Top_Nav" ref={barRef}>
@@ -93,7 +96,7 @@ const Top_Nav = () => {
         <div className="Top_Nav_Actions">
           <Link
             to="/Vault/Search"
-            className={`Top_Nav_Icon_Button${pathname.startsWith('/Vault/Search') ? ' active' : ''}`}
+            className={`Top_Nav_Icon_Button Top_Nav_Search${pathname.startsWith('/Vault/Search') ? ' active' : ''}`}
             title={t('sidebar.search')}
             aria-label={t('sidebar.search')}
           >
@@ -140,6 +143,24 @@ const Top_Nav = () => {
                   <Icon.Help />
                   <span>{t('sidebar.help')}</span>
                 </Link>
+                {/* No telemóvel o Admin não cabe na barra do fundo: fica aqui */}
+                {role === 'ADMIN' && (
+                  <Link to="/Vault/Admin" role="menuitem" className="Top_Nav_Menu_Item mobile-only" onClick={() => setMenuOpen(false)}>
+                    <Icon.Settings />
+                    <span>{t('menu.admin')}</span>
+                  </Link>
+                )}
+                {bridge ? (
+                  <button type="button" role="menuitem" className="Top_Nav_Menu_Item" onClick={() => bridge.changeServer()}>
+                    <Icon.World />
+                    <span>{t('sidebar.changeServer')}</span>
+                  </button>
+                ) : (
+                  <Link to="/Vault/Help#android" role="menuitem" className="Top_Nav_Menu_Item" onClick={() => setMenuOpen(false)}>
+                    <Icon.Logo />
+                    <span>{t('sidebar.androidApp')}</span>
+                  </Link>
+                )}
                 <button type="button" role="menuitem" className="Top_Nav_Menu_Item danger" onClick={logout}>
                   <Icon.Logout />
                   <span>{t('sidebar.logout')}</span>

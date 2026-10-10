@@ -27,7 +27,7 @@
 
     h1{
       font-family: Font.$font_family_display;
-      font-size: clamp(28px, 3.4vw, 40px);
+      font-size: clamp(24px, 3.4vw, 40px);
       font-weight: 700;
       line-height: 1.1;
       letter-spacing: -.02em;
@@ -482,5 +482,26 @@
     color: var(--text-faint);
 
     a{ color: var(--accent); font-weight: 600; }
+  }
+
+  // --- Telemóvel ------------------------------------------------------------------------------
+  @media (max-width: 760px){
+    gap: 14px;
+    --panel-pad: 16px;
+
+    .Stats_Hero p{ font-size: 14.5px; margin-top: 6px; }
+    .Stats_Row{ gap: 14px; }
+    .Stats_Summary_Value{ font-size: 24px; }
+    .Stats_Summary_Note{ font-size: 12px; }
+    .Stats_Panel_Head{ padding: 14px var(--panel-pad) 12px; }
+    .Stats_Panel_Head h2{ font-size: 15px; }
+    .Stats_Panel_Body{ padding: 14px var(--panel-pad) var(--panel-pad); gap: 12px; }
+    .Stats_Legend{ font-size: 13px; }
+    .Stats_Legend.columns{ grid-template-columns: 1fr; }
+    .Stats_Ratings{ min-height: 140px; gap: 4px; }
+    .Stats_Years{ height: 140px; gap: 12px; }
+    .Stats_Game{ height: 48px; gap: 10px; grid-template-columns: 16px 30px minmax(0, 1fr) auto; }
+    .Stats_Game_Cover{ width: 30px; }
+    .Stats_Game_Name{ font-size: 13.5px; }
   }
 }

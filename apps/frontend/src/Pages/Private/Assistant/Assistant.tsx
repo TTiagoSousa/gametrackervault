@@ -88,6 +88,13 @@ const Assistant = () => {
               {messages.length === 0 ? (
                 <div className='Assistant_Intro'>
                   <p>{t('intro')}</p>
+                  <div className='Assistant_Intro_Suggestions'>
+                    {SUGGESTIONS.map((key) => (
+                      <button key={key} type='button' onClick={() => ask(t(`suggestions.${key}`))}>
+                        {t(`suggestions.${key}`)}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 messages.map((message, i) => (

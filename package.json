@@ -16,7 +16,8 @@
     "dev:frontend": "npm run build:shared && npm run dev -w @gametracker/frontend",
     "build": "npm run build:shared && npm run build -w @gametracker/backend && npm run build -w @gametracker/frontend",
     "lint": "npm run lint -w @gametracker/backend && npm run lint -w @gametracker/frontend",
-    "release": "node scripts/release.mjs"
+    "release": "node scripts/release.mjs",
+    "build:android": "node scripts/build-android.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

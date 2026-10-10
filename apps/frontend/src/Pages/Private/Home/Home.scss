@@ -16,7 +16,7 @@
 
     h1{
       font-family: Font.$font_family_display;
-      font-size: clamp(28px, 3.4vw, 40px);
+      font-size: clamp(24px, 3.4vw, 40px);
       font-weight: 700;
       line-height: 1.1;
       letter-spacing: -.02em;
@@ -370,5 +370,56 @@
     font-size: 13px;
     font-weight: 700;
     color: var(--accent);
+  }
+
+  // --- Telemóvel ------------------------------------------------------------------------------
+  @media (max-width: 760px){
+    gap: 18px;
+
+    .Home_Hero p{ margin-top: 6px; font-size: 14.5px; line-height: 1.5; }
+
+    .Home_Shelves{ gap: 14px; }
+
+    .Home_Shelf{
+      padding: 14px 14px 0;
+
+      .Home_Shelf_Head{ margin-bottom: 12px; }
+      .Home_Shelf_Head h2{ font-size: 15px; }
+      .Home_Shelf_Count{ font-size: 13px; }
+      .Home_Shelf_Board{ margin: 0 -14px; height: 6px; }
+      .Home_Shelf_Row{ gap: 12px; padding-bottom: 10px; }
+      .Home_Shelf_Empty{ font-size: 13.5px; }
+    }
+
+    .Home_Game_Name{ font-size: 12.5px; min-height: calc(12.5px * 1.3 * 2); }
+
+    // Jogo ao calhas: texto curto, dois botões lado a lado e um resultado baixo
+    .Random_Pick{
+      padding: 14px;
+      gap: 12px;
+
+      h2{ font-size: 15px; }
+    }
+
+    .Random_Pick_Text p{ font-size: 13.5px; }
+
+    .Random_Pick_Actions{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .Random_Pick_Button,
+    .Random_Pick_Button.ghost{
+      height: 40px;
+      padding: 0 10px;
+      font-size: 13px;
+
+      svg{ width: 15px; height: 15px; }
+    }
+
+    .Random_Pick_Result{ height: 96px; padding: 10px; }
+    .Random_Pick_Name{ font-size: 15px; }
   }
 }

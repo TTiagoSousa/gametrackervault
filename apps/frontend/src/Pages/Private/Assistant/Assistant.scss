@@ -9,7 +9,8 @@
   --pad-top: 32px;
   --pad-bottom: 24px;
 
-  height: calc(100svh - var(--top-nav-height, 76px) - var(--pad-top) - var(--pad-bottom));
+  // No telemóvel desconta também a barra de navegação do fundo
+  height: calc(100svh - var(--top-nav-height, 76px) - var(--bottom-nav-height, 0px) - var(--pad-top) - var(--pad-bottom));
   min-height: 460px;
   margin-bottom: calc(var(--pad-bottom) - 64px);
   display: grid;
@@ -17,16 +18,12 @@
   gap: 20px;
   font-family: Font.$font_family_sans;
 
-  @media (max-width: 980px){
-    grid-template-columns: 1fr;
-
-    // No telemóvel a conversa ocupa o ecrã; as sugestões ficam no fundo da página
-    .Assistant_Side{ display: none; }
-  }
+  @media (max-width: 980px){ grid-template-columns: 1fr; }
 
   @media (max-width: 760px){
-    --pad-top: 20px;
-    --pad-bottom: 16px;
+    --pad-top: 16px;
+    --pad-bottom: 12px;
+    min-height: 380px;
     margin-bottom: calc(var(--pad-bottom) - 48px);
   }
 
@@ -328,5 +325,44 @@
 
       &:hover{ text-decoration: underline; }
     }
+  }
+
+  // Sugestões dentro da conversa vazia: só quando a coluna da direita não aparece
+  .Assistant_Intro_Suggestions{
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+
+    button{
+      @include Mixin.Ghost_Button;
+      min-height: 36px;
+      padding: 7px 12px;
+      font-weight: 600;
+      text-align: left;
+    }
+  }
+
+  // --- Ecrãs estreitos (no fim, para ganhar às regras acima) -----------------------------
+  @media (max-width: 980px){
+    .Assistant_Side{ display: none; }
+    .Assistant_Intro_Suggestions{ display: flex; }
+  }
+
+  @media (max-width: 760px){
+    .Assistant_Head{ padding: 10px 12px; gap: 10px; }
+    .Assistant_Head_Icon{ width: 34px; height: 34px; padding: 8px; }
+    .Assistant_Head_Text h1{ font-size: 16px; }
+    .Assistant_New{ height: 34px; padding: 0 10px; font-size: 12.5px; }
+    .Assistant_Messages{ padding: 14px; gap: 18px; }
+    .Assistant_Message{ grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
+    .Assistant_Avatar{ width: 28px; height: 28px; font-size: 12px; }
+    .Assistant_Intro p{ font-size: 14.5px; }
+    .Assistant_Composer{ padding: 10px; gap: 8px; }
+    .Assistant_Composer textarea{ height: 46px; padding: 11px 12px; font-size: 15px; }
+    .Assistant_Send{ width: 46px; height: 46px; }
+    .Assistant_Stop{ height: 46px; padding: 0 12px; }
+    .Markdown{ font-size: 14.5px; }
   }
 }

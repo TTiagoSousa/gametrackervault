@@ -41,5 +41,6 @@
   "otherVersions": "Other versions",
   "sameSeries": "From the same series",
   "partOf": "Part of",
-  "openIgdb": "View on IGDB"
+  "openIgdb": "View on IGDB",
+  "closeShelf": "Close"
 }

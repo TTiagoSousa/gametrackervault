@@ -20,11 +20,140 @@
 
   @media (max-width: 1080px){
     grid-template-columns: 1fr;
-
-    .Library_Panel{ position: static; max-height: none; order: -1; }
   }
 
   @media (max-width: 760px){ margin-bottom: -48px; }
+
+  // --- "A minha estante": coluna no computador, folha no telemóvel e no tablet ---------
+  // No computador o invólucro não conta para o layout: o painel é a coluna da grelha
+  .Game_Dock,
+  .Game_Dock_Sheet{ display: contents; }
+
+  .Game_Dock_Head,
+  .Game_Dock_Trigger{ display: none; }
+
+  @media (max-width: 1080px){
+    // Fechada, a folha não existe; aberta, cobre o ecrã com o painel em baixo
+    .Game_Dock{
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      align-items: flex-end;
+      background: var(--overlay-scrim);
+
+      &.open{ display: flex; }
+    }
+
+    .Game_Dock_Sheet{
+      width: 100%;
+      max-height: 90svh;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-radius: 14px 14px 0 0;
+      overflow: hidden;
+    }
+
+    .Game_Dock_Head{
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 44px;
+      padding: 0 12px;
+    }
+
+    .Game_Dock_Handle{
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 40px;
+      height: 4px;
+      margin-left: -20px;
+      border-radius: 2px;
+      background: var(--line-strong);
+    }
+
+    .Game_Dock_Close{
+      padding: 6px 4px;
+      border: none;
+      background: none;
+      color: var(--accent);
+      font-family: Font.$font_family_sans;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    // O painel enche a folha: rola por dentro e o rodapé fica no fundo
+    .Library_Panel{
+      position: static;
+      flex: 1;
+      min-height: 0;
+      max-height: none;
+      border: none;
+      border-radius: 0;
+    }
+
+    // A barra que abre a folha, fixa por cima da navegação do fundo
+    .Game_Dock_Trigger{
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: calc(var(--bottom-nav-height) + 12px);
+      z-index: 55;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 52px;
+      padding: 0 14px 0 16px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--ctrl-radius);
+      background: var(--surface);
+      box-shadow: var(--float-shadow);
+      color: var(--text-main);
+      font-family: Font.$font_family_sans;
+      cursor: pointer;
+    }
+
+    .Game_Dock_Trigger_Title{
+      font-family: Font.$font_family_display;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .Game_Dock_Trigger_Badge{
+      --status-color: var(--accent);
+
+      margin-left: auto;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--status-color);
+      color: var(--on-accent);
+      font-size: 12.5px;
+      font-weight: 700;
+      white-space: nowrap;
+
+      &.status-PLAYING{ --status-color: var(--game-status-playing); color: var(--status-ink); }
+      &.status-FINISHED_MAIN,
+      &.status-FINISHED_EXTRAS{ --status-color: var(--game-status-finished); color: var(--status-ink); }
+      &.status-COMPLETED_100{ --status-color: var(--game-status-beaten); color: var(--status-ink); }
+      &.status-PAUSED{ --status-color: var(--text-soft); }
+      &.status-DROPPED{ --status-color: var(--danger-color); }
+    }
+
+    .Game_Dock_Trigger_Chevron{
+      width: 18px;
+      height: 18px;
+      color: var(--text-faint);
+      transform: rotate(180deg);
+    }
+
+    // O fim da página não fica escondido atrás da barra
+    --main-pad-bottom: 140px;
+  }
 
   .Game_Main{
     min-width: 0;
@@ -32,7 +161,8 @@
     flex-direction: column;
     gap: 36px;
     // O espaço que a página tirou ao contentor volta aqui, por baixo do conteúdo
-    padding-bottom: 64px;
+    // (mais, no telemóvel, o lugar da barra "A minha estante")
+    padding-bottom: var(--main-pad-bottom, 64px);
   }
 
   .Game_Back{
@@ -98,10 +228,18 @@
     gap: 32px;
     align-items: start;
 
+    // Telemóvel: capa pequena ao lado do título; as notas e os factos por baixo,
+    // a toda a largura (a ficha deixa de ser uma caixa: os filhos entram na grelha)
     @media (max-width: 720px){
-      grid-template-columns: 1fr;
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 10px 16px;
 
-      .Game_Cover{ max-width: 240px; }
+      .Game_Cover{ grid-row: 1 / span 3; }
+
+      .Game_Info{ display: contents; }
+
+      .Game_Ratings,
+      .Game_Facts{ grid-column: 1 / -1; margin-top: 8px; }
     }
   }
 
@@ -151,7 +289,7 @@
 
   .Game_Title{
     font-family: Font.$font_family_display;
-    font-size: clamp(28px, 3.2vw, 42px);
+    font-size: clamp(21px, 3.2vw, 42px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -.02em;
@@ -209,6 +347,14 @@
     .Game_Rating_Count{
       font-size: 12.5px;
       color: var(--text-faint);
+    }
+
+    @media (max-width: 720px){
+      padding: 10px 12px;
+
+      .Game_Rating_Value{ font-size: 22px; }
+      .Game_Rating_Label{ font-size: 12.5px; }
+      .Game_Rating_Count{ font-size: 11.5px; }
     }
   }
 

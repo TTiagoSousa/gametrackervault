@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useGameDetail } from '../../../Hooks/Games/useGameDetail';
@@ -28,6 +28,27 @@ const Game = () => {
   // Ao mudar de jogo, os "Ler mais" voltam a fechar
   const open = expanded.id === gameId ? expanded : { id: gameId, summary: false, story: false };
   const toggle = (key: 'summary' | 'story') => setExpanded({ ...open, [key]: !open[key] });
+
+  // Telemóvel e tablet: "A minha estante" abre como uma folha por cima da página.
+  // Fica aberta só para o jogo em que foi aberta.
+  const { t: tl } = useTranslation('library');
+  const [sheetFor, setSheetFor] = useState<number | null>(null);
+  const sheetOpen = sheetFor === gameId;
+
+  // Com a folha aberta a página não rola por trás, e Esc fecha-a
+  useEffect(() => {
+    if (!sheetOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSheetFor(null);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [sheetOpen]);
 
   const back = (
     <button
@@ -202,9 +223,29 @@ const Game = () => {
       <Game_Shelf title={t('sameSeries')} games={game.sameSeries} />
       </div>
 
-      {/* Coluna da direita, fixa ao fazer scroll. key: o rascunho recomeça ao
-          abrir outro jogo (ex.: uma DLC) */}
-      <Library_Panel key={gameId} gameId={gameId} {...library} />
+      {/* No computador, coluna da direita fixa ao fazer scroll (o invólucro não
+          existe para o layout: display contents). No telemóvel e no tablet, uma
+          folha que abre por cima a partir da barra "A minha estante".
+          key: o rascunho recomeça ao abrir outro jogo (ex.: uma DLC) */}
+      <div className={`Game_Dock${sheetOpen ? ' open' : ''}`} onClick={() => setSheetFor(null)}>
+        <div className='Game_Dock_Sheet' role={sheetOpen ? 'dialog' : undefined} aria-modal={sheetOpen || undefined} onClick={(e) => e.stopPropagation()}>
+          <div className='Game_Dock_Head'>
+            <span className='Game_Dock_Handle' aria-hidden='true' />
+            <button type='button' className='Game_Dock_Close' onClick={() => setSheetFor(null)}>
+              {t('closeShelf')}
+            </button>
+          </div>
+          <Library_Panel key={gameId} gameId={gameId} {...library} />
+        </div>
+      </div>
+
+      <button type='button' className='Game_Dock_Trigger' onClick={() => setSheetFor(gameId)} aria-expanded={sheetOpen}>
+        <span className='Game_Dock_Trigger_Title'>{tl('title')}</span>
+        <span className={`Game_Dock_Trigger_Badge${library.entry ? ` status-${library.entry.status}` : ''}`}>
+          {library.entry ? tl(`statusShort.${library.entry.status}`) : tl('add')}
+        </span>
+        <span className='Game_Dock_Trigger_Chevron' aria-hidden='true'><Icon.Chevron /></span>
+      </button>
     </div>
   );
 };

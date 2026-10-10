@@ -14,7 +14,7 @@
 
   .Settings_Hero h1{
     font-family: Font.$font_family_display;
-    font-size: clamp(28px, 3.4vw, 40px);
+    font-size: clamp(24px, 3.4vw, 40px);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -.02em;
@@ -322,5 +322,33 @@
     font-family: Font.$font_family_mono;
     font-size: 11.5px;
     opacity: .7;
+  }
+
+  // --- Telemóvel: tema e língua em botões de largura igual ---------------------------------
+  @media (max-width: 760px){
+    gap: 16px;
+    --card-pad: 16px;
+
+    .Settings_Content{ gap: 14px; }
+    .Settings_Card_Head{ padding-bottom: 14px; }
+    .Settings_Card_Head h2{ font-size: 16px; }
+    .Settings_Block{ padding: 16px 0; gap: 12px; }
+    .Settings_Block.row{ align-items: stretch; gap: 12px; }
+
+    .Settings_Segmented{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .Settings_Segment{
+      justify-content: center;
+      padding: 10px 6px;
+      font-size: 13px;
+    }
+
+    .Settings_Save{ width: 100%; }
+    .Settings_Footer{ flex-direction: column; align-items: stretch; }
   }
 }

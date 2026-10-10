@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>GameTracker Vault</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <main>
+    <div class="spines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <div>
+      <h1 data-t="title"></h1>
+      <p data-t="text" style="margin-top: 10px"></p>
+      <p class="hint" id="server" style="margin-top: 12px"></p>
+    </div>
+    <div class="actions">
+      <button class="primary" id="retry" type="button" data-t="retry"></button>
+      <button class="ghost" id="change" type="button" data-t="change"></button>
+    </div>
+  </main>
+
+  <script>
+    var TEXT = {
+      pt: {
+        title: 'Sem ligação ao servidor',
+        text: 'Não foi possível abrir o GameTracker Vault. Confirma que o telemóvel tem rede e que o servidor está ligado.',
+        retry: 'Tentar outra vez',
+        change: 'Mudar de servidor'
+      },
+      es: {
+        title: 'Sin conexión con el servidor',
+        text: 'No se pudo abrir GameTracker Vault. Comprueba que el móvil tiene red y que el servidor está encendido.',
+        retry: 'Volver a intentarlo',
+        change: 'Cambiar de servidor'
+      },
+      en: {
+        title: 'Can’t reach the server',
+        text: 'GameTracker Vault could not be opened. Check that the phone has a connection and that the server is on.',
+        retry: 'Try again',
+        change: 'Change server'
+      }
+    };
+    var lang = (navigator.language || 'en').slice(0, 2);
+    var t = TEXT[lang] || TEXT.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-t]').forEach(function (el) { el.textContent = t[el.getAttribute('data-t')]; });
+
+    var app = window.GameTrackerApp;
+    if (app) document.getElementById('server').textContent = app.currentServer();
+    document.getElementById('retry').addEventListener('click', function () { if (app) app.retry(); });
+    document.getElementById('change').addEventListener('click', function () { if (app) app.changeServer(); });
+  </script>
+</body>
+</html>

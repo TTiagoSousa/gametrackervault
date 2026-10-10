@@ -655,4 +655,9 @@ $filters-width: 300px;
       gap: 22px 14px;
     }
   }
+
+  // Telemóvel: o contentor tem 16px por cima (não 20px)
+  @media (max-width: 760px){
+    .Search_Toolbar{ margin-top: -16px; }
+  }
 }

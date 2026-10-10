@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_title">Nova versão da app</string>
+    <string name="update_message">Está disponível a versão %1$s da app GameTracker Vault (tens a %2$s). A atualização demora uns segundos.</string>
+    <string name="update_now">Atualizar</string>
+    <string name="update_later">Mais tarde</string>
+    <string name="update_downloading">A descarregar a atualização…</string>
+    <string name="update_failed">Não foi possível atualizar: %1$s</string>
+    <string name="update_corrupt">O ficheiro descarregado está danificado. Tenta outra vez.</string>
+    <string name="update_latest">Já tens a versão mais recente (%1$s).</string>
+    <string name="update_unavailable">Não foi possível procurar atualizações. Confirma que o servidor tem a app publicada e tenta outra vez.</string>
+</resources>

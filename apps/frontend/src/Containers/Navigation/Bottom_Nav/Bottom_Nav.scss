@@ -1,0 +1,65 @@
+@use '../../../Styles/Fonts.scss' as Font;
+
+// Barra de navegação do telemóvel, fixa no fundo. A altura é a variável
+// --bottom-nav-height (definida no Main.scss), que as páginas descontam.
+.Bottom_Nav{
+  display: none;
+
+  @media (max-width: 760px){
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    height: var(--bottom-nav-height);
+    box-sizing: border-box;
+    padding-bottom: env(safe-area-inset-bottom);
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    background: var(--surface);
+    border-top: 1px solid var(--line-strong);
+    font-family: Font.$font_family_sans;
+  }
+
+  .Bottom_Nav_Item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    color: var(--text-faint);
+    -webkit-tap-highlight-color: transparent;
+
+    &.active{
+      color: var(--accent);
+
+      .Bottom_Nav_Icon{ background: var(--accent-soft); }
+    }
+
+    &:focus-visible{
+      outline: none;
+
+      .Bottom_Nav_Icon{ box-shadow: 0 0 0 3px var(--accent-soft); }
+    }
+  }
+
+  .Bottom_Nav_Icon{
+    width: 48px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+
+    svg{ width: 20px; height: 20px; }
+  }
+
+  .Bottom_Nav_Label{
+    max-width: 100%;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

@@ -10,7 +10,7 @@
 
     h1{
       font-family: Font.$font_family_display;
-      font-size: clamp(28px, 3.4vw, 40px);
+      font-size: clamp(24px, 3.4vw, 40px);
       font-weight: 700;
       line-height: 1.1;
       letter-spacing: -.02em;
@@ -98,5 +98,16 @@
     }
 
     @media (max-width: 720px){ padding: 0 16px 18px; }
+  }
+
+  // --- Telemóvel ------------------------------------------------------------------------------
+  @media (max-width: 760px){
+    gap: 16px;
+
+    .Help_Hero p{ font-size: 14.5px; margin-top: 6px; }
+    .Help_Section summary{ padding: 14px 16px; }
+    .Help_Section_Title{ font-size: 15px; }
+    .Help_Section_Body{ padding: 0 16px 16px; }
+    .Help_Section_Body .Markdown{ font-size: 14px; }
   }
 }

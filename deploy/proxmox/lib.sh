@@ -178,6 +178,17 @@ server {
         try_files \$uri =404;
     }
 
+    # App Android (APK) e a ficha dela: o tipo certo para o Android a instalar e
+    # sem cache, para um APK novo chegar logo.
+    location /downloads/ {
+        types {
+            application/vnd.android.package-archive apk;
+            application/json json;
+        }
+        add_header Cache-Control "no-cache";
+        try_files \$uri =404;
+    }
+
     location = /env-config.js { add_header Cache-Control "no-store"; }
     location = /index.html   { add_header Cache-Control "no-cache"; }
 
