@@ -163,3 +163,10 @@ change it for any noncommercial purpose — at home, for friends, in a club or s
 Selling it, offering it as a paid service or using it inside a commercial product is not
 allowed. If you share it or a modified version, keep the license and the copyright
 notice and point back to this repository; the easiest way is to fork it.
+
+## Support
+
+GameTracker Vault is free and maintained in my spare time. If it's useful to you, you
+can buy me a coffee:
+
+<a href="https://paypal.me/TTiagoSousa"><img src="https://img.shields.io/badge/Donate-PayPal-0070BA?style=for-the-badge&logo=paypal&logoColor=white" alt="Donate with PayPal"></a>

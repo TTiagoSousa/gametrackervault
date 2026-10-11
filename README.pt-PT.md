@@ -162,3 +162,10 @@ usar e alterar à vontade para qualquer fim não comercial — em casa, para ami
 clube ou numa escola. Não é permitido vendê-la, oferecê-la como serviço pago nem usá-la
 dentro de um produto comercial. Se a partilhares, ou uma versão alterada, mantém a
 licença e o aviso de copyright e indica este repositório; o mais simples é fazer um fork.
+
+## Apoiar
+
+O GameTracker Vault é gratuito e mantido no meu tempo livre. Se te for útil, podes
+pagar-me um café:
+
+<a href="https://paypal.me/TTiagoSousa"><img src="https://img.shields.io/badge/Doar-PayPal-0070BA?style=for-the-badge&logo=paypal&logoColor=white" alt="Doar com PayPal"></a>
